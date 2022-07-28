@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=UTF-8>
+    <title>Hello World!</title>
+
+<script>
+document.addEventListener('readystatechange', event => {
+  switch (document.readyState) {
+    case "loading":
+      console.log("document.readyState: ", document.readyState,
+       `- The document is still loading.`
+       );
+      break;
+    case "interactive":
+      console.log("document.readyState: ", document.readyState, 
+        `- The document has finished loading DOM. `,
+        `- "DOMContentLoaded" event`
+        );
+      break;
+    case "complete":
+      console.log("document.readyState: ", document.readyState, 
+        `- The page DOM with Sub-resources are now fully loaded. `,
+        `- "load" event`
+        );
+      break;
+  }
+});
+</script>
+</head>
+
+
+<body>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script> 
+</body>
+</html>
