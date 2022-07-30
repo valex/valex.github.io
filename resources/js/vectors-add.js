@@ -26,24 +26,25 @@ class PAGE_APP {
         };
 
         this.vectors = {
-            a: new SVGVector2D(-2.5, 2, {
+            a: new SVGVector2D(-2.4, 2.1, {
                 id: 'vector_a',
                 html_label: "a&#773;",
             }),
-            b: new SVGVector2D(3.5, 2.4, {
+            b: new SVGVector2D(4.8, 2.4, {
                 id: 'vector_b',
                 html_label: "b&#773;",
             }),
-            a_plus_b: new SVGVector2D(1, 4.4, {
+            a_plus_b: new SVGVector2D(2.4, 4.5, {
                 id: 'a_plus_b_vector',
                 color: '#FF0000',
                 html_label: "a&#773; + b&#773;",
+                html_label_min_width: 500
             }),
-            b_moved: new SVGVector2D(3.5, 2.4, {
+            b_moved: new SVGVector2D(4.8, 2.4, {
                 id: 'b_moved_vector',
                 color: '#AAAAAA',
                 dasharray: '3 2'
-            }, -2.5, 2)
+            }, -2.4, 2.1)
         };
 
 
@@ -234,19 +235,23 @@ class PAGE_APP {
 
         // place label
         if( html_label != null ){
-            this.mainGroup.append('text')
-                .html(html_label)
-                .attr('id',vector.id+"_label")
-                .style('text-anchor', 'middle')
-                .style('alignment-baseline', 'middle')
-                .attr("transform", "rotate("+(-vector.angle)+","+this.scaleX(x1+((x2-x1) / 2))+","+this.scaleY(y1+((y2-y1) / 2))+")")
-                .attr('fill', color)
-                .attr('fill-opacity', 0.7)
-                .attr('x',this.scaleX(x1+((x2-x1) / 2)))
-                .attr('y',this.scaleY(y1+((y2-y1) / 2)))
-                .attr('dx',0)
-                .attr('dy',-14)
-                .attr('font-size','20px');
+
+            if( null == vector.getOption('html_label_min_width') || this.calculations.svgWidth >= vector.getOption('html_label_min_width'))
+            {
+                this.mainGroup.append('text')
+                    .html(html_label)
+                    .attr('id',vector.id+"_label")
+                    .style('text-anchor', 'middle')
+                    .style('alignment-baseline', 'middle')
+                    .attr("transform", "rotate("+(-vector.angle)+","+this.scaleX(x1+((x2-x1) / 2))+","+this.scaleY(y1+((y2-y1) / 2))+")")
+                    .attr('fill', color)
+                    .attr('fill-opacity', 0.7)
+                    .attr('x',this.scaleX(x1+((x2-x1) / 2)))
+                    .attr('y',this.scaleY(y1+((y2-y1) / 2)))
+                    .attr('dx',0)
+                    .attr('dy',-14)
+                    .attr('font-size','20px');
+            }
         }
 
         // place arrow
