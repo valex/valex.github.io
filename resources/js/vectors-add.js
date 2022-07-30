@@ -1,4 +1,4 @@
-import SVGVector2D from './SVGVector2D'
+import SVGVector2D from './SVGVector2D.js'
 
 class PAGE_APP {
     // Constructor

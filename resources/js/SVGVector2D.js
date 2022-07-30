@@ -1,4 +1,4 @@
-import Vector2D from './Vector2D'
+import Vector2D from './Vector2D.js'
 
 class SVGVector2D {
     // Constructor
