@@ -246,6 +246,7 @@ class PAGE_APP {
                     .attr("transform", "rotate("+(-vector.angle)+","+this.scaleX(x1+((x2-x1) / 2))+","+this.scaleY(y1+((y2-y1) / 2))+")")
                     .attr('fill', color)
                     .attr('fill-opacity', 0.7)
+                    .attr('font-style','italic')
                     .attr('x',this.scaleX(x1+((x2-x1) / 2)))
                     .attr('y',this.scaleY(y1+((y2-y1) / 2)))
                     .attr('dx',0)

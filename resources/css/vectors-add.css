@@ -1,4 +1,8 @@
 svg text {
+    font-family: sans-serif;
+}
+
+svg text {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
