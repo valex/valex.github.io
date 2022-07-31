@@ -13,10 +13,14 @@ class PAGE_APP {
                 bottom: 10,
                 left: 10,
             },
-            smallestAxisDomain: [-5, 5]
+            smallestAxisDomain: [-5, 5],
+            breakpoints: {
+                extraSmall: 576
+            }
         };
 
         this.calculations = {
+            windowWidth: null,
             svgWidth: null,
             svgHeight: null,
             mainGroupWidth: null,
@@ -57,6 +61,69 @@ class PAGE_APP {
         this.scaleX = null;
         this.scaleY = null;
 
+        this.init();
+    }
+
+    init(){
+        this.calculations.windowWidth = window.innerWidth;
+
+        if(this.calculations.windowWidth < this.options.breakpoints.extraSmall){
+            this.options.aspectRatio = 4/3;
+        }
+
+        this.el = document.getElementById(this.options.elID);
+
+        this.calculations.svgWidth = Math.floor( this.el.clientWidth - 1 );
+        this.calculations.svgHeight = Math.floor( this.calculations.svgWidth / this.options.aspectRatio );
+
+        if(this.calculations.svgWidth < this.calculations.svgHeight){
+            this.calculations.smallestAxisLabel = 'x';
+        }
+        
+        this.calculations.mainGroupWidth = this.calculations.svgWidth - this.options.margins.left - this.options.margins.right;
+        this.calculations.mainGroupHeight = this.calculations.svgHeight - this.options.margins.top - this.options.margins.bottom;
+        
+        this.svg = d3.select(this.el)
+                .append("svg")
+                .attr('xmlns', 'http://www.w3.org/2000/svg')
+                .attr("width", this.calculations.svgWidth)
+                .attr("height", this.calculations.svgHeight)
+                .on('click', function() {
+                    console.log('onClickSvg');
+                });
+
+        this.mainGroup = this.svg.append('g')
+            .attr('transform', 'translate(' + this.options.margins.left + ',' + this.options.margins.top + ')');
+
+
+        if(this.calculations.smallestAxisLabel == 'y'){
+
+            this.scaleY = d3.scaleLinear()
+                .domain(this.options.smallestAxisDomain)
+                .range([ this.calculations.mainGroupHeight, 0]);
+
+            this.scaleX = d3.scaleLinear()
+                .domain([
+                    this.options.smallestAxisDomain[0] * (this.calculations.mainGroupWidth/this.calculations.mainGroupHeight), 
+                    this.options.smallestAxisDomain[1] * (this.calculations.mainGroupWidth/this.calculations.mainGroupHeight), 
+                ])
+                .range([0, this.calculations.mainGroupWidth ]);
+        }
+
+        if(this.calculations.smallestAxisLabel == 'x'){
+            this.scaleX = d3.scaleLinear()
+                .domain(this.options.smallestAxisDomain)
+                .range([0, this.calculations.mainGroupWidth ]);
+
+            this.scaleY = d3.scaleLinear()
+                .domain([
+                    this.options.smallestAxisDomain[0] * (this.calculations.mainGroupHeight/this.calculations.mainGroupWidth), 
+                    this.options.smallestAxisDomain[1] * (this.calculations.mainGroupHeight/this.calculations.mainGroupWidth), 
+                ])
+                .range([ this.calculations.mainGroupHeight, 0]);
+        }
+
+        // Events
         d3.select('#t_a_x').on('input', function(e){
             if( ! APP.isNumeric(e.target.value))
                 return;
@@ -116,63 +183,6 @@ class PAGE_APP {
 
             APP.update()
         })
-
-        this.init();
-    }
-
-    init(){
-        this.el = document.getElementById(this.options.elID);
-
-        this.calculations.svgWidth = Math.floor( this.el.clientWidth - 1 );
-        this.calculations.svgHeight = Math.floor( this.calculations.svgWidth / this.options.aspectRatio );
-
-        if(this.calculations.svgWidth < this.calculations.svgHeight){
-            this.calculations.smallestAxisLabel = 'x';
-        }
-        
-        this.calculations.mainGroupWidth = this.calculations.svgWidth - this.options.margins.left - this.options.margins.right;
-        this.calculations.mainGroupHeight = this.calculations.svgHeight - this.options.margins.top - this.options.margins.bottom;
-        
-        this.svg = d3.select(this.el)
-                .append("svg")
-                .attr('xmlns', 'http://www.w3.org/2000/svg')
-                .attr("width", this.calculations.svgWidth)
-                .attr("height", this.calculations.svgHeight)
-                .on('click', function() {
-                    console.log('onClickSvg');
-                });
-
-        this.mainGroup = this.svg.append('g')
-            .attr('transform', 'translate(' + this.options.margins.left + ',' + this.options.margins.top + ')');
-
-
-        if(this.calculations.smallestAxisLabel == 'y'){
-
-            this.scaleY = d3.scaleLinear()
-                .domain(this.options.smallestAxisDomain)
-                .range([ this.calculations.mainGroupHeight, 0]);
-
-            this.scaleX = d3.scaleLinear()
-                .domain([
-                    this.options.smallestAxisDomain[0] * (this.calculations.mainGroupWidth/this.calculations.mainGroupHeight), 
-                    this.options.smallestAxisDomain[1] * (this.calculations.mainGroupWidth/this.calculations.mainGroupHeight), 
-                ])
-                .range([0, this.calculations.mainGroupWidth ]);
-        }
-
-        if(this.calculations.smallestAxisLabel == 'x'){
-            this.scaleX = d3.scaleLinear()
-                .domain(this.options.smallestAxisDomain)
-                .range([0, this.calculations.mainGroupWidth ]);
-
-            this.scaleY = d3.scaleLinear()
-                .domain([
-                    this.options.smallestAxisDomain[0] * (this.calculations.mainGroupHeight/this.calculations.mainGroupWidth), 
-                    this.options.smallestAxisDomain[1] * (this.calculations.mainGroupHeight/this.calculations.mainGroupWidth), 
-                ])
-                .range([ this.calculations.mainGroupHeight, 0]);
-        }
-
 
 
         this.drawAxes();
