@@ -95,7 +95,6 @@ class PAGE_APP {
         this.mainGroup = this.svg.append('g')
             .attr('transform', 'translate(' + this.options.margins.left + ',' + this.options.margins.top + ')');
 
-
         if(this.calculations.smallestAxisLabel == 'y'){
 
             this.scaleY = d3.scaleLinear()
@@ -464,8 +463,8 @@ class PAGE_APP {
             .attr("cy", this.scaleY(this.vectors.a.y));
 
         d3.select('#b_control')
-        .attr("cx", this.scaleX(this.vectors.b.x))
-        .attr("cy", this.scaleY(this.vectors.b.y));
+            .attr("cx", this.scaleX(this.vectors.b.x))
+            .attr("cy", this.scaleY(this.vectors.b.y));
 
         d3.select('#'+this.vectors.a.id)
             .attr("x2", this.scaleX(this.vectors.a.x))
@@ -569,7 +568,8 @@ class PAGE_APP {
 
         d3.select('#t_result_x').text(this.vectors.result.x.toFixed(2));
         d3.select('#t_result_y').text(this.vectors.result.y.toFixed(2));
-    } // end
+        
+    } // end updateCalculationTable()
 
     a_vectorInfo() {
         let info = "a&#773;&nbsp;&nbsp;&lang;";

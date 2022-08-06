@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=UTF-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Vector length or vector magnitude. How to calculate vector length and interactive animation.">
+    <meta name="keywords" content="vector, vectors, length, magnitude, norm, formula, animation, interactive">
+
+    <title>Vector length, magnitude - Interactive Animation</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+  
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+
+    <script defer src="./resources/js/vector_length.js" type="module"></script>
+
+    <script defer src="./resources/js/donate.js" type="module"></script>
+    
+    <link rel="stylesheet" href="./resources/css/vector_length.css" >
+
+    <script>if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"nbdfgbmu",utcoffset:"3"}))};sessionStorage.setItem("_swa","1");</script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <section class="text-center">
+            <h1 class="h4 d-flex justify-content-center align-items-center">
+              Vector length or magnitude
+            </h1>
+        </section>
+
+        <div class="row">
+            <div class="col-sm-8">
+    
+                <div id="svg_chart"></div>
+    
+                <div class="alert alert-secondary rounded-0 py-2" role="alert">
+                    <p style="font-size: 0.8rem;" class="mb-2">Move vector by dragging circle at the end of arrow and have fun ;)</p>
+                </div>
+
+                <div class="alert alert-warning" role="alert">
+                    <p>The <b>length</b> of a vector is also sometimes called the <i>magnitude</i> or the <i>norm</i> of a vector.</p>
+          
+                    <p>The length or magnitude or norm of the vector `vec a` is denoted by `norm(vec a)` or, less commonly, `abs(vec a)`</p>
+                    
+                    <p>The length of a `n`-dimensional vector `vec V` is a scalar given by the formula:</p>
+
+                    <p class="text-center">`norm(vec V) = sqrt(sum_(i=1)^n V_i^2)`</p>
+
+                    <p>The length of a `two`-dimensional vector `vec a` is a scalar given by the formula:</p>
+
+                    <p class="text-center">`norm(vec a) = sqrt(a_x^2 + a_y^2)`</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th class="text-center">x</th>
+                          <th class="text-center">y</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>`vec a`</th>
+                          <td>
+                            <input id="t_a_x" class="form-control form-control-sm" type="text" >
+                          </td>
+                          <td>
+                            <input id="t_a_y" class="form-control form-control-sm" type="text" >
+                          </td>
+                        </tr>
+                        <tr>
+                          <th class="text-nowrap" colspan="2">`norm(vec a) = sqrt(a_x^2 + a_y^2)`</th>
+                          <td id="t_result" class="text-center align-middle"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+
+                <!-- See also -->
+                <div class="card">
+                    <div class="card-header">
+                        See also
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            <a href="/vector_addition.html" class="list-group-item list-group-item-action">
+                                Vector addition
+                            </a>
+                            <a href="/vector_subtraction.html" class="list-group-item list-group-item-action">
+                                Vector subtraction
+                            </a>
+                            <a href="/vector_length.html" class="list-group-item list-group-item-action active">
+                                Vector length
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- end See also -->
+            </div>
+        </div> <!--end .row -->
+
+    </div> <!--end .container-fluid -->
+
+
+
+    <section class="">
+        <footer class=" text-white" style="background-color: #0a4275;">
+            <div class="container p-4 pb-0">
+            <section class="text-center">
+                <p class="d-flex justify-content-center align-items-center">
+                If you like all of this, please buy me a beer
+                </p>
+            </section>
+            </div>
+    
+            <div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            <div class="table-responsive">
+                <table class="w-100">
+                <tr>
+                    <td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
+                    <td ><span class="ms-3" id="btc_donate"></span></td>
+                </tr>
+                <tr>
+                    <td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
+                    <td ><span class="ms-3" id="xmr_donate"></span></td>
+                </tr>
+                <tr>
+                    <td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
+                    <td ><span class="ms-3" id="ltc_donate"></span></td>
+                </tr>
+                </table>
+            </div>
+            </div>
+    
+        </footer>
+    </section>
+</body>
+</html>
