@@ -4,10 +4,10 @@
     <meta charset=UTF-8>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Vector length or vector magnitude. How to calculate vector length and interactive animation.">
-    <meta name="keywords" content="vector, vectors, length, magnitude, norm, formula, animation, interactive">
+    <meta name="description" content="Unit vector is a vector of length 1 (one)">
+    <meta name="keywords" content="vector, vectors, length, unit, normalized">
 
-    <title>Vector length, magnitude - Interactive Animation</title>
+    <title>Unit vector - Interactive Animation</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
@@ -17,11 +17,11 @@
   
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
 
-    <script defer src="./resources/js/vector_length.js" type="module"></script>
+    <script defer src="./resources/js/unit_vector.js" type="module"></script>
 
     <script defer src="./resources/js/donate.js" type="module"></script>
     
-    <link rel="stylesheet" href="./resources/css/vector_length.css" >
+    <link rel="stylesheet" href="./resources/css/unit_vector.css" >
 
     <script>if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"nbdfgbmu",utcoffset:"3"}))};sessionStorage.setItem("_swa","1");</script>
 </head>
@@ -30,7 +30,7 @@
     <div class="container-fluid">
         <section class="text-center">
             <h1 class="h4 d-flex justify-content-center align-items-center">
-              Vector length or magnitude
+              Unit vector
             </h1>
         </section>
 
@@ -44,17 +44,17 @@
                 </div>
 
                 <div class="alert alert-warning" role="alert">
-                    <p>The <b>length</b> of a vector is also sometimes called the <i>magnitude</i> or the <i>norm</i> of a vector.</p>
+                    <p><b>Unit vector</b> (or often <i>normalized vector</i>) is a vector of <a href="/vector_length.html" class="alert-link">length</a> 1 (one)</p>
           
-                    <p>The length or magnitude or norm of the vector `vec a` is denoted by `norm(vec a)` or, less commonly, `abs(vec a)`</p>
+                    <p>Unit vector is denoted by `hat Q` (pronounced "<i>q-hat</i>")</p>
                     
-                    <p>The length of a `n`-dimensional vector `vec V` is a scalar given by the formula:</p>
+                    <p>The unit vector `hat Q` of a non-zero vector `vec Q` is the vector in the direction of `vec Q` and with the <a href="/vector_length.html" class="alert-link">length</a> equal to 1 (one):</p>
 
-                    <p class="text-center">`norm(vec V) = sqrt(sum_(i=1)^n V_i^2)`</p>
+                    <p class="text-center">`hat Q = vec Q / norm(vec Q)`</p>
 
-                    <p>The length of a `two`-dimensional vector `vec a` is a scalar given by the formula:</p>
+                    <p>For a `two`-dimensional vector `vec Q`, used in current example:</p>
 
-                    <p class="text-center">`norm(vec a) = sqrt(a_x^2 + a_y^2)`</p>
+                    <p class="text-center">`hat Q = vec Q / norm(vec Q) = << Q_x / sqrt(Q_x^2 + Q_y^2), Q_y / sqrt(Q_x^2 + Q_y^2) >>`</p>
                 </div>
             </div>
             <div class="col-sm-4">
@@ -69,17 +69,26 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <th>`vec a`</th>
+                          <th>`vec Q`</th>
                           <td>
-                            <input id="t_a_x" class="form-control form-control-sm" type="text" >
+                            <input id="t_0_x" class="form-control form-control-sm" type="text" >
                           </td>
                           <td>
-                            <input id="t_a_y" class="form-control form-control-sm" type="text" >
+                            <input id="t_0_y" class="form-control form-control-sm" type="text" >
                           </td>
                         </tr>
                         <tr>
-                          <th class="text-nowrap" colspan="2">`norm(vec a) = sqrt(a_x^2 + a_y^2)`</th>
-                          <td id="t_result" class="text-center align-middle"></td>
+                            <th class="text-nowrap">`norm(vec Q) `</th>
+                            <td id="t_length_0" colspan="2" class="text-center align-middle"></td>
+                        </tr>
+                        <tr>
+                            <th>`hat Q = vec Q / norm(vec Q)`</th>
+                            <td id="t_1_x" class="text-center align-middle">
+                              
+                            </td>
+                            <td id="t_1_y" class="text-center align-middle">
+                              
+                            </td>
                         </tr>
                       </tbody>
                     </table>
@@ -98,10 +107,10 @@
                             <a href="/vector_subtraction.html" class="list-group-item list-group-item-action">
                                 Vector subtraction
                             </a>
-                            <a href="/vector_length.html" class="list-group-item list-group-item-action active">
+                            <a href="/vector_length.html" class="list-group-item list-group-item-action">
                                 Vector length
                             </a>
-                            <a href="/unit_vector.html" class="list-group-item list-group-item-action">
+                            <a href="/unit_vector.html" class="list-group-item list-group-item-action active">
                                 Unit vector
                             </a>
                         </div>
@@ -120,7 +129,7 @@
             <div class="container p-4 pb-0">
             <section class="text-center">
                 <p class="d-flex justify-content-center align-items-center">
-                If you like all of this, please buy me a beer
+                If you like all of this, please buy me a coffee
                 </p>
             </section>
             </div>
