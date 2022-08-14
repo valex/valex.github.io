@@ -1,0 +1,64 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+
+            <div id="svg_chart"></div>
+
+            <div class="alert alert-secondary rounded-0 py-2" role="alert">
+                <p style="font-size: 0.8rem;" class="mb-2">Move vectors by dragging circles at the end of each one and have fun ;)</p>
+
+                <p style="font-size: 0.8rem;" class="mb-0">Gray, dashed vector represents vector `vec b` moved to the end of vector `vec a`. It is a graphical way for vector addition.</p>
+
+            </div>
+
+            <div class="alert alert-warning" role="alert">
+                <p>The result of vector addition is another vector, where each component is the sum of vector components</p>
+
+                <p>Consider two vectors `vec a` and `vec b`. Where, `vec a = << a_x, a_y >>` and `vec b = << b_x, b_y >>`. Then, the resultant vector (or vector sum) `vec c = vec a + vec b = << a_x+b_x, a_y+b_y >>`</p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th></th>
+                        <th class="text-center">x</th>
+                        <th class="text-center">y</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>`vec a`</th>
+                            <td>
+                                <input id="t_a_x" class="form-control form-control-sm" type="text" >
+                            </td>
+                            <td>
+                                <input id="t_a_y" class="form-control form-control-sm" type="text" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>`vec b`</th>
+                            <td>
+                                <input id="t_b_x" class="form-control form-control-sm" type="text" >
+                            </td>
+                            <td>
+                                <input id="t_b_y" class="form-control form-control-sm" type="text" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="text-nowrap">`vec a` + `vec b`</th>
+                            <td id="t_a_plus_b_x" class="text-center"></td>
+                            <td id="t_a_plus_b_y" class="text-center"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            include see_also.pug
+
+        </div>
+    </div>

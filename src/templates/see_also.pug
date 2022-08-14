@@ -1,0 +1,14 @@
+div(class='card')
+    div(class='card-header') See also
+    div(class='card-body')
+        div(class='list-group')
+
+            each page in pages
+                if pages[index]['theme'] != page['theme']
+                    - continue
+
+                - var classList = 'list-group-item list-group-item-action'
+                if pages[index]['slug'] == page['slug']
+                    - classList = classList+' active'
+
+                a(class=classList, href='/'+page['slug']+'.html') #{page['title']}

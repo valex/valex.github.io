@@ -1,151 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <meta charset=UTF-8>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description" content="Vector subtraction">
-    <meta name="keywords" content="vector, vectors, sub, subtraction, animation, interactive">
-
-    <title>Vector subtraction - Interactive Animation</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-
-    <script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-  
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
-
-    <script defer src="./resources/js/vector_subtraction.js" type="module"></script>
-
-    <script defer src="./resources/js/donate.js" type="module"></script>
-    
-    <link rel="stylesheet" href="./resources/css/vector_subtraction.css" >
-
-    <script>if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"nbdfgbmu",utcoffset:"3"}))};sessionStorage.setItem("_swa","1");</script>
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Vector subtraction">
+<meta name="keywords" content="vector, vectors, sub, subtraction, animation, interactive">
+<title>Vector subtraction - Interactive Animation</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+<script defer src="./resources/js/vector_subtraction.js" type="module"></script>
+<script defer src="./resources/js/donate.js" type="module"></script>
+<link rel="stylesheet" href="./resources/css/vector_subtraction.css" >
+<script>if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"nbdfgbmu",utcoffset:"3"}))};sessionStorage.setItem("_swa","1");</script>
 </head>
-
-
 <body>
-  <div class="container-fluid">
-    <section class="text-center">
-      <h1 class="h4 d-flex justify-content-center align-items-center">
-        Vector subtraction
-      </h1>
-    </section>
-
-    <div class="row">
-      <div class="col-sm-8">
-
-        <div id="svg_chart"></div>
-
-        <div class="alert alert-secondary rounded-0 py-2" role="alert">
-          <p style="font-size: 0.8rem;" class="mb-2">Move vectors by dragging circles at the end of each one and have fun ;)</p>
-
-          <p style="font-size: 0.8rem;" class="mb-0">Gray, dashed vector represents vector `vec b` moved to the end of vector `vec a` and in the opposite direction. It is a graphical way for vector subtraction.</p>
-
-        </div>
-
-        <div class="alert alert-warning" role="alert">
-          <p>The result of vector subtraction is another vector, where each component is the result of subtracting each corresponding vector component</p>
-
-          <p>Consider two vectors `vec a` and `vec b`. Where, `vec a = << a_x, a_y >>` and `vec b = << b_x, b_y >>`. Then, the resultant vector `vec c = vec a - vec b = << a_x-b_x, a_y-b_y >>`</p>
-        </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th></th>
-                <th class="text-center">x</th>
-                <th class="text-center">y</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>`vec a`</th>
-                <td>
-                  <input id="t_a_x" class="form-control form-control-sm" type="text" >
-                </td>
-                <td>
-                  <input id="t_a_y" class="form-control form-control-sm" type="text" >
-                </td>
-              </tr>
-              <tr>
-                <th>`vec b`</th>
-                <td>
-                  <input id="t_b_x" class="form-control form-control-sm" type="text" >
-                </td>
-                <td>
-                  <input id="t_b_y" class="form-control form-control-sm" type="text" >
-                </td>
-              </tr>
-              <tr>
-                <th class="text-nowrap">`vec a` - `vec b`</th>
-                <td id="t_result_x" class="text-center"></td>
-                <td id="t_result_y" class="text-center"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-                <!-- See also -->
-                <div class="card">
-                  <div class="card-header">
-                    See also
-                  </div>
-                  <div class="card-body">
-                      <div class="list-group">
-                          <a href="/vector_addition.html" class="list-group-item list-group-item-action">
-                              Vector addition
-                          </a>
-                          <a href="/vector_subtraction.html" class="list-group-item list-group-item-action active">Vector subtraction</a>
-                          <a href="/vector_length.html" class="list-group-item list-group-item-action">
-                            Vector length
-                          </a>
-                          <a href="/unit_vector.html" class="list-group-item list-group-item-action">
-                            Unit vector
-                          </a>
-                        </div>
-                  </div>
-              </div>
-              <!-- end See also -->
-      </div>
-    </div>
-  </div> <!--end .container-fluid -->
-
-  <section class="">
-    <footer class=" text-white" style="background-color: #0a4275;">
-      <div class="container p-4 pb-0">
-        <section class="text-center">
-          <p class="d-flex justify-content-center align-items-center">
-            If you like all of this, please buy me a beer
-          </p>
-        </section>
-      </div>
-
-      <div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        <div class="table-responsive">
-          <table class="w-100">
-            <tr>
-              <td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
-              <td ><span class="ms-3" id="btc_donate"></span></td>
-            </tr>
-            <tr>
-              <td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
-              <td ><span class="ms-3" id="xmr_donate"></span></td>
-            </tr>
-            <tr>
-              <td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
-              <td ><span class="ms-3" id="ltc_donate"></span></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-
-    </footer>
-  </section>
-</body>
+<div class="container-fluid">
+<section class="text-center">
+<h1 class="h4 d-flex justify-content-center align-items-center">Vector subtraction</h1>
+</section><div class="row">
+<div class="col-sm-8">
+<div id="svg_chart"></div>
+<div class="alert alert-secondary rounded-0 py-2" role="alert">
+<p style="font-size: 0.8rem;" class="mb-2">Move vectors by dragging circles at the end of each one and have fun ;)</p>
+<p style="font-size: 0.8rem;" class="mb-0">Gray, dashed vector represents vector `vec b` moved to the end of vector `vec a` and in the opposite direction. It is a graphical way for vector subtraction.</p>
+</div>
+<div class="alert alert-warning" role="alert">
+<p>The result of vector subtraction is another vector, where each component is the result of subtracting each corresponding vector component</p>
+<p>Consider two vectors `vec a` and `vec b`. Where, `vec a = << a_x, a_y >>` and `vec b = << b_x, b_y >>`. Then, the resultant vector `vec c = vec a - vec b = << a_x-b_x, a_y-b_y >>`</p>
+</div>
+</div>
+<div class="col-sm-4">
+<div class="table-responsive">
+<table class="table">
+<thead>
+<tr>
+<th></th>
+<th class="text-center">x</th>
+<th class="text-center">y</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>`vec a`</th>
+<td>
+<input id="t_a_x" class="form-control form-control-sm" type="text" >
+</td>
+<td>
+<input id="t_a_y" class="form-control form-control-sm" type="text" >
+</td>
+</tr>
+<tr>
+<th>`vec b`</th>
+<td>
+<input id="t_b_x" class="form-control form-control-sm" type="text" >
+</td>
+<td>
+<input id="t_b_y" class="form-control form-control-sm" type="text" >
+</td>
+</tr>
+<tr>
+<th class="text-nowrap">`vec a` - `vec b`</th>
+<td id="t_result_x" class="text-center"></td>
+<td id="t_result_y" class="text-center"></td>
+</tr>
+</tbody>
+</table>
+</div><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/vector_addition.html">Vector addition</a><a class="list-group-item list-group-item-action active" href="/vector_subtraction.html">Vector subtraction</a><a class="list-group-item list-group-item-action" href="/vector_length.html">Vector length or magnitude</a><a class="list-group-item list-group-item-action" href="/unit_vector.html">Unit vector</a></div></div></div></div>
+</div></div> <!--end .container-fluid --><section class="">
+<footer class=" text-white" style="background-color: #0a4275;">
+<div class="container p-4 pb-0">
+<section class="text-center">
+<p class="d-flex justify-content-center align-items-center"><If>you like all of this, please buy me a coffee</If></p>
+</section>
+</div>
+<div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+<div class="table-responsive">
+<table class="w-100">
+<tr>
+<td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
+<td ><span class="ms-3" id="btc_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
+<td ><span class="ms-3" id="xmr_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
+<td ><span class="ms-3" id="ltc_donate"></span></td>
+</tr>
+</table>
+</div>
+</div>
+</footer>
+</section></body>
 </html>
