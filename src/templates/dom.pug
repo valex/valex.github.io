@@ -1,0 +1,804 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+            <p>The <strong>Document Object Model</strong> (<b>DOM</b>) represents XML or HTML documents as a tree of nodes. Using DOM methods and properties, you can access any element on the page, modify or delete elements, and add new ones. DOM is a language-independent Application Programming Interface (API) that can be implemented not only in JavaScript, but also in any other programming language. For example, you can generate pages on the server side using the PHP implementation of DOM (<a href="https://www.php.net/dom" target="_blank">php.net/dom</a>).</p>
+
+            <p>Any HTML document can be represented as a DOM tree, where each node has its parent and children. Each node in this tree is an object, with its own properties and methods. Empty lines and comments are also considered objects (nodes) in the DOM model.</p>
+
+            <p>For all examples, we will use a simple HTML document, the code of which is shown below. And for viewing and working with the console, a separate page has been created - <a href="/dom_example.html" target="_blank" rel="nofollow">dom_example.html</a></p>
+            
+            -
+                const markup =
+                `<!DOCTYPE html>
+                <html>
+                    <head>
+                        <title>My page</title>
+                    </head>
+                    <body>
+                        <p class="opener">first paragraph</p>
+                        <p><em>second</em> paragraph</p>
+                        <p id="closer">final</p>
+                        <!-- and that's about it -->
+                    </body>
+                </html>`
+
+            pre(class="bg-light")
+                code #{markup}
+
+            <div class="d-flex justify-content-between my-3">
+                <div class="toc">
+                    <div class="toctitle">
+                        <h4>Fast links</h4>
+                    </div> 
+                    
+                    <ul>
+                        <li>
+                            <a href="#accessing_dom"><span class="tocnumber">•</span> <span class="toctext">Accessing DOM Nodes</span></a> 
+                            <ul>
+                                <li><a href="#document_node"><span class="tocnumber">•</span> <span class="toctext">The document Node</span></a></li>
+                                <li><a href="#document_element"><span class="tocnumber">•</span> <span class="toctext">documentElement</span></a></li>
+                                <li><a href="#child_nodes"><span class="tocnumber">•</span> <span class="toctext">Child nodes</span></a></li>
+                                <li><a href="#attributes"><span class="tocnumber">•</span> <span class="toctext">Attributes</span></a></li>
+                                <li><a href="#content_access"><span class="tocnumber">•</span> <span class="toctext">Accessing the Content of an Element</span></a></li>
+                                <li><a href="#dom_access_methods"><span class="tocnumber">•</span> <span class="toctext">Methods for efficient DOM access</span></a></li>
+                                <li><a href="#sibling_properties"><span class="tocnumber">•</span> <span class="toctext">Elements that share the same parent</span></a></li>
+                                <li><a href="#document_body"><span class="tocnumber">•</span> <span class="toctext">document.body</span></a></li>
+                                <li><a href="#first_last_child"><span class="tocnumber">•</span> <span class="toctext">firstChild and lastChild</span></a></li>
+                                <li><a href="#traversing_dom"><span class="tocnumber">•</span> <span class="toctext">Traversing DOM</span></a></li>
+                            </ul>
+                        </li> 
+                        <li>
+                            <a href="#modifying_dom"><span class="tocnumber">•</span> <span class="toctext">Modifying DOM Nodes</span></a>
+                            <ul>
+                                <li><a href="#changing_styles"><span class="tocnumber">•</span> <span class="toctext">Changing Styles</span></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#creating_nodes"><span class="tocnumber">•</span> <span class="toctext">Creating new element nodes</span></a>
+                            <ul>
+                                <li><a href="#insert_before"><span class="tocnumber">•</span> <span class="toctext">insertBefore()</span></a></li>
+                                <li><a href="#creating_nodes_pure_dom"><span class="tocnumber">•</span> <span class="toctext">Creating element nodes using pure DOM</span></a></li>
+                                <li><a href="#clone_node"><span class="tocnumber">•</span> <span class="toctext">cloneNode()</span></a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#remove_nodes"><span class="tocnumber">•</span> <span class="toctext">Remove Nodes</span></a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+
+            h2(id='accessing_dom') Accessing DOM Nodes
+            <p></p>
+
+            h3(id='document_node') The document Node
+            <p>The <code>document</code> node represents the entire HTML or XML document and is the root of the DOM tree. It is also the starting point for accessing any element or node in the document.</p>
+
+            <p>You can access the <code>document</code> node using the <code>document</code> object, which is a global variable in web browsers.</p>
+
+            <p>To investigate this node, execute the command <code>console.dir(document)</code>. The <code>console.dir</code> command will display all properties and methods of this node.</p>
+
+            <p>All nodes (including <code>document</code> node, text nodes, element nodes, and attribute nodes) have <code>nodeType</code>, <code>nodeName</code>, and <code>nodeValue</code> properties.</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.nodeType;
+                    9
+
+            <p>There are <a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/nodeType" target="_blank">12 types of nodes</a> represented by integer numbers. As you can see, the <code>document</code> node is represented by the number 9. The most commonly encountered types are 1 (element), 2 (attribute), and 3 (text).</p>
+
+            <p>All nodes also have names. For HTML tags, the node name is the tag name (<code>tagName</code> property). Text nodes have the name <code>#text</code>, and the <code>document</code> node is named as:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.nodeName;
+                    "#document"
+
+            <p>Nodes can also have a value associated with them. For example, for text nodes, the value is the text content itself. The <code>document</code> node doesn't have any value:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.nodeValue;
+                    null
+
+            br
+            br
+
+            h3(id='document_element') documentElement
+
+            <p>The <code>documentElement</code> property is a property of the <code>document</code> object, which represents the root element of the <code>document</code>. This means that <code>documentElement</code> refers to the <code>&lt;html&gt;</code> element in an HTML document.</p>
+
+            <p>The root element is the parent element for all other elements in the document and can contain other elements inside itself.</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.documentElement;
+                    &lt;html&gt;…&lt;/html&gt;
+
+            <p><code>nodeType</code> equals 1, which corresponds to an element node:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.documentElement.nodeType;
+                    1
+
+            <p>For element nodes, the <code>nodeName</code> and <code>tagName</code> properties contain the name of the tag itself:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.documentElement.nodeName
+                    "HTML"
+
+            pre(class="bg-light")
+                code.
+                    > document.documentElement.tagName;
+                    "HTML"
+
+            br
+            br
+
+            h3(id='child_nodes') Child nodes
+            
+            <p>To check if a node has child nodes, you can call the <b>hasChildNodes()</b> method:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.documentElement.hasChildNodes();
+                    true
+
+            <p>The HTML element has three child elements: head, body, and a whitespace|empty element between them (whitespace elements are accounted for by most, but not all, browsers). You can access the child elements using the <code>childNodes</code> property:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.documentElement.childNodes.length;
+                    3
+
+                    > document.documentElement.childNodes[0];
+                    &lt;head&gt;…&lt;/head&gt;
+
+                    > document.documentElement.childNodes[1];
+                    #text
+
+                    > document.documentElement.childNodes[2];
+                    &lt;body&gt;…&lt;/body&gt;
+
+
+            <p>Each child node has a <code>parentNode</code> property that can be used to access its parent node:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.documentElement.childNodes[1].parentNode;
+                    &lt;html&gt;…&lt;/html&gt;
+
+            <p>Let's save a reference to the <code>body</code> node:</p>
+
+            pre(class="bg-light")
+                code.
+                    > const bd = document.documentElement.childNodes[2];
+
+
+            <p>Let's see how many child nodes the <code>body</code> has:</p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes.length;
+                    9
+
+
+            <p>Let's recall what's inside the <code>body</code> tag:</p>
+
+            -
+                const markup2 =
+                `<body>
+                    <p class="opener">first paragraph</p>
+                    <p><em>second</em> paragraph</p>
+                    <p id="closer">final</p>
+                    <!-- and that's about it -->
+                </body>`
+
+            pre(class="bg-light")
+                code #{markup2}
+
+            <p>But why the body node contains 9 child nodes? Well, 3 <code>p</code> nodes and 1 <i>comment node</i> make up a total of 4 child nodes. The <i>whitespace nodes</i> between these 4 element nodes give us an additional 3 text nodes. That totals to 7 child nodes. The whitespace node between the <code>&lt;body&gt;</code> tag and the first <code>&lt;p&gt;</code> tag will be the eighth child node. The whitespace node between the comment and the closing <code>&lt;/body&gt;</code> tag will be the <b>ninth</b> child node. To check these claims, you can run the command <code>bg.childNodes</code> in the console.</p>
+
+            br
+            br
+
+            h3(id='attributes') Attributes
+
+            <p>Since the first child node of the <code>body</code> node is a <i>whitespace node</i>, then the second node (index 1) is the first paragraph in our HTML document:</p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes[1];
+                    &lt;p class="opener"&gt;first paragraph&lt;/p&gt;
+
+            <p>To check if an element has attributes, the method <code>hasAttributes()</code> is used:</p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes[1].hasAttributes();
+                    true
+
+            <p>How many attributes? In our example, there is 1 attribute - <code>class</code></p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes[1].attributes.length;
+                    1
+
+            <p>You can access attributes both <i>by index</i> and <i>by name</i>. You can also get the value of an attribute using the <code>getAttribute()</code> method:</p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes[1].attributes[0].nodeName;
+                    "class"
+
+                    > bd.childNodes[1].attributes[0].nodeValue;
+                    "opener"
+
+                    > bd.childNodes[1].attributes['class'].nodeValue;
+                    "opener"
+
+                    > bd.childNodes[1].getAttribute('class');
+                    "opener"
+
+            br
+            br
+
+            h3(id='content_access') Accessing the Content of an Element
+
+            <p>Let's take a look at the first paragraph of our document:</p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes[1].nodeName;
+                    "P"
+
+            <p>You can retrieve the text content inside a paragraph by using the <code>textContent</code> property. The <code>textContent</code> property does not exist in older versions of IE, but another property, <code>innerText</code>, returns the same value:</p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes[1].textContent;
+                    "first paragraph"
+
+                    > bd.childNodes[1].innerText;
+                    "first paragraph"
+
+
+            <p>There is also the <code>innerHTML</code> property, which returns (or sets) the HTML code contained within the node. It can be noticed that such behavior somewhat contradicts the DOM model, which represents the document as a tree of nodes rather than a string of tags. However, the <code>innerHTML</code> property has proven to be so convenient that it is widely used.</p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes[1].innerHTML;
+                    "first paragraph"
+
+
+            <p>The first paragraph contains only text, so both <code>innerHTML</code> and <code>textContent</code> (<code>innerText</code> in IE) will return the same value. However, the second paragraph contains an <code>em</code> node, so we can observe the differences in the properties:</p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes[3].innerHTML;
+                    "&lt;em&gt;second&lt;/em&gt; paragraph"
+
+                    > bd.childNodes[3].textContent;
+                    "second paragraph"
+
+            <p>Another way to retrieve the text within the first paragraph is to use the <code>nodeValue</code> property of the text node contained within the <code>p</code> element:</p>
+
+            pre(class="bg-light")
+                code.
+                    > bd.childNodes[1].childNodes.length;
+                    1
+
+                    > bd.childNodes[1].childNodes[0].nodeName;
+                    "#text"
+
+                    > bd.childNodes[1].childNodes[0].nodeValue;
+                    "first paragraph"
+
+
+            h3(id='dom_access_methods') Methods for efficient DOM access
+
+            <p>By using the properties <code>childNodes</code>, <code>parentNode</code>, <code>nodeName</code>, <code>nodeValue</code> and <i>attributes</i>, you can traverse the DOM tree and perform various operations on document nodes. However, the fact that whitespace and empty characters are also considered text nodes makes this traversal method unreliable. If the page structure changes, your script may no longer work correctly. Additionally, if you want to access nested elements of a particular node, you would need to write additional code before you can do so. That's where the fast access methods come into play, namely <code>getElementsByTagName()</code>, <code>getElementsByName()</code>, and <code>getElementById()</code>.</p>
+
+            <p><code>getElementsByTagName()</code> takes a tag name (element node name) as an argument and returns a collection (array-like object) of nodes that match the tag name. For example, the following script will count the number of paragraphs (the <code>&lt;p&gt;</code> tag) in the document:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.getElementsByTagName('p').length;
+                    3
+
+            <p>Access to each element of the collection can be obtained using <i>square brackets</i> or the <code>item()</code> method by specifying the index of the desired element (0 for the first element). For example:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.getElementsByTagName('p')[0];
+                    &lt;p class="opener"&gt;first paragraph&lt;/p&gt;
+
+                    > document.getElementsByTagName('p').item(0);
+                    &lt;p class="opener"&gt;first paragraph&lt;/p&gt;
+
+            br
+
+            <p>To retrieve the content of the first <code>&lt;p&gt;</code> tag, you can use the <code>innerHTML</code> property:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.getElementsByTagName('p')[0].innerHTML;
+                    "first paragraph"
+
+            br
+
+            <p>To access the last <code>&lt;p&gt;</code> tag:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.getElementsByTagName('p').item( document.getElementsByTagName('p').length - 1 );
+                    &lt;p id="closer"&gt;final&lt;/p&gt;
+
+            <p>To access the attributes of an element, you can use the <code>attributes</code> array or the <code>getAttribute()</code> method as shown before. However, a shorter way is to use the <i>attribute name as a property</i> of the element you're working with. This way, to get the value of the <code>id</code> attribute, you can write it like this:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.getElementsByTagName('p')[2].id;
+                    "closer"
+
+            <p>However, this approach will not work when accessing the value of the <code>class</code> attribute. This is an exception because the keyword "<code>class</code>" is reserved in ECMAScript. To overcome this issue, you need to use the <code>className</code> property instead:</p>
+            
+            pre(class="bg-light")
+                code.
+                    > document.getElementsByTagName('p')[0].className;
+                    "opener"
+
+            <p>Using the <code>getElementsByTagName()</code> method, you can retrieve an array-like collection of all elements on the page:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.getElementsByTagName('*').length;
+                    8
+
+            br
+            br
+
+
+            <p><b><code>getElementById()</code></b> is the most common method for accessing elements. You simply assign an <i>ID attribute</i> to the elements you intend to work with later, and then access them using the following approach:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.getElementById('closer');
+                    &lt;p id="closer"&gt;final&lt;/p&gt;
+
+            br
+            br
+
+            <p>Additional methods for fast access, introduced in modern browsers:</p>
+
+            ul
+                li <code>getElementsByClassName()</code>: searching for elements by the value of the <code>class</code> attribute.
+                li <code>querySelector()</code>: searching for an element based on a specified CSS selector
+                li <code>querySelectorAll()</code>: this method is similar to the previous one, except that it returns all matching elements, not just the first one.
+
+
+            br
+            br
+
+            h3(id='sibling_properties') Elements that share the same parent
+
+
+            <p><code>nextSibling</code> and <code>previousSibling</code> are two convenient properties for navigating the DOM tree when you already have a reference to a specific element.</p>
+
+            ul
+                li <code>nextSibling</code> refers to the next sibling node, which is the next element or node at the same level in the DOM hierarchy.
+                li <code>previousSibling</code> refers to the previous sibling node, which is the previous element or node at the same level in the DOM hierarchy.
+
+            <p>These properties allow you to traverse the DOM tree horizontally, moving to the next or previous sibling element or node from the current reference point.</p>
+
+            pre(class="bg-light")
+                code.
+                    > var para = document.getElementById('closer');
+                    > para.nextSibling;
+                    #text
+
+                    > para.previousSibling;
+                    #text
+
+                    > para.previousSibling.previousSibling;
+                    &lt;p&gt;…&lt;/p&gt;
+
+                    > para.previousSibling.previousSibling.previousSibling;
+                    #text       
+
+                    > para.previousSibling.previousSibling.nextSibling.nextSibling;
+                    &lt;p id="closer"&gt;final&lt;/p&gt;
+
+
+            br
+            br
+
+            h3(id='document_body') document.body
+
+            <p><code>document.body</code> is a property that represents the <code>&lt;body&gt;</code> element of an HTML document. It provides access to the content within the <code>&lt;body&gt;</code> tag, which is the main area of the webpage visible to the user.</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body;
+                    &lt;body&gt;…&lt;/body&gt;
+
+                    > document.body.nextSibling;
+                    null
+
+                    > document.body.previousSibling.previousSibling;
+                    &lt;head&gt;…&lt;/head&gt;
+
+            br
+            br
+
+            h3(id='first_last_child') firstChild and lastChild
+
+            <p><code>firstChild</code> and <code>lastChild</code> are properties of a DOM node that provide access to its first and last child nodes, respectively. <code>firstChild</code> is equivalent to <code>childNodes[0]</code>, and <code>lastChild</code> is equivalent to <code>childNodes[childNodes.length - 1]</code>:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body.firstChild;
+                    #text
+
+                    > document.body.lastChild;
+                    #text
+
+                    > document.body.lastChild.previousSibling;
+                    &lt;!-- and that's about it --&gt;
+
+                    > document.body.lastChild.previousSibling.nodeValue;
+                    " and that's about it "
+
+
+            br
+            br
+
+            h3(id='traversing_dom') Traversing DOM
+
+            <p>Finally, here is a function that takes any DOM node and traverses the entire DOM tree starting from the given node:</p>
+
+            pre(class="bg-light")
+                code.
+                    function walkDOM(n) {
+                        do {
+
+                            console.log(n);
+
+                            if (n.hasChildNodes()) {
+                                walkDOM(n.firstChild);
+                            }
+
+                        } while (n = n.nextSibling);
+                    }
+
+            <p>Usage example:</p>
+
+            pre(class="bg-light")
+                code.
+                    > walkDOM(document.documentElement);
+                    > walkDOM(document.body);
+
+            br
+            br
+
+            h2(id='modifying_dom') Modifying DOM Nodes
+
+            <p>Let's save a reference to the last <code>&lt;p&gt;</code> tag in a variable (remember that we are using a <a href="/dom_example.html" target="_blank" rel="nofollow">separate test page</a> for all the examples):</p>
+
+            pre(class="bg-light")
+                code.
+                    > var my = document.getElementById('closer');
+
+            <p>By changing the value of the <code>innerHTML</code> property, we modify the content of the <code>&lt;p&gt;</code> tag</p>
+
+            pre(class="bg-light")
+                code.
+                    > my.innerHTML = 'final!!!';
+                    "final!!!"
+
+            <p>Since <code>innerHTML</code> accepts an <i>HTML-formatted string</i>, you can create a new DOM element node as follows:</p>
+
+            pre(class="bg-light")
+                code.
+                    > my.innerHTML = '&lt;em&gt;my&lt;/em&gt; final';
+                    "&lt;em&gt;my&lt;/em&gt; final"
+
+            <p>The new <code>em</code>-node becomes part of the DOM tree:</p>
+
+            pre(class="bg-light")
+                code.
+                    > my.firstChild;
+                    &lt;em&gt;my&lt;/em&gt;
+
+                    > my.firstChild.firstChild;
+                    #text "my"
+
+            <p>Another way to change the text inside a tag is to directly access the text node and modify its <code>nodeValue</code> property:</p>
+
+            pre(class="bg-light")
+                code.
+                    > my.firstChild.firstChild.nodeValue = 'your';
+                    "your"
+
+            br
+            br
+
+            h3(id='changing_styles') Changing Styles
+
+            <p>More often, we need to change the presentation of elements rather than their content. All elements have a <code>style</code> property, which in turn contains properties that correspond to CSS properties. Here's an example of how you can change the style of a paragraph by adding a red border to it:</p>
+
+            pre(class="bg-light")
+                code.
+                    > my.style.border = "1px solid red";
+                    "1px solid red"
+
+            <p>CSS properties are often written with hyphens, which are not supported in JavaScript. In such cases, you should omit the hyphen and convert the following letter to uppercase. Thus, the CSS property <code>padding-top</code> becomes <code>paddingTop</code>, <code>margin-left</code> becomes <code>marginLeft</code>, and so on:</p>
+
+            pre(class="bg-light")
+                code.
+                    > my.style.fontWeight = 'bold';
+                    "bold"
+
+            <p>Additionally, there is access to the <code>cssText</code> property, which allows you to work with styles as a string:</p>
+
+            pre(class="bg-light")
+                code.
+                    > my.style.cssText;
+                    "border: 1px solid red; font-weight: bold;"
+
+            <p>To modify the style, you need to modify the string:</p>
+
+            pre(class="bg-light")
+                code.
+                    > my.style.cssText += " border-style: dashed;"
+                    "border: 1px dashed red; font-weight: bold; border-style: dashed;"
+
+            br
+            br
+
+            h2(id="creating_nodes") Creating new element nodes
+
+            <p>To create new nodes in the Document Object Model, you should use the methods <code>createElement()</code> and <code>createTextNode()</code>. Once you have created a new node, you can add it to the DOM tree using methods like <code>appendChild()</code> (or <code>insertBefore()</code>, or <code>replaceChild()</code>).</p>
+
+            <p>Creating a new <code>p</code>-element node and setting its text content:</p>
+
+            pre(class="bg-light")
+                code.
+                    > var myp = document.createElement('p');
+                    > myp.innerHTML = 'yet another';
+                    "yet another"
+
+            <p>The new element automatically inherits all default properties, including the <code>style</code> property, which you can modify:</p>
+
+            pre(class="bg-light")
+                code.
+                    > myp.style;
+                    CSSStyleDeclaration
+
+                    > myp.style.border = '2px dotted blue';
+                    "2px dotted blue"
+
+            <p>By using the <code>appendChild()</code> method, you can add the new node to the DOM tree. Calling this method on the <code>document.body</code> node means creating one or more child nodes immediately after the last child node element. In our case, the new <code>p</code>-element will be added to the end of the page.</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body.appendChild(myp);
+                    &lt;p style="border: 2px dotted blue;"&gt;yet another&lt;/p&gt;
+
+            br
+            br
+
+            h3(id='insert_before') insertBefore()
+
+            <p>Using the <code>appendChild()</code> method, you can only add a new child element to the end of the selected element. To specify the exact position for the new element, you can use the <code>insertBefore()</code> method. Its functionality is similar to <code>appendChild()</code>, but it takes an additional parameter that indicates where (before which element) the new element should be placed.</p>
+
+            <p>For example, the following code will insert a text node at the end of the <code>BODY</code>:</p>
+            
+            pre(class="bg-light")
+                code.
+                    > document.body.appendChild(document.createTextNode('boo!'));
+
+            <p>The following code creates another <i>text node</i> and inserts it as the <i>first child</i> element of the <code>BODY</code> node:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body.insertBefore(
+                        document.createTextNode('first boo!'),
+                        document.body.firstChild
+                    );
+
+            br
+            br
+
+            h3(id="creating_nodes_pure_dom") Creating element nodes using pure DOM
+
+            <p>Using <code>innerHTML</code> makes it easier to create new nodes compared to using pure DOM methods. When creating element nodes exclusively with DOM methods, you need to follow several steps:</p>
+
+            ol 
+                li Create a text node containing the text "yet another".
+                li Create a paragraph node.
+                li Add the text node as a child node to the paragraph node.
+                li Add the paragraph node as a child node to the body node.
+
+
+            <p>With this method, you can create any number of nodes and organize their nesting as desired. For example, let's say you need to add the following HTML code to the end of the <code>body</code> tag:</p>
+
+            pre(class="bg-light")
+                code.
+                    &lt;p&gt;one more paragraph&lt;strong&gt;bold&lt;/strong&gt;&lt;/p&gt;
+
+            <p>The hierarchy of nodes will look as follows:</p>
+
+            pre(class="bg-light")
+                code.
+                    P (paragraph) element node
+                        Text node with the value "one more paragraph"
+                        STRONG element node
+                            Text node with the value "bold"
+
+
+            <p>Thus, the code to create and insert these new elements into the document looks as follows:</p>
+
+            pre(class="bg-light")
+                code.
+                    // Create a P element node
+                    var myp = document.createElement('p');
+
+                    // Create a text node and append it to the P element node
+                    var myt = document.createTextNode('one more paragraph ');
+                    myp.appendChild(myt);
+
+                    // Create a STRONG element node and append a text node to it
+                    var str = document.createElement('strong');
+                    str.appendChild(document.createTextNode('bold'));
+
+                    // Append the STRONG element node to the P element node
+                    myp.appendChild(str);
+
+                    // Append the P element node to the BODY
+                    document.body.appendChild(myp);
+
+            br
+            br
+
+            h3(id='clone_node') cloneNode()
+
+            <p>Another way to create new nodes is by copying (or cloning) an existing node. The <code>cloneNode()</code> method is used for this purpose and accepts a boolean parameter (<code>true</code> for deep cloning, including all child elements, <code>false</code> for shallow cloning of only the current element). Let's use this method.</p>
+
+            <p>Let's save a reference to the element we want to copy in a variable:</p>
+
+            pre(class="bg-light")
+                code.
+                    > var el = document.getElementsByTagName('p')[1];
+
+            <p>Now the variable <code>el</code> refers to the second paragraph, which looks like this:</p>
+
+            pre(class="bg-light")
+                code.
+                    &lt;p&gt;&lt;em&gt;second&lt;/em&gt; paragraph&lt;/p&gt;
+
+            <p>Let's perform a <i>shallow copy</i> of this element and insert it into the <code>body</code>:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body.appendChild(el.cloneNode(false));
+
+            <p>You won't see any changes on the page because <i>with shallow copying</i>, only a copy of the <code>&lt;p&gt;</code> element is created without its nested elements. This means that the text inside the paragraph (which is a child text node) will not be copied.</p>
+
+            <p>The executed code is equivalent to the following:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body.appendChild(document.createElement('p'));
+
+            <p>If deep copying is performed, the entire DOM tree starting from the <code>P</code>-element will be copied, including the text nodes and the <code>EM</code>-element. The following code will fully copy the second paragraph to the end of the document:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body.appendChild(el.cloneNode(true));
+
+            <p>If you prefer, you can copy only the <code>EM</code> node:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body.appendChild(el.firstChild.cloneNode(true));
+                    &lt;em&gt;second&lt;/em&gt;
+
+            <p>... or only the text node with the value 'second':</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body.appendChild(el.firstChild.firstChild.cloneNode(false));
+                    "second"
+
+            br
+            br
+
+            h2(id='remove_nodes') Remove Nodes
+
+            <p>To remove nodes from the DOM tree, the <code>removeChild()</code> method is used.</p>
+
+            <p>Here's how you can remove the second paragraph (remember that we are using a <a href="/dom_example.html" target="_blank" rel="nofollow">separate test page</a> for all the examples):</p>
+
+            pre(class="bg-light")
+                code.
+                    > var myp = document.getElementsByTagName('p')[1];
+                    > var removed = document.body.removeChild(myp);
+
+            <p>The <code>removeChild()</code> method returns the removed element, in case you need to use it further. You can still use all DOM methods on the removed element, even though it no longer exists in the DOM tree.</p>
+            
+            <p>For example:</p>
+
+            pre(class="bg-light")
+                code.
+                    > removed;
+                    &lt;p&gt;…&lt;/p&gt;
+
+                    > removed.firstChild;
+                    &lt;em&gt;second&lt;/em&gt;
+
+            <p>There is also a method called <code>replaceChild()</code> that removes a node and inserts a new one in its place.</p>
+            
+            <p>Here's how you can replace the second paragraph with the one stored in the <code>removed</code> variable:</p>
+            
+            pre(class="bg-light")
+                code.
+                    > var p = document.getElementsByTagName('p')[1];
+                    > var replaced = document.body.replaceChild(removed, p);
+
+            <p>Just like <code>removeChild()</code>, <code>replaceChild()</code> also returns a reference to the node that was removed from the DOM tree.</p>
+            
+            pre(class="bg-light")
+                code.
+                    > replaced;
+                    &lt;p id="closer"&gt;final&lt;/p&gt;
+            
+            <p>The quick way to remove all content inside an element is to assign an empty string to the <code>innerHTML</code> property. The following code will remove all the children of the <code>BODY</code> tag:</p>
+            
+            pre(class="bg-light")
+                code.
+                    > document.body.innerHTML = '';
+                    ""
+
+            <p>To check if the <code>BODY</code> tag no longer has any children, you can use the following code:</p>
+
+            pre(class="bg-light")
+                code.
+                    > document.body.firstChild;
+                    null
+
+            <p>To remove nodes using only DOM methods, you would need to traverse all the descendants of a given node and remove each one individually. Here's a small function that removes all nodes starting from the provided node:</p>
+            
+            pre(class="bg-light")
+                code.
+                    function removeAll(n) {
+                        while (n.firstChild) {
+                            n.removeChild(n.firstChild);
+                        }
+                    }
+            
+            <p>You can call this function with the desired node as an argument to remove all its descendants. For example, to remove all nodes within the <code>BODY</code> tag, you can use </p>
+            
+            pre(class="bg-light")
+                code.
+                    > removeAll(document.body);
+
+            br
+            br
+
+        </div>
+
+        <div class="col-sm-4">
+
+            include see_also.pug
+            
+        </div>
+    </div>

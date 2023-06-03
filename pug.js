@@ -44,6 +44,16 @@ const pages = [
     
         "title": "Unit vector"
     },
+    {
+        "slug": "dom",
+        "theme": "javascript",
+    
+        "meta_description": "Discover the power of the Document Object Model (DOM) and how it enables dynamic, interactive web experiences. Learn about the fundamental concepts of DOM, including elements, nodes, and attributes, and explore how JavaScript can be used to manipulate them. With practical examples and step-by-step instructions, this comprehensive guide will help you master DOM and take your web development skills to the next level.",
+        "meta_keywords": "DOM manipulation, JavaScript DOM, HTML elements, web development, front-end development, nodes, attributes",
+        "meta_title": "DOM - Document Object Model. DOM Manipulation Methods in JavaScript",
+    
+        "title": "DOM - Document Object Model"
+    },
 ];
 
 for(let i=0; i<pages.length; i++){
