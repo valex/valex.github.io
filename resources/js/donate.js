@@ -1,7 +1,7 @@
 class Donate {
     constructor() {
 
-        this.btc = '1MTc6PTkNeTv7B1SJftuePRNe3oFWLBThm';
+        this.btc = 'bc1qnnejvwevfc34epy5ujcvk0sce3qexxvntczf5h';
         this.xmr = '41nk3XNcXzS1uQuz5Ny5KtFKXQbYRhA8bJ1TbKLHyChENYmN5NVQaF9c1EnRy4mdqjaLEw1bJRbdKUm7Mn3NwavfQGmcPfY';
         this.ltc = 'LWV5CAdA9kTZaBjyAQpjWdMRdDW9ArngFD';
 
