@@ -54,6 +54,16 @@ const pages = [
     
         "title": "DOM - Document Object Model"
     },
+    {
+        "slug": "freebitcoin_autoclick",
+        "theme": "freebitcoin",
+    
+        "meta_description": "Automate freebitco.in earnings with Autoroll Autoclick script. Boost Bitcoin profits effortlessly. Skip CAPTCHA hassle. Install with Tampermonkey. Start now!",
+        "meta_keywords": "freebitco.in, Autoroll Autoclick script, automate earnings, Bitcoin, cryptocurrency, Tampermonkey, skip CAPTCHA",
+        "meta_title": "Automate Bitcoin Earnings with freebitco.in Autoroll Autoclick Script | Boost Your Profits Effortlessly",
+    
+        "title": "freebitco.in Autoroll Autoclick Script"
+    },
 ];
 
 for(let i=0; i<pages.length; i++){
