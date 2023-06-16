@@ -1,0 +1,6 @@
+.image-container {
+    float: left;
+    margin-right: 30px;
+    shape-outside: rectangle();
+    shape-margin: 10px;
+}

@@ -64,6 +64,16 @@ const pages = [
     
         "title": "freebitco.in Autoroll Autoclick Script"
     },
+    {
+        "slug": "freebitcoin_multiply_btc_roll_counter",
+        "theme": "freebitcoin",
+    
+        "meta_description": "Track and analyze roll statistics in freebitco.in's Multiply BTC game with the freebitco.in Multiply BTC Roll Counter. Get valuable insights on the number of rolls since the last winning number and optimize your strategy.",
+        "meta_keywords": "freebitco.in, Multiply BTC, roll counter, roll statistics, strategy, gambling",
+        "meta_title": "Freebitco.in Multiply BTC Roll Counter | Track and Analyze Roll Statistics",
+    
+        "title": "freebitco.in Multiply BTC Roll Counter Script"
+    },
 ];
 
 for(let i=0; i<pages.length; i++){
