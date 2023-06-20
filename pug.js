@@ -55,6 +55,16 @@ const pages = [
         "title": "DOM - Document Object Model"
     },
     {
+        "slug": "script_tag",
+        "theme": "javascript",
+    
+        "meta_description": "Learn how to effectively include JavaScript in your web pages using the script-tag and understand the benefits of dynamically loading scripts. Explore techniques such as direct embedding and external file inclusion, along with the 'defer' and 'async' attributes. Discover the use of the link rel='subresource' tag to optimize resource loading, improve performance, and enhance the browsing experience.",
+        "meta_keywords": "JavaScript inclusion, script tag, direct embedding, external file inclusion, 'defer' attribute, 'async' attribute, dynamic script loading, resource optimization, performance enhancement, 'subresource' tag, web development, front-end programming.",
+        "meta_title": "Understanding JavaScript Inclusion in HTML: Embedding Scripts, External Files, and Key Considerations",
+    
+        "title": "Inserting JavaScript into an HTML page"
+    },
+    {
         "slug": "freebitcoin_autoclick",
         "theme": "freebitcoin",
     

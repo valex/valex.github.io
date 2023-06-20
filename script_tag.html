@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Learn how to effectively include JavaScript in your web pages using the script-tag and understand the benefits of dynamically loading scripts. Explore techniques such as direct embedding and external file inclusion, along with the 'defer' and 'async' attributes. Discover the use of the link rel='subresource' tag to optimize resource loading, improve performance, and enhance the browsing experience.">
+<meta name="keywords" content="JavaScript inclusion, script tag, direct embedding, external file inclusion, 'defer' attribute, 'async' attribute, dynamic script loading, resource optimization, performance enhancement, 'subresource' tag, web development, front-end programming.">
+<title>Understanding JavaScript Inclusion in HTML: Embedding Scripts, External Files, and Key Considerations</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+<script defer src="./resources/js/script_tag.js" type="module"></script>
+<script defer src="./resources/js/donate.js" type="module"></script>
+<link rel="stylesheet" href="./resources/css/basic.css" >
+<link rel="stylesheet" href="./resources/css/script_tag.css" >
+<script src="https://cdn.counter.dev/script.js" data-id="b0775af1-0d2d-4956-bf6a-2894dc0d0d57" data-utcoffset="3"></script>
+</head>
+<body>
+<div class="container-fluid">
+<section class="text-center">
+<h1 class="h4 d-flex justify-content-center align-items-center">Inserting JavaScript into an HTML page</h1>
+</section><div class="row">
+<div class="col-sm-8">
+<p>The primary way to include a script in a webpage is through the <code>&lt;script&gt;</code> tag. There are two methods: <b>direct embedding</b> and <b>external file inclusion</b>. For direct embedding, you place the JavaScript code directly within the HTML file using <code>&lt;script&gt;</code> tags. This approach is suitable for small code snippets or when immediate script execution is needed. Alternatively, you can include an external JavaScript file by referencing it using the <code>&lt;script&gt;</code> tag's <code>src</code> attribute. This method promotes code modularity, reusability, and easier maintenance. It improves the HTML file's structure and readability while allowing code reuse across multiple web pages.</p>
+<div class="d-flex justify-content-between my-3">
+<div class="toc">
+<div class="toctitle">
+<h4>Fast links</h4>
+</div> 
+<ul>
+<li><a href="#direct_embedding"><span class="tocnumber">•</span> <span class="toctext">Direct embedding</span></a> </li>
+<li>
+<a href="#external_file_inclusion"><span class="tocnumber">•</span> <span class="toctext">JavaScript from an external file</span></a> 
+<ul>
+<li><a href="#tag_placement"><span class="tocnumber">•</span> <span class="toctext">Tag Placement</span></a></li>
+<li><a href="#defer_attribute"><span class="tocnumber">•</span> <span class="toctext">'defer' attribute</span></a></li>
+<li><a href="#async_attribute"><span class="tocnumber">•</span> <span class="toctext">'async' attribute</span></a></li>
+<li><a href="#dynamic_script_loading"><span class="tocnumber">•</span> <span class="toctext">Dynamic Script Loading</span></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div><br><br><h2 id="direct_embedding">Direct embedding</h2><p>To include JavaScript code directly in your HTML file, you can place the code inside the <code>&lt;script&gt;</code> element like this:</p><pre class="bg-light"><code>&lt;script&gt;
+  function greet() {
+    console.log("Hello world");
+  }
+&lt;/script&gt;
+</code></pre><p>The JavaScript code written inside a <code>&lt;script&gt;</code> element is read and executed from the top to the bottom. In this example, a function is defined and stored in the JavaScript environment. The remaining content of the webpage is not loaded or displayed until all the code inside the <code>&lt;script&gt;</code> element has been evaluated. It ensures that the function is available and ready to be used before the webpage continues rendering or processing other elements.</p><br><br><h2 id="external_file_inclusion">JavaScript from an external file</h2><p>To include JavaScript code from an external file, you need to use the <code>src</code> attribute. The <code>src</code> attribute requires a URL that points to a file containing the JavaScript code. Here's an example:</p><pre class="bg-light"><code>&lt;script src="path/to/file.js"&gt;&lt;/script&gt;
+</code></pre><p>In this example, we are loading an external file called "<code>file.js</code>" into the webpage. The "<code>file.js</code>" file only needs to contain the JavaScript code that would typically be placed between the <code>&lt;script&gt;</code> and <code>&lt;/script&gt;</code> tags. Similar to <a href="#direct_embedding">inline JavaScript code</a>, the page processing pauses while the external file is being interpreted. Additionally, there is some time taken to download the external file from the server before it can be executed.</p><p>It's important to remember that when using the <code>src</code> attribute in a <code>&lt;script&gt;</code> element, additional JavaScript code should not be placed between the <code>&lt;script&gt;</code> and <code>&lt;/script&gt;</code> tags. If both are included, the browser will download and execute the script file specified in the <code>src</code> attribute, while ignoring any inline code written between the <code>&lt;script&gt;</code> and <code>&lt;/script&gt;</code> tags.</p><p>One of the remarkable and sometimes debated features of the <code>&lt;script&gt;</code> element is its capability to include JavaScript files <i>from external domains</i>. By using the <code>src</code> attribute of the <code>&lt;script&gt;</code> element, you can specify a complete URL that points to a JavaScript file <i>located outside the domain of the HTML page</i>. Here's an example:</p><pre class="bg-light"><code>&lt;script src="http://somewhere.com/file.js"&gt;&lt;/script&gt;
+</code></pre><p>When you include JavaScript code from an external domain, it will be loaded and interpreted as if it were a part of the webpage itself. This feature allows you to fetch JavaScript from different domains if required. However, it's important to exercise caution when referencing JavaScript files hosted on a server that you don't have control over. There's a risk that a malicious programmer could replace the file with malicious code. To defend against this potential risk, the <code>&lt;script&gt;</code> tag provides the <code>integrity</code> attribute. This attribute allows you to specify a cryptographic hash of the external file's content. The browser can then verify the <i>integrity</i> of the file by comparing the provided hash with the calculated hash of the downloaded file. By using the <code>integrity</code> attribute, you can add an extra layer of protection and ensure that the included JavaScript file hasn't been tampered with.</p><p>The <code>&lt;script&gt;</code> elements on a webpage are processed sequentially, following the order in which they appear. The JavaScript code inside the first <code>&lt;script&gt;</code> element must be fully processed before the second <code>&lt;script&gt;</code> element is executed. Similarly, the second <code>&lt;script&gt;</code> element must complete its processing before the third one, and so on. </p><h3 id="tag_placement">Tag Placement</h3><p>In the past, it was common practice to put all <code>&lt;script&gt;</code> elements inside the <code>&lt;head&gt;</code> section of a webpage. This means that the JavaScript code was included before the actual content of the page. Here's an example:</p><pre class="bg-light"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Example HTML Page&lt;/title&gt;
+    &lt;script src="file1.js"&gt;&lt;/script&gt;
+    &lt;script src="file2.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Content goes here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>However, when you include all JavaScript files within the <code>&lt;head&gt;</code> section of a webpage, it means that the browser needs to download, analyze, and interpret all of that JavaScript code before it can start rendering the page (rendering starts when the browser encounters the opening <code>&lt;body&gt;</code> tag). This can lead to a significant delay in rendering the page, especially if there are many JavaScript files or if they are large in size. During this delay, the browser will appear blank, without any content displayed. Due to this reason, modern web applications usually place all JavaScript references within the <code>&lt;body&gt;</code> element, after the page content. Here's an example to illustrate this:</p><pre class="bg-light"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Example HTML Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Content goes here --&gt;
+    &lt;script src="file1.js"&gt;&lt;/script&gt;
+    &lt;script src="file2.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>Using this approach, the browser can fully render the page before processing the JavaScript code and the amount of time spent on a blank browser window is reduced.</p><br><br><h3 id="defer_attribute">'defer' attribute</h3><p>The "<code>defer</code>" attribute serves to indicate that a script <i>will not modify the structure of the page while it is executing</i>. By using the "<code>defer</code>" attribute on a <code>&lt;script&gt;</code> element, we inform the browser to start downloading the script <i>immediately</i>, but postpone its <i>execution</i> until the entire page has been parsed. This ensures safe and efficient handling of scripts without interfering with the page rendering process.</p><pre class="bg-light"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Example HTML Page&lt;/title&gt;
+    &lt;script defer src="file1.js"&gt;&lt;/script&gt;
+    &lt;script defer src="file2.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Content goes here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>In this example, even though the <code>&lt;script&gt;</code> elements are placed in the document <code>&lt;head&gt;</code>, they won't be executed until the browser reaches the closing <code>&lt;/html&gt;</code> tag. </p><p>According to the HTML5 specification, scripts are executed <i>in the order they appear</i>. Therefore, the first deferred script executes before the second one, and both are executed before the <code>DOMContentLoaded</code> event. However, in practice, deferred scripts <i>may not always execute in order</i> or before the <code>DOMContentLoaded</code> event. It is advisable to include just one deferred script whenever possible to avoid potential inconsistencies.</p><br><br><h3 id="async_attribute">'async' attribute</h3><p>The "<code>async</code>" attribute is used to enable <i>asynchronous loading</i> and execution of scripts. Scripts with the "<code>async</code>" attribute are not guaranteed to execute in the order they are specified, as they start executing as soon as they are downloaded, regardless of the order.</p><pre class="bg-light"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Example HTML Page&lt;/title&gt;
+    &lt;script async src="file1.js"&gt;&lt;/script&gt;
+    &lt;script async src="file2.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Content goes here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>In the code, the second script file may execute before the first one, so it's crucial that there are no dependencies between them. By using the "<code>async</code>" attribute, we indicate that the page doesn't have to wait for the script to be downloaded and executed before continuing to load. It also doesn't have to wait for another script to load and execute. Therefore, it's recommended that asynchronous scripts do not make changes to the page's structure while loading. </p><p>Asynchronous scripts are guaranteed to execute before the page's <code>load</code> event, but their execution may occur before or after the <code>DOMContentLoaded</code> event.</p><br><br><h3 id="dynamic_script_loading">Dynamic Script Loading</h3><p>You are not limited to using static <code>&lt;script&gt;</code> tags to load resources. Because JavaScript is able to use the <a href="/dom.html" target="_blank">DOM API</a>, you can dynamically add script elements to the page, which in turn will load the specified resources. This can be achieved by programmatically creating <code>script</code> elements and attaching them to the DOM structure:</p><pre class="bg-light"><code>let scriptElement = document.createElement('script');
+scriptElement.src = 'filename.js';
+
+// If needed, you can also add other attributes to the &lt;script&gt; element
+// scriptElement.async = true; // for asynchronous loading
+// scriptElement.defer = true; // for deferred loading
+
+document.head.appendChild(scriptElement); // Add to the DOM
+</code></pre><p>Note that the request to fetch the script file will be initiated and sent to the server once the <code>scriptElement</code> is attached to the DOM. This is because the browser begins fetching external resources, such as scripts, stylesheets, or images, only when they are added to the DOM.</p><p>By default, scripts that are created in this fashion are <code>async</code>.</p><p>To inform browsers of the existence of these dynamically requested files, you can explicitly declare them in the document <code>head</code>:</p><pre class="bg-light"><code>&lt;link rel="subresource" href="filename.js"&gt;
+</code></pre><br><br></div>
+<div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/dom.html">DOM - Document Object Model</a><a class="list-group-item list-group-item-action active" href="/script_tag.html">Inserting JavaScript into an HTML page</a></div></div></div></div>
+</div></div> <!--end .container-fluid --><section class="">
+<footer class=" text-white" style="background-color: #0a4275;">
+<div class="container p-4 pb-0">
+<section class="text-center">
+<p class="d-flex justify-content-center align-items-center">If you like all of this, please buy me a coffee</p>
+</section>
+</div>
+<div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+<div class="table-responsive">
+<table class="w-100">
+<tr>
+<td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
+<td ><span class="ms-3" id="btc_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
+<td ><span class="ms-3" id="xmr_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
+<td ><span class="ms-3" id="ltc_donate"></span></td>
+</tr>
+</table>
+</div>
+</div>
+</footer>
+</section></body>
+</html>

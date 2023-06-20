@@ -1,0 +1,47 @@
+.toc {
+    background-color: #f8f9fa;
+    border: 1px solid #a2a9b1;
+    display: inline-block;
+    display: table;
+    font-size: 95%;
+    margin-top: 2rem;
+    padding: 5px;
+}
+
+.toc .toctitle {
+    text-align: center;
+}
+
+.toc h4 {
+    border: 0;
+    display: inline;
+    font-size: 100%;
+    font-weight: 700;
+    padding: 0;
+}
+
+.toc ul {
+    list-style-image: none;
+    list-style-type: none;
+    margin-left: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.toc ul ul {
+    margin: 0 0 0 2em;
+}
+
+.toc a {
+    text-decoration: none;
+}
+
+.toc a:hover {
+    text-decoration: underline;
+}
+
+.tocnumber {
+    color: #222;
+    padding-left: 0;
+    padding-right: .5em;
+}
