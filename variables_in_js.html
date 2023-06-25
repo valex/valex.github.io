@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Learn about JavaScript variables and their types: var, let, and const. Understand variable scoping, initialization, and best practices for improved code quality. Discover how to declare variables, handle global and block scopes, and ensure immutability with const.">
+<meta name="keywords" content="JavaScript variables, var, let, const, variable scoping, variable types, variable declaration, global scope, block scope, const correctness, variable immutability, code quality">
+<title>JavaScript Variables: Understanding var, let, and const | Complete Guide and Best Practices</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+<script defer src="./resources/js/variables_in_js.js" type="module"></script>
+<script defer src="./resources/js/donate.js" type="module"></script>
+<link rel="stylesheet" href="./resources/css/basic.css" >
+<link rel="stylesheet" href="./resources/css/variables_in_js.css" >
+<script src="https://cdn.counter.dev/script.js" data-id="b0775af1-0d2d-4956-bf6a-2894dc0d0d57" data-utcoffset="3"></script>
+</head>
+<body>
+<div class="container-fluid">
+<section class="text-center">
+<h1 class="h4 d-flex justify-content-center align-items-center">Variables in JavaScript</h1>
+</section><div class="row">
+<div class="col-sm-8"><p>In JavaScript, variables can hold different types of data. They act as containers for storing values. There are three keywords used to declare variables: <code>var</code> which is available in all versions of JavaScript, and <code>const</code> and <code>let</code> which were introduced later.</p><div class="d-flex justify-content-between my-3">
+<div class="toc">
+<div class="toctitle">
+<h4>Fast links</h4>
+</div> 
+<ul>
+<li>
+<a href="#var"><span class="tocnumber">•</span> <span class="toctext">var</span></a> 
+<ul>
+<li><a href="#var_scope"><span class="tocnumber">•</span> <span class="toctext">var Scope</span></a></li>
+<li><a href="#var_hoisting"><span class="tocnumber">•</span> <span class="toctext">var Hoisting</span></a></li>
+</ul>
+</li>
+<li>
+<a href="#let"><span class="tocnumber">•</span> <span class="toctext">let</span></a> 
+<ul>
+<li><a href="#temporal_dead_zone"><span class="tocnumber">•</span> <span class="toctext">Temporal Dead Zone</span></a></li>
+<li><a href="#global_declarations"><span class="tocnumber">•</span> <span class="toctext">Global Declarations</span></a></li>
+</ul>
+</li>
+<li>
+<a href="#const"><span class="tocnumber">•</span> <span class="toctext">const</span></a> 
+</li>
+<li>
+<a href="#best_practices"><span class="tocnumber">•</span> <span class="toctext">Best Practices</span></a> 
+</li>
+</ul>
+</div>
+</div><br><br><h2 id="var">var</h2><p>To define a variable, use the <code>var</code> keyword followed by the variable name, like this:</p><pre class="bg-light"><code>var message;
+</code></pre><p>This code defines a variable named <code>message</code> that can be used to hold any value. (Without initialization, it holds the special value <code>undefined</code>.)</p><p>JavaScript implements variable initialization, so it’s possible to define the variable and set its value at the same time:</p><pre class="bg-light"><code>var message = "Hello World";
+</code></pre><p>In JavaScript, it is perfectly legal (but not recommended) to initialize a variable with a string value and then change it to a numeric value:</p><pre class="bg-light"><code>var message = "Hello World";
+message = 100; // legal, but not recommended
+</code></pre><br><br><h3 id="var_scope">var Scope</h3><p>Defining a variable inside of a function using <code>var</code> means that the variable is destroyed as soon as the function exits (<b>local variable</b>), as shown here:</p><pre class="bg-light"><code>function test() {
+    var message = "hi"; // local variable
+}
+test();
+console.log(message); // error!
+</code></pre><p>It is, however, possible to define a variable <b>globally</b> by simply omitting the <code>var</code> operator as follows:</p><pre class="bg-light"><code>function test() {
+    message = "hi"; // global variable
+}
+test();
+console.log(message); // "hi"
+</code></pre><p>By removing the <code>var</code> operator from the example, the <code>message</code> variable becomes global. As soon as the function <code>test()</code> is called, the variable is defined and becomes accessible outside of the function once it has been executed.</p><p>Although it’s possible to define global variables by omitting the <code>var</code> operator, this approach <i>is not recommended</i>.</p><p>If you need to define more than one variable, you can do it using a single statement, separating each variable (and optional initialization) with a comma like this:</p><pre class="bg-light"><code>var message = "hi",
+    found = false,
+    age = 29;
+</code></pre><br><br><h3 id="var_hoisting">var Hoisting</h3><p>When using <code>var</code>, the following is possible because variables declared using that keyword <i>are hoisted</i> to the top of the function scope: </p><pre class="bg-light"><code>function hoisting() {
+    console.log(num);
+    var num = 26;
+}
+hoisting(); // undefined
+</code></pre><p>This does not throw an error because JavaScript technically treats it like this:</p><pre class="bg-light"><code>function hoisting() {
+    var num;
+    console.log(num);
+    num = 26;
+}
+hoisting(); // undefined
+</code></pre><p>This is “<b>hoisting</b>”, where the interpreter pulls all variable declarations to the top of its scope.</p><br><br><h2 id="let">let</h2><p><code>let</code> operates in nearly the same way as <code><a href="#var">var</a></code>, but with some important differences. Most notable is that <code>let</code> is <i>block scoped</i>, but <code>var</code> is <i>function scoped</i>.</p><pre class="bg-light"><code>if (true) {
+    var name = 'Matt';
+    console.log(name); // Matt          
+}
+console.log(name); // Matt
+
+if (true) {
+    let age = 26;
+    console.log(age); // 26
+}
+console.log(age); // ReferenceError: age is not defined
+
+</code></pre><p>Here, the <code>age</code> variable cannot be referenced outside the <code>if</code> block because its scope does not extend outside the block. Block scope is strictly a subset of function scope, so any scope limitations that apply to <code>var</code> declarations will also apply to <code>let</code> declarations.</p><br><br><h3 id="temporal_dead_zone">Temporal Dead Zone</h3><p>Another important behavior of <code>let</code> distinguishing it from <code>var</code> is that <code>let</code> declarations cannot be used in a way that assumes <a href="#var_hoisting">hoisting</a>:</p><pre class="bg-light"><code>// name is hoisted
+console.log(name); // undefined
+var name = 'Matt';
+
+// age is not hoisted
+console.log(age); // ReferenceError: age is not defined
+let age = 26;
+</code></pre><p>Variables declared with <code>let</code> cannot be accessed or referenced before they are actually declared in the code. The period of code execution before the declaration of <code>let</code> variables is known as the "<b>temporal dead zone</b>", during which any attempts to access or reference these variables will result in a <code>ReferenceError</code>.</p><br><br><h3 id="global_declarations">Global Declarations</h3><p>Unlike the <code>var</code> keyword, when declaring variables using <code>let</code> <i>in the global context</i>, variables will not attach to the <code>window</code> object as they do with <code>var</code>:</p><pre class="bg-light"><code>var name = 'Matt';
+console.log(window.name); // 'Matt'
+
+let age = 26;
+console.log(window.age); // undefined
+</code></pre><p>However, <code>let</code> declarations will still occur inside the global block scope, which will persist for the lifetime of the page. </p><br><br><h2 id="const">const</h2><p><code>const</code> behaves identically to that of <code>let</code> but with one important difference — it must be initialized with a value, and that value <i>cannot be redefined</i> after declaration. Attempting to modify a <code>const</code> variable will result in a runtime error.</p><pre class="bg-light"><code>const num = 16;
+num = 33; // TypeError: assignment to a constant
+</code></pre><p>If a <code>const</code> variable references an object, it does not violate the <code>const</code> constraints to modify properties inside that object. </p><pre class="bg-light"><code>const person = {};
+person.name = 'Eve'; // ok
+
+</code></pre><br><br><h2 id="best_practices">Best Practices</h2><br><br><h5>Don’t Use <code>var</code></h5><p>By using <code>let</code> and <code>const</code>, developers often find that they don't need to use <code>var</code> anymore in their code. This change leads to better code quality as it encourages proper variable scoping, localized declarations, and adherence to constants.</p><br><br><h5>Prefer <code>const</code> Over <code>let</code></h5><p>By using <code>const</code> declarations, the browser and code analysis tools can ensure that variables remain constant and prevent illegal reassignments. Because of this, many developers prefer to declare variables as <code>const</code> by default, unless they specifically need to change their values. This approach allows developers to have a clear understanding of values that should never change and helps identify unexpected behavior when attempting to modify them.</p><br><br></div>
+<div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/dom.html">DOM - Document Object Model</a><a class="list-group-item list-group-item-action" href="/script_tag.html">Inserting JavaScript into an HTML page</a><a class="list-group-item list-group-item-action active" href="/variables_in_js.html">Variables in JavaScript</a></div></div></div></div>
+</div></div> <!--end .container-fluid --><section class="">
+<footer class=" text-white" style="background-color: #0a4275;">
+<div class="container p-4 pb-0">
+<section class="text-center">
+<p class="d-flex justify-content-center align-items-center">If you like all of this, please buy me a coffee</p>
+</section>
+</div>
+<div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+<div class="table-responsive">
+<table class="w-100">
+<tr>
+<td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
+<td ><span class="ms-3" id="btc_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
+<td ><span class="ms-3" id="xmr_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
+<td ><span class="ms-3" id="ltc_donate"></span></td>
+</tr>
+</table>
+</div>
+</div>
+</footer>
+</section></body>
+</html>

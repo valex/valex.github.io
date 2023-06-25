@@ -1,0 +1,240 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+            p In JavaScript, variables can hold different types of data. They act as containers for storing values. There are three keywords used to declare variables: <code>var</code> which is available in all versions of JavaScript, and <code>const</code> and <code>let</code> which were introduced later.
+
+            <div class="d-flex justify-content-between my-3">
+                <div class="toc">
+                    <div class="toctitle">
+                        <h4>Fast links</h4>
+                    </div> 
+                    
+                    <ul>
+                        <li>
+                            <a href="#var"><span class="tocnumber">•</span> <span class="toctext">var</span></a> 
+                            <ul>
+                                <li><a href="#var_scope"><span class="tocnumber">•</span> <span class="toctext">var Scope</span></a></li>
+                                <li><a href="#var_hoisting"><span class="tocnumber">•</span> <span class="toctext">var Hoisting</span></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#let"><span class="tocnumber">•</span> <span class="toctext">let</span></a> 
+                            <ul>
+                                <li><a href="#temporal_dead_zone"><span class="tocnumber">•</span> <span class="toctext">Temporal Dead Zone</span></a></li>
+                                <li><a href="#global_declarations"><span class="tocnumber">•</span> <span class="toctext">Global Declarations</span></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#const"><span class="tocnumber">•</span> <span class="toctext">const</span></a> 
+                        </li>
+                        <li>
+                            <a href="#best_practices"><span class="tocnumber">•</span> <span class="toctext">Best Practices</span></a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            br
+            br
+
+            h2(id='var') var
+
+            p To define a variable, use the <code>var</code> keyword followed by the variable name, like this:
+            
+            pre(class="bg-light")
+                code. 
+                  var message;
+
+            p This code defines a variable named <code>message</code> that can be used to hold any value. (Without initialization, it holds the special value <code>undefined</code>.)
+
+            p JavaScript implements variable initialization, so it’s possible to define the variable and set its value at the same time:
+        
+            pre(class="bg-light")
+                code. 
+                  var message = "Hello World";
+
+            p In JavaScript, it is perfectly legal (but not recommended) to initialize a variable with a string value and then change it to a numeric value:
+                        
+            pre(class="bg-light")
+                code. 
+                  var message = "Hello World";
+                  message = 100; // legal, but not recommended
+
+            br
+            br
+
+            h3(id='var_scope') var Scope
+
+            p Defining a variable inside of a function using <code>var</code> means that the variable is destroyed as soon as the function exits (<b>local variable</b>), as shown here:
+
+            pre(class="bg-light")
+                code. 
+                    function test() {
+                        var message = "hi"; // local variable
+                    }
+                    test();
+                    console.log(message); // error!
+
+            p It is, however, possible to define a variable <b>globally</b> by simply omitting the <code>var</code> operator as follows:
+        
+            pre(class="bg-light")
+                code. 
+                    function test() {
+                        message = "hi"; // global variable
+                    }
+                    test();
+                    console.log(message); // "hi"
+
+            p By removing the <code>var</code> operator from the example, the <code>message</code> variable becomes global. As soon as the function <code>test()</code> is called, the variable is defined and becomes accessible outside of the function once it has been executed.
+        
+            p Although it’s possible to define global variables by omitting the <code>var</code> operator, this approach <i>is not recommended</i>.
+
+            p If you need to define more than one variable, you can do it using a single statement, separating each variable (and optional initialization) with a comma like this:
+
+            pre(class="bg-light")
+                code. 
+                    var message = "hi",
+                        found = false,
+                        age = 29;
+
+            br
+            br
+            
+            h3(id='var_hoisting') var Hoisting
+
+            p When using <code>var</code>, the following is possible because variables declared using that keyword <i>are hoisted</i> to the top of the function scope: 
+                    
+            pre(class="bg-light")
+                code. 
+                    function hoisting() {
+                        console.log(num);
+                        var num = 26;
+                    }
+                    hoisting(); // undefined
+
+            p This does not throw an error because JavaScript technically treats it like this:
+
+            pre(class="bg-light")
+                code. 
+                    function hoisting() {
+                        var num;
+                        console.log(num);
+                        num = 26;
+                    }
+                    hoisting(); // undefined
+
+            p This is “<b>hoisting</b>”, where the interpreter pulls all variable declarations to the top of its scope.
+
+            br
+            br
+
+            h2(id='let') let
+
+            p <code>let</code> operates in nearly the same way as <code><a href="#var">var</a></code>, but with some important differences. Most notable is that <code>let</code> is <i>block scoped</i>, but <code>var</code> is <i>function scoped</i>.
+
+            pre(class="bg-light")
+                code. 
+                    if (true) {
+                        var name = 'Matt';
+                        console.log(name); // Matt          
+                    }
+                    console.log(name); // Matt
+                    
+                    if (true) {
+                        let age = 26;
+                        console.log(age); // 26
+                    }
+                    console.log(age); // ReferenceError: age is not defined
+                    
+
+            p Here, the <code>age</code> variable cannot be referenced outside the <code>if</code> block because its scope does not extend outside the block. Block scope is strictly a subset of function scope, so any scope limitations that apply to <code>var</code> declarations will also apply to <code>let</code> declarations.
+
+            br
+            br
+
+            h3(id='temporal_dead_zone') Temporal Dead Zone
+
+            p Another important behavior of <code>let</code> distinguishing it from <code>var</code> is that <code>let</code> declarations cannot be used in a way that assumes <a href="#var_hoisting">hoisting</a>:
+            
+            pre(class="bg-light")
+                code. 
+                    // name is hoisted
+                    console.log(name); // undefined
+                    var name = 'Matt';
+
+                    // age is not hoisted
+                    console.log(age); // ReferenceError: age is not defined
+                    let age = 26;
+
+            p Variables declared with <code>let</code> cannot be accessed or referenced before they are actually declared in the code. The period of code execution before the declaration of <code>let</code> variables is known as the "<b>temporal dead zone</b>", during which any attempts to access or reference these variables will result in a <code>ReferenceError</code>.
+
+            br
+            br
+
+            h3(id='global_declarations') Global Declarations
+
+            p Unlike the <code>var</code> keyword, when declaring variables using <code>let</code> <i>in the global context</i>, variables will not attach to the <code>window</code> object as they do with <code>var</code>:
+
+            pre(class="bg-light")
+                code. 
+                    var name = 'Matt';
+                    console.log(window.name); // 'Matt'
+
+                    let age = 26;
+                    console.log(window.age); // undefined
+
+            p However, <code>let</code> declarations will still occur inside the global block scope, which will persist for the lifetime of the page. 
+        
+            br
+            br
+
+            h2(id='const') const
+
+            p <code>const</code> behaves identically to that of <code>let</code> but with one important difference — it must be initialized with a value, and that value <i>cannot be redefined</i> after declaration. Attempting to modify a <code>const</code> variable will result in a runtime error.
+
+            pre(class="bg-light")
+                code. 
+                    const num = 16;
+                    num = 33; // TypeError: assignment to a constant
+
+            p If a <code>const</code> variable references an object, it does not violate the <code>const</code> constraints to modify properties inside that object. 
+
+            pre(class="bg-light")
+                code. 
+                    const person = {};
+                    person.name = 'Eve'; // ok
+
+
+            br
+            br
+
+            h2(id='best_practices') Best Practices
+        
+            br
+            br
+
+            h5 Don’t Use <code>var</code>
+
+            p By using <code>let</code> and <code>const</code>, developers often find that they don't need to use <code>var</code> anymore in their code. This change leads to better code quality as it encourages proper variable scoping, localized declarations, and adherence to constants.
+
+            br
+            br
+
+            h5 Prefer <code>const</code> Over <code>let</code>
+
+            p By using <code>const</code> declarations, the browser and code analysis tools can ensure that variables remain constant and prevent illegal reassignments. Because of this, many developers prefer to declare variables as <code>const</code> by default, unless they specifically need to change their values. This approach allows developers to have a clear understanding of values that should never change and helps identify unexpected behavior when attempting to modify them.
+
+            br
+            br
+            
+        </div>
+
+        <div class="col-sm-4">
+
+            include see_also.pug
+            
+        </div>
+    </div>

@@ -64,6 +64,16 @@ const pages = [
     
         "title": "Inserting JavaScript into an HTML page"
     },
+        {
+        "slug": "variables_in_js",
+        "theme": "javascript",
+    
+        "meta_description": "Learn about JavaScript variables and their types: var, let, and const. Understand variable scoping, initialization, and best practices for improved code quality. Discover how to declare variables, handle global and block scopes, and ensure immutability with const.",
+        "meta_keywords": "JavaScript variables, var, let, const, variable scoping, variable types, variable declaration, global scope, block scope, const correctness, variable immutability, code quality",
+        "meta_title": "JavaScript Variables: Understanding var, let, and const | Complete Guide and Best Practices",
+    
+        "title": "Variables in JavaScript"
+    },
     {
         "slug": "freebitcoin_autoclick",
         "theme": "freebitcoin",
