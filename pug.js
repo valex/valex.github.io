@@ -45,6 +45,16 @@ const pages = [
         "title": "Unit vector"
     },
     {
+        "slug": "cross_product",
+        "theme": "vectors",
+    
+        "meta_description": "Explore the concept of cross product in 3D vectors through an interactive animation. Understand how it produces a new vector perpendicular to the multiplied vectors, with trigonometric significance and the right-hand rule.",
+        "meta_keywords": "cross product, vector product, 3D vectors, interactive animation, perpendicular vectors, trigonometric significance, right-hand rule",
+        "meta_title": "Cross product | 3D interactive animation",
+    
+        "title": "Cross product"
+    },
+    {
         "slug": "dom",
         "theme": "javascript",
     

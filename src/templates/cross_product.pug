@@ -1,0 +1,119 @@
+extends basic.pug
+
+block scripts
+    script(defer, src='https://unpkg.com/three@0.147.0/build/three.min.js')
+    script(defer, src='https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js')
+    script(defer, src='https://unpkg.com/three@0.147.0/examples/js/controls/DragControls.js')
+
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+
+            <div id="webgl_chart"></div>
+
+            <div class="alert alert-secondary rounded-0 py-2" role="alert">
+                <p style="font-size: 0.8rem;" class="mb-2"><b>Rotate</b> - by clicking and holding the left mouse button</p>
+                <p style="font-size: 0.8rem;" class="mb-2"><b>Scale</b> - using the mouse wheel</p>
+                <p style="font-size: 0.8rem;" class="mb-2">You can <i>modify</i> the vectors <b>by dragging</b> them using the spheres located at the ends of each vector</p>
+                <ul style="font-size: 0.8rem;" class="mb-2">
+                    <li><b>Yellow</b> is a vector `vec P`</li>
+                    <li><b>Orange</b> is a vector `vec Q`</li>
+                    <li><b>White</b> is a cross product `vec (P xx Q)`</li>
+                </ul>
+
+                <hr>
+
+                <ul style="font-size: 0.8rem;" class="mb-2">
+                    <li>The <b>red</b> axis represents the <b>x</b>-axis</li>
+                    <li>The <b>green</b> axis represents the <b>y</b>-axis.</li>
+                    <li>The <b>blue</b> axis represents the <b>z</b>-axis.</li>
+                </ul>
+            </div>
+
+            <div class="alert alert-warning" role="alert">
+                <p>The <b><i>cross product</i></b> of two three-dimensional vectors, also known as the <i>vector product</i>, produces a new vector that is perpendicular to both of the multiplied vectors.</p>
+        
+                <p>The cross product of two 3D vectors `vec P` and `vec Q`, written as `vec(P xx Q)`, is a vector quantity given by the formula:</p>
+
+                <p class="text-center">`vec(P xx Q) = << P_y Q_z - P_z Q_y, P_z Q_x - P_x Q_z, P_x Q_y - P_y Q_x >>`</p>
+
+                <hr>
+
+                <p>Like the <i>dot product</i>, the <b>cross product</b> has trigonometric significance. Given two 3D vectors `vec P` and `vec Q`, the cross product `vec(P xx Q)` satisfies the equation:</p>
+
+                <p class="text-center">`norm(vec(P xx Q)) = norm(vec P) norm(vec Q) sin alpha`</p>
+
+                <p>where `alpha` is the planar angle between the lines connecting the origin to the points represented by `vec P` and `vec Q`, or in simpler terms, it is the angle between vectors `vec P` and `vec Q`.</p>
+                
+                <hr>
+                
+                <p>Any nonzero result of the <b>cross product</b> must be perpendicular to the two vectors being multiplied together, but there are two possible directions that satisfy this requirement. It turns out that the <i>cross product</i> follows a pattern called the <i>right hand rule</i>.</p>
+                <p style="font-style: italic;">If the fingers of the right hand are aligned with a vector `vec P`, and the palm is facing in the direction of a vector `vec Q`, then the thumb points along the direction of the cross product `vec(P xx Q)`.</p>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th class="text-center">x</th>
+                        <th class="text-center">y</th>
+                        <th class="text-center">z</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th>`vec P`<sub style="margin-left:3px; padding:2px; background-color:#333333; color: #f4d03f; border-radius: 3px;">yellow</sub></th>
+                        <td>
+                        <input id="t_0_x" class="form-control form-control-sm" type="text" >
+                        </td>
+                        <td>
+                        <input id="t_0_y" class="form-control form-control-sm" type="text" >
+                        </td>
+                        <td>
+                        <input id="t_0_z" class="form-control form-control-sm" type="text" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>`vec Q`<sub style="margin-left:3px; padding:2px; background-color:#333333; color: #de6400; border-radius: 3px;">orange</sub></th>
+                        <td>
+                        <input id="t_1_x" class="form-control form-control-sm" type="text" >
+                        </td>
+                        <td>
+                        <input id="t_1_y" class="form-control form-control-sm" type="text" >
+                        </td>
+                        <td>
+                        <input id="t_1_z" class="form-control form-control-sm" type="text" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>`vec (P xx Q)`<sub style="margin-left:3px; padding:2px; background-color:#333333; color: #ffffff; border-radius: 3px;">white</sub></th>
+                        <td class="text-center align-middle">
+                            <span id="t_2_x" ></span>
+                        </td>
+                        <td class="text-center align-middle">
+                            <span id="t_2_y" ></span>
+                        </td>
+                        <td class="text-center align-middle">
+                            <span id="t_2_z" ></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="text-center align-middle">`alpha`</th>
+                        <td colspan=3 class="text-center align-middle">
+                            <span style="font-weight: bold;" id="t_alpha"></span>rad&nbsp;=&nbsp;<span id="t_alpha_deg"></span>&deg;
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            include see_also.pug
+
+        </div>
+    </div>
