@@ -6,7 +6,15 @@
 <meta name="keywords" content="vector, vectors, length, unit, normalized">
 <title>Unit vector - Interactive Animation</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+<script>MathJax = {
+   tex: {
+       inlineMath: [['$', '$'], ['\\(', '\\)']]
+   },
+   svg: {
+       fontCache: 'global'
+   }
+};</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script><script defer src="./resources/js/unit_vector.js" type="module"></script>
 <script defer src="./resources/js/donate.js" type="module"></script>
@@ -26,11 +34,11 @@
 </div>
 <div class="alert alert-warning" role="alert">
 <p><b>Unit vector</b> (or often <i>normalized vector</i>) is a vector of <a href="/vector_length.html" class="alert-link">length</a> 1 (one)</p>
-<p>Unit vector is denoted by `hat Q` (pronounced "<i>q-hat</i>")</p>
-<p>The unit vector `hat Q` of a non-zero vector `vec Q` is the vector in the direction of `vec Q` and with the <a href="/vector_length.html" class="alert-link">length</a> equal to 1 (one):</p>
-<p class="text-center">`hat Q = vec Q / norm(vec Q)`</p>
-<p>For a `two`-dimensional vector `vec Q`, used in current example:</p>
-<p class="text-center">`hat Q = vec Q / norm(vec Q) = << Q_x / sqrt(Q_x^2 + Q_y^2), Q_y / sqrt(Q_x^2 + Q_y^2) >>`</p>
+<p>Unit vector is denoted by \(\hat{Q}\) (pronounced "<i>q-hat</i>")</p>
+<p>The unit vector \(\hat{Q}\) of a non-zero vector \(\vec{ Q }\) is the vector in the direction of \(\vec{ Q }\) and with the <a href="/vector_length.html" class="alert-link">length</a> equal to 1 (one):</p>
+<p class="text-center">\( \hat{Q}=\dfrac{\vec{ Q }}{\lVert \vec{ Q } \rVert} \)</p>
+<p>For a \(two\)-dimensional vector \(\vec{ Q }\), used in current example:</p>
+<p class="text-center">\( \hat{Q}=\dfrac{\vec{ Q }}{\lVert \vec{ Q } \rVert}=\Biggl \langle \dfrac{Q_x}{\sqrt{Q_x^2 + Q_y^2}}, \dfrac{Q_y}{\sqrt{Q_x^2 + Q_y^2}} \Biggr \rangle \)</p>
 </div>
 </div>
 <div class="col-sm-4">
@@ -45,7 +53,7 @@
 </thead>
 <tbody>
 <tr>
-<th>`vec Q`</th>
+<th>\(\vec{ Q }\)</th>
 <td>
 <input id="t_0_x" class="form-control form-control-sm" type="text" >
 </td>
@@ -54,11 +62,11 @@
 </td>
 </tr>
 <tr>
-<th class="text-nowrap">`norm(vec Q) `</th>
+<th class="text-nowrap">\(\lVert \vec{ Q } \rVert\)</th>
 <td id="t_length_0" colspan="2" class="text-center align-middle"></td>
 </tr>
 <tr>
-<th>`hat Q = vec Q / norm(vec Q)`</th>
+<th>\(\hat{Q} = \dfrac{\vec{ Q }}{\lVert \vec{ Q } \rVert} \)</th>
 <td id="t_1_x" class="text-center align-middle">
 </td>
 <td id="t_1_y" class="text-center align-middle">

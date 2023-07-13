@@ -6,7 +6,15 @@
 <meta name="keywords" content="vector, vectors, length, magnitude, norm, formula, animation, interactive">
 <title>Vector length, magnitude - Interactive Animation</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-<script id="MathJax-script" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=AM_CHTML"></script>
+<script>MathJax = {
+   tex: {
+       inlineMath: [['$', '$'], ['\\(', '\\)']]
+   },
+   svg: {
+       fontCache: 'global'
+   }
+};</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script><script defer src="./resources/js/vector_length.js" type="module"></script>
 <script defer src="./resources/js/donate.js" type="module"></script>
@@ -26,11 +34,11 @@
 </div>
 <div class="alert alert-warning" role="alert">
 <p>The <b>length</b> of a vector is also sometimes called the <i>magnitude</i> or the <i>norm</i> of a vector.</p>
-<p>The length or magnitude or norm of the vector `vec a` is denoted by `norm(vec a)` or, less commonly, `abs(vec a)`</p>
-<p>The length of a `n`-dimensional vector `vec V` is a scalar given by the formula:</p>
-<p class="text-center">`norm(vec V) = sqrt(sum_(i=1)^n V_i^2)`</p>
-<p>The length of a `two`-dimensional vector `vec a` is a scalar given by the formula:</p>
-<p class="text-center">`norm(vec a) = sqrt(a_x^2 + a_y^2)`</p>
+<p>The length or magnitude or norm of the vector \(\vec{a}\) is denoted by \(\|\vec{a}\|\) or, less commonly, \(\lvert\vec{a}\rvert\)</p>
+<p>The length of a \(n\)-dimensional vector \(\vec{V}\) is a scalar given by the formula:</p>
+<p class="text-center">\[\|\vec{V}\| = \sqrt{\sum_{i=1}^{n}{V_i^2}} \]</p>
+<p>The length of a \(two\)-dimensional vector \(\vec{a}\) is a scalar given by the formula:</p>
+<p class="text-center">\(\|\vec{a}\| = \sqrt{a_x^2 + a_y^2}\)</p>
 </div>
 </div>
 <div class="col-sm-4">
@@ -45,7 +53,7 @@
 </thead>
 <tbody>
 <tr>
-<th>`vec a`</th>
+<th>\(\vec{a}\)</th>
 <td>
 <input id="t_a_x" class="form-control form-control-sm" type="text" >
 </td>
@@ -54,7 +62,7 @@
 </td>
 </tr>
 <tr>
-<th class="text-nowrap" colspan="2">`norm(vec a) = sqrt(a_x^2 + a_y^2)`</th>
+<th class="text-nowrap" colspan="2">\(\|\vec{a}\| = \sqrt{a_x^2 + a_y^2}\)</th>
 <td id="t_result" class="text-center align-middle"></td>
 </tr>
 </tbody>
