@@ -4,12 +4,18 @@ class PAGE_APP {
         this.options = {
             elID: 'webgl_chart',
             aspectRatio: 4/3,
-            circlesRadius: 8,
+            sphereRadius: 0.5,
+            cameraTarget: new THREE.Vector3( 0, 3, 0 ),
+            cameraPositionNormVector: new THREE.Vector3( 0.457495710997814, 0.457495710997814, 0.7624928516630234 ),
+            chartWidthProductdistanceToCam: 22300,
+            cameraPlaneDividerRatio: 13.22,
         };
 
         this.calculations = {
             chartWidth: null,
             chartHeight: null,
+            distanceToCam: null,
+            cameraPlaneDivider: null,
         };
 
         this.vectors = [
@@ -53,7 +59,9 @@ class PAGE_APP {
 
         this.calculations.chartWidth = Math.floor( this.el.clientWidth - 1 );
         this.calculations.chartHeight = Math.floor( this.calculations.chartWidth / this.options.aspectRatio );
-
+        this.distanceToCam = this.options.chartWidthProductdistanceToCam / this.calculations.chartWidth;
+        this.cameraPlaneDivider = this.calculations.chartWidth / this.options.cameraPlaneDividerRatio;
+        
         this.initScene();
 
         this.updateCalculationTable();
@@ -73,7 +81,7 @@ class PAGE_APP {
 
         // create a camera, which defines where we're looking at.
         //const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const camera = new THREE.OrthographicCamera(this.calculations.chartWidth / -64, this.calculations.chartWidth / 64, this.calculations.chartHeight / 64, this.calculations.chartHeight / -64, -200, 500);
+        const camera = new THREE.OrthographicCamera(this.calculations.chartWidth / -this.cameraPlaneDivider, this.calculations.chartWidth / this.cameraPlaneDivider, this.calculations.chartHeight / this.cameraPlaneDivider, this.calculations.chartHeight / -this.cameraPlaneDivider, -200, 500);
 
         // create a render and set the size
         const webGLRenderer = new THREE.WebGLRenderer({ antialias: true });
@@ -83,10 +91,10 @@ class PAGE_APP {
         webGLRenderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
         // position and point the camera to the center of the scene
-        camera.position.x = 12;
-        camera.position.y = 12;
-        camera.position.z = 20;
-        camera.lookAt(new THREE.Vector3(0, 0, 0));
+        camera.position.x = this.options.cameraPositionNormVector.x * this.distanceToCam;
+        camera.position.y = this.options.cameraPositionNormVector.y * this.distanceToCam;
+        camera.position.z = this.options.cameraPositionNormVector.z * this.distanceToCam ;
+        camera.lookAt(this.options.cameraTarget);
 
         // add spotlight for the shadows
         const spotLight = new THREE.SpotLight(0xffffff);
@@ -110,7 +118,7 @@ class PAGE_APP {
             this.vectors[vector_index]['arrow_object'] = arrowHelper;
             
             if(true==vector.has_control){
-                const sphereGeometry = new THREE.SphereGeometry(0.5, 18, 18);
+                const sphereGeometry = new THREE.SphereGeometry(this.options.sphereRadius, 18, 18);
                 const sphereMaterial = new THREE.MeshBasicMaterial({color: vector.color, transparent: true, opacity: 0.2});
                 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
             
@@ -166,7 +174,7 @@ class PAGE_APP {
         // IMPORTANT: make sure that your container.append(renderer.domElement); is executed BEFORE initializing OrbitControls( camera, renderer.domElement );
         const orbitControls = new THREE.OrbitControls(camera, webGLRenderer.domElement);
         orbitControls.enablePan = false;
-        orbitControls.target = new THREE.Vector3( 0, 3, 0 );
+        orbitControls.target = this.options.cameraTarget;
         orbitControls.update();
 
         const dragControls = new THREE.DragControls( draggedObjects, camera, webGLRenderer.domElement );
