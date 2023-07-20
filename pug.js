@@ -74,7 +74,7 @@ const pages = [
     
         "title": "Inserting JavaScript into an HTML page"
     },
-        {
+    {
         "slug": "variables_in_js",
         "theme": "javascript",
     
@@ -103,6 +103,16 @@ const pages = [
         "meta_title": "Freebitco.in Multiply BTC Roll Counter | Track and Analyze Roll Statistics",
     
         "title": "freebitco.in Multiply BTC Roll Counter Script"
+    },
+    {
+        "slug": "numbers_in_js",
+        "theme": "javascript",
+    
+        "meta_description": "Learn about the different types of numbers in JavaScript, including integers, floating-point numbers, NaN, and Infinity. Understand how to handle conversions and avoid common pitfalls with Number, parseInt, and parseFloat functions. Get insights into the complexities of JavaScript numbers and improve your coding precision.",
+        "meta_keywords": "JavaScript numbers, integers, floating-point numbers, NaN, Infinity, Number, parseInt, parseFloat, conversions, coding precision, JavaScript data types.",
+        "meta_title": "JavaScript Numbers: Integers, Floating-Point, NaN, and Infinity Explained",
+    
+        "title": "Numbers in JavaScript"
     },
 ];
 

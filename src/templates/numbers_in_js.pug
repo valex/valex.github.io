@@ -1,0 +1,276 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+            p In JavaScript, there are several number types that you can work with. The most common number types are:
+
+
+            <ol>
+                <li><b>Integer</b>: Integers are whole numbers without a fractional component.</li>
+                <li><b>Floating-Point Number</b>: Also known as "float" or "double," floating-point numbers are numbers with a fractional component.</li>
+                <li><b>NaN</b>: Stands for "Not-a-Number." It represents an unrepresentable or undefined value resulting from an invalid operation.</li>
+                <li><b>Infinity</b>: Represents positive infinity, which is the result of a mathematical operation that exceeds the largest representable number.</li>
+                <li><b>Negative Infinity</b>: Represents negative infinity, which is the result of a mathematical operation that exceeds the lowest representable number.</li>
+            </ol>
+
+            <div class="d-flex justify-content-between my-3">
+                <div class="toc">
+                    <div class="toctitle">
+                        <h4>Fast links</h4>
+                    </div> 
+                    
+                    <ul>
+                        <li>
+                            <a href="#integer"><span class="tocnumber">•</span> <span class="toctext">Integer</span></a> 
+                        </li>
+                        <li>
+                            <a href="#floating_point"><span class="tocnumber">•</span> <span class="toctext">Floating-Point Number</span></a> 
+                            <ul>
+                                <li><a href="#e_notation"><span class="tocnumber">•</span> <span class="toctext">E-notation</span></a></li>
+                                <li><a href="#range"><span class="tocnumber">•</span> <span class="toctext">Range of Values</span></a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#nan"><span class="tocnumber">•</span> <span class="toctext">NaN</span></a> 
+                        </li>
+                        <li>
+                            <a href="#number_conversions"><span class="tocnumber">•</span> <span class="toctext">Number Conversions</span></a> 
+                            <ul>
+                                <li><a href="#parseint"><span class="tocnumber">•</span> <span class="toctext">parseInt()</span></a></li>
+                                <li><a href="#parsefloat"><span class="tocnumber">•</span> <span class="toctext">parseFloat()</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            br
+            br
+
+            h2(id='integer') Integer
+
+            p The simplest way to represent a number in JavaScript is using the <i>decimal integer format</i>, which can be directly entered as shown below:
+            
+            pre(class="bg-light")
+                code. 
+                  let intNum = 55; // integer
+
+            p Integers can be represented in JavaScript using <i>octal</i> (base 8) or <i>hexadecimal</i> (base 16) literals. <i>Octal literals</i> start with a zero (0) followed by a sequence of octal digits (0 through 7). If a number outside this range is encountered in the literal, the leading zero is ignored, and the number is treated as a decimal, as shown in the following examples:
+
+            pre(class="bg-light")
+                code. 
+                    let octalNum1 = 070; // octal for 56
+                    let octalNum2 = 079; // invalid octal - interpreted as 79
+                    let octalNum3 = 08; // invalid octal - interpreted as 8
+
+            <div class="alert alert-warning" role="alert">
+                | Octal literals are invalid when running in <i>strict mode</i> and will cause the JavaScript engine to throw a syntax error.
+            </div>  
+
+            p To represent a <i>hexadecimal literal</i> in JavaScript, you simply start with '0x' (case-insensitive), followed by any number of hexadecimal digits (0 through 9 and A through F). The letters can be in uppercase or lowercase. Here's an example:
+        
+            pre(class="bg-light")
+                code. 
+                  let hexNum1 = 0xA;  // hexadecimal for 10
+                  let hexNum2 = 0x1f; // hexadecimal for 31
+                
+            <div class="alert alert-warning" role="alert">
+                | Numbers created using <i>octal</i> or <i>hexadecimal</i> format are treated as decimal numbers in all arithmetic operations. JavaScript automatically converts them to decimal format for arithmetic calculations.
+            </div> 
+
+            br
+            br
+
+            h2(id='floating_point') Floating-Point Number
+
+
+            p To represent a floating-point value in JavaScript, you need to include a decimal point and at least one number after it. While it's not necessary to have an integer before the decimal point, it's recommended. Here are some examples:
+                        
+            pre(class="bg-light")
+                code. 
+                    let floatNum1 = 1.1;
+                    let floatNum2 = 0.1;
+                    let floatNum3 = .1; // valid, but not recommended
+                    
+            p Since storing floating-point values requires twice as much memory as storing integers, JavaScript always tries to convert values into integers whenever possible. If there are no digits after the decimal point, the number is treated as an integer. Similarly, if the number being represented is a whole number (e.g., 1.0), it will be converted into an integer. Here's an example:
+
+            pre(class="bg-light")
+                code. 
+                    let floatNum1 = 1.; // missing digit after decimal - interpreted as integer 1
+                    let floatNum2 = 10.0; // whole number - interpreted as integer 10
+                    
+            p(id="e_notation") To represent very large or very small numbers in JavaScript, you can use <b><i>e-notation</i></b>. E-notation is a way to show a number multiplied by 10 raised to a certain power. In JavaScript, <i>e-notation</i> follows the format of a number (either integer or floating-point) followed by the letter <b>E</b> (uppercase or lowercase), and then the power of 10 to multiply by. Take a look at this example:
+        
+            pre(class="bg-light")
+                code. 
+                    let floatNum = 3.459e7; // equal to 34590000
+
+            p In this example, <code>floatNum</code> is equal to 34,590,000 even though it is represented in a more compact form using e-notation. The notation essentially says, "Take 3.459 and multiply it by 10<sup>7</sup>".
+        
+            p E-notation is also handy for expressing very small numbers, like <code>0.00000000000000003</code>, which can be written more concisely as <code>3e-17</code>.
+
+            hr
+
+            p You should avoid comparing floating-point numbers directly due to potential precision errors caused by their binary representation. These precision errors arise from the fact that certain decimal numbers cannot be precisely represented in binary form. Let's consider a simple example:
+
+            pre(class="bg-light")
+                code. 
+                    let num1 = 0.1;
+                    let num2 = 0.2;
+                    let sum = num1 + num2;
+
+                    console.log(sum); // Output: 0.30000000000000004
+                    console.log(sum == 0.3); // Output: false
+
+            p In this example, the variables <code>num1</code> and <code>num2</code> represent the floating-point numbers <code>0.1</code> and <code>0.2</code>, respectively. When we add these numbers together and store the result in the variable <code>sum</code>, the actual result is a slightly imprecise value: <code>0.30000000000000004</code>.
+
+            p Now, if we compare <code>sum</code> to the decimal number <code>0.3</code> using the equality operator <code>==</code>, the result will be <code>false</code>, even though mathematically, they should be equal.
+
+            br
+            br
+            
+            h3(id='range') Range of Values
+
+            p In JavaScript, the smallest number that can be stored is represented by <code>Number.MIN_VALUE</code>, which is approximately <code>5e–324</code> on most browsers. On the other hand, the largest number is represented by <code>Number.MAX_VALUE</code>, which is approximately <code>1.7976931348623157e+308</code> on most browsers. If a calculation yields a number that falls outside JavaScript's numeric range, it is automatically assigned the special value of <code>Infinity</code>. 
+            
+            p Negative numbers that exceed the representable range are denoted as <code>-Infinity</code> (<i>negative infinity</i>), while positive numbers beyond the range are simply denoted as <code>Infinity</code> (<i>positive infinity</i>). You can easily obtain the values of positive and negative <code>Infinity</code> in JavaScript by using <code>Number.NEGATIVE_INFINITY</code> and <code>Number.POSITIVE_INFINITY</code>.
+
+            p If a calculation results in either a positive or negative <code>Infinity</code>, you cannot use that value for any more calculations because <code>Infinity</code> doesn't have a numeric representation suitable for further calculations. To check if a value falls within the valid numeric range (between the minimum and maximum values), you can use the <code>isFinite()</code> function. This function will only return <code>true</code> if the argument is within the valid range, as demonstrated in this example:
+            
+            pre(class="bg-light")
+                code. 
+                    let result = Number.MAX_VALUE + Number.MAX_VALUE;
+                    console.log(isFinite(result)); // false
+
+            br
+            br
+
+            h2(id="nan") NaN
+
+            p In JavaScript, there's a special numeric value called <b>NaN</b>, which stands for "<i>Not a Number</i>". It's used to indicate when an operation that should return a number fails, instead of throwing an error. For instance, dividing any number by 0 usually leads to an error in many other programming languages, stopping the code. However, in JavaScript, dividing a number by 0 will result in <code>NaN</code>, which allows the rest of the processing to continue without halting the code execution.
+
+            p The value <code>NaN</code> has two unique characteristics. First, if you perform any operation involving <code>NaN</code> (like <code>NaN</code> divided by 10), the result will always be <code>NaN</code>. Second, <code>NaN</code> is not equal to any other value, even <code>NaN</code> itself. For instance, the following comparison will return false:
+
+            pre(class="bg-light")
+                code. 
+                    console.log(NaN == NaN); // false
+
+            p To handle this situation, JavaScript offers the <code>isNaN()</code> function. This function takes one argument, which can be any type of data, and checks if the value is "<i>not a number</i>". When a value is passed to <code>isNaN()</code>, it tries to convert it into a number. Some non-numeric values can be directly converted to numbers, like the string "10" or a <code>Boolean</code> value. However, if the value cannot be converted into a number, the function returns <code>true</code>. Let's look at an example:
+
+            pre(class="bg-light")
+                code. 
+                    console.log(isNaN(NaN));    // true
+                    console.log(isNaN(10));     // false - 10 is a number
+                    console.log(isNaN("10"));   // false - can be converted to number 10
+                    console.log(isNaN("blue")); // true - cannot be converted to a number
+                    console.log(isNaN(true));   // false - can be converted to number 1
+
+            br
+            br
+
+            h2(id='number_conversions') Number Conversions
+
+            p There are three functions to turn non-numeric values into numbers: <code>Number()</code> casting function, <code>parseInt()</code> function, and <code>parseFloat()</code> function. The <code>Number()</code> function can be used on any data type, while the other two functions are specifically used to convert strings into numbers. Each of these functions reacts differently to the same input.
+
+            p The <code>Number()</code> function converts values according to these rules:
+
+            <ul>
+                <li>If the input is a <code>Boolean</code> value (<code>true</code> or <code>false</code>), <code>true</code> is converted to <code>1</code>, and <code>false</code> is converted to <code>0</code>.</li>
+                <li>If the input is already a number, it returns the same number</li>
+                <li>If the input is <code>null</code>, it returns <code>0</code></li>
+                <li>If the input is <code>undefined</code>, it returns <code>NaN</code></li>
+                <li>If the input is a string, the following rules are applied:
+                    <ul>
+                        <li>If the string contains only numbers, with or without a plus or minus sign in front, it will always be converted to a <b>decimal</b> number. For example, <code>Number("1")</code> becomes <code>1</code>, <code>Number("123")</code> becomes <code>123</code>, and <code>Number("011")</code> becomes <code>11</code> (note that leading zeros are ignored)</li>
+                        <li>If the string contains a valid <i>floating-point format</i>, like "<code>1.1</code>", it will be converted into the correct floating-point numeric value (once again, leading zeros are ignored)</li>
+                        <li>If the string contains a valid <i>hexadecimal format</i>, such as "<code>0xf</code>", it is converted into an integer that matches the hexadecimal value.</li>
+                        <li>If the string is <i>empty</i> (contains no characters), it is converted to <code>0</code></li>
+                        <li>If the string contains anything other than these previous formats, it is converted into <code>NaN</code></li>
+                    </ul>
+                </li>
+                <li>When applied to objects, the <code>valueOf()</code> method is called and the returned value is converted based on the previously described rules. If that conversion results in <code>NaN</code>, the <code>toString()</code> method is called and the rules for converting strings are applied.</li>
+            </ul>
+
+            pre(class="bg-light")
+                code. 
+                    let num1 = Number("Hello world!");  // NaN
+                    let num2 = Number("");              // 0
+                    let num3 = Number("000011");        // 11
+                    let num4 = Number(true);            // 1
+
+            hr
+
+            p(id="parseint") Due to the complexities of the <code>Number()</code> function when converting strings, the <code>parseInt()</code> function is usually a better choice, especially for dealing with <i>integers</i>. The <code>parseInt()</code> function carefully examines the string to determine if it matches a number pattern. It ignores any leading white spaces until it encounters the first non-white space character. If this first character is not a number, a minus sign, or a plus sign, <code>parseInt()</code> always returns <code>NaN</code>. This means that the empty string will return <code>NaN</code> (unlike <code>Number()</code>, which returns <code>0</code>).
+
+            p On the other hand, if the first character is a number, plus, or minus sign, the conversion continues to the second character and goes on until it reaches the end of the string or encounters a non-numeric character. For example, "<code>1234blue</code>" is converted to <code>1234</code> because "<code>blue</code>" is completely ignored. Similarly, "<code>22.5</code>" will be converted to <code>22</code> because the decimal is not a valid integer character.
+            
+            p The <code>parseInt()</code> function also recognizes the various <i>integer formats</i> (decimal, octal, and hexadecimal). This means when the string begins with "<code>0x</code>", it is interpreted as a hexadecimal integer; if it begins with "<code>0</code>" followed by a number, it is interpreted as an octal value.
+            
+            p Let's look at some examples of conversions to better understand what happens:
+            
+            pre(class="bg-light")
+                code. 
+                    let num1 = parseInt("1234blue");    // 1234
+                    let num2 = parseInt("");            // NaN
+                    let num3 = parseInt("0xA");         // 10 - hexadecimal
+                    let num4 = parseInt(22.5);          // 22
+                    let num5 = parseInt("70");          // 70 - decimal
+                    let num6 = parseInt("0xf");         // 15 - hexadecimal
+
+            p To make things less confusing, <code>parseInt()</code> offers a second argument called "<i>radix</i>", which specifies the number system used in the value you're parsing. For example, if you know that the value is in hexadecimal format, you can pass <code>16</code> as the <i>radix</i> to ensure proper parsing. Here's an illustration:
+
+            pre(class="bg-light")
+                code. 
+                    let num = parseInt("0xAF", 16); // 175
+
+            p By providing the hexadecimal radix (<code>16</code>), you can skip the "<code>0x</code>" prefix, and the conversion will still work correctly. Here's how it goes:
+        
+            pre(class="bg-light")
+                code. 
+                    let num1 = parseInt("AF", 16); // 175
+                    let num2 = parseInt("AF");     // NaN
+
+            p In the first case, when using "<code>AF</code>" with radix <code>16</code>, <code>parseInt()</code> converts it to the decimal number <code>175</code> successfully. However, in the second case, since the radix is not specified, <code>parseInt()</code> cannot determine the correct conversion and returns <code>NaN</code> (<i>Not a Number</i>).
+
+            p Passing in a radix can greatly change the outcome of the conversion. Consider the following:
+
+            pre(class="bg-light")
+                code. 
+                    let num1 = parseInt("10", 2);   // 2 - parsed as binary
+                    let num2 = parseInt("10", 8);   // 8 - parsed as octal
+                    let num3 = parseInt("10", 10);  // 10 - parsed as decimal
+                    let num4 = parseInt("10", 16);  // 16 - parsed as hexadecimal
+
+            p It's a good idea to include a radix when using <code>parseInt()</code> because if you leave it off, <code>parseInt()</code> will decide how to interpret the input on its own, which can lead to errors.
+
+            hr
+
+            p(id="parsefloat") The <code>parseFloat()</code> function works similarly to <code>parseInt()</code>, starting at the beginning of the string and analyzing each character. It keeps parsing the string until it reaches the end or encounters an invalid character for a floating-point number. When parsing, the first occurrence of a <i>decimal point</i> is valid, but if there's a second <i>decimal point</i>, it becomes invalid, and everything after it is ignored. For example, "<code>22.34.5</code>" will be converted to <code>22.34</code>.
+
+
+            p Another difference in <code>parseFloat()</code> is that initial zeros are always ignored. This function will recognize any of the floating-point formats <a href="#floating_point">discussed earlier</a>, as well as the decimal format (leading zeros are always ignored). Hexadecimal numbers always become 0. Because <code>parseFloat()</code> parses only decimal values, there is no radix mode.
+
+            p Additionally, if the string represents a whole number (no decimal point or only a zero after the decimal point), <code>parseFloat()</code> returns an integer. Let's see some examples to illustrate these points:
+
+            pre(class="bg-light")
+                code. 
+                    let num1 = parseFloat("1234blue");  // 1234 - integer
+                    let num2 = parseFloat("0xA");       // 0
+                    let num3 = parseFloat("22.5");      // 22.5
+                    let num4 = parseFloat("22.34.5");   // 22.34
+                    let num5 = parseFloat("0908.5");    // 908.5
+                    let num6 = parseFloat("3.125e7");   // 31250000
+
+            br
+            br
+            
+        </div>
+
+        <div class="col-sm-4">
+
+            include see_also.pug
+            
+        </div>
+    </div>
