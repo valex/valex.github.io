@@ -1,0 +1,447 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+            p The String data type in JavaScript is used to represent a sequence of zero or more 16-bit Unicode characters. Strings can be created using <i>double quotes</i> ("), <i>single quotes</i> ('), or <i>backticks</i> (`). So, you can write strings like this:
+
+            pre(class="bg-light")
+                code. 
+                    let favoriteFood = "pizza";
+                    let favoriteDrink = 'lemonade';
+                    let favoriteActivity = `swimming`;
+
+            p Unlike some languages in which using different quotes changes how the string is interpreted, there is no difference in the syntaxes in JavaScript. However, it's important to remember that a string must start and end with the same type of quote.
+
+            <div class="d-flex justify-content-between my-3">
+                <div class="toc">
+                    <div class="toctitle">
+                        <h4>Fast links</h4>
+                    </div> 
+                    
+                    <ul>
+                        <li>
+                            <a href="#character_literals"><span class="tocnumber">•</span> <span class="toctext">Character Literals</span></a> 
+                        </li>
+                        <li>
+                            <a href="#immutable"><span class="tocnumber">•</span> <span class="toctext">Strings are immutable</span></a> 
+                        </li>
+                        <li>
+                            <a href="#converting_to_string"><span class="tocnumber">•</span> <span class="toctext">Converting to a String</span></a> 
+                        </li>
+                        <li>
+                            <a href="#template_literals"><span class="tocnumber">•</span> <span class="toctext">Template Literals</span></a> 
+                            <ul>
+                                <li><a href="#interpolation"><span class="tocnumber">•</span> <span class="toctext">Interpolation</span></a></li>
+                                <li><a href="#tag_functions"><span class="tocnumber">•</span> <span class="toctext">Tag Functions</span></a></li>
+                                <li><a href="#raw_strings"><span class="tocnumber">•</span> <span class="toctext">Raw Strings</span></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            br
+            br
+
+            h2(id='character_literals') Character Literals
+
+            p The String data type in JavaScript has special character literals that represent nonprintable or useful characters. These characters are listed in the following table:
+            
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="text-center" scope="col">LITERAL</th>
+                            <th scope="col">MEANING</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="text-center" scope="row">\n</th>
+                            <td>New line</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">\t</th>
+                            <td>Tab</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">\b</th>
+                            <td>Backspace</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">\r</th>
+                            <td>Carriage return</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">\f</th>
+                            <td>Form feed</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">&#92;&#92;&#92;&#92;</th>
+                            <td>Backslash (&nbsp;&#92;&nbsp;)</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">\'</th>
+                            <td>Single quote (&nbsp;'&nbsp;) - used when the string is enclosed by single quotes. For example: <code>'He said, \'hey.\''</code></td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">\"</th>
+                            <td>Double quote (&nbsp;"&nbsp;) - used when the string is enclosed by double quotes. For example: <code>"He said, \"hey.\""</code></td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">\`</th>
+                            <td>Backtick (&nbsp;`&nbsp;) - used when the string is enclosed by backticks. For example: <code>`He said, \`hey.\``</code></td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">\xnn</th>
+                            <td>A character represented by hexadecimal code <code>nn</code> (where <code>n</code> is a hexadecimal digit <code>0-F</code>). Example: <code>\x41</code> is equivalent to "<code>A</code>".</td>
+                        </tr>
+                        <tr>
+                            <th class="text-center" scope="row">\unnnn</th>
+                            <td>A Unicode character represented by the hexadecimal code <code>nnnn</code> (where <code>n</code> is a hexadecimal digit <code>0-F</code>). Example: <code>\u03a3</code> is equivalent to the Greek character &#x3a3;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            br
+            br
+
+            p These special character literals can be placed anywhere within a string and will be treated as a single character. For instance:
+
+            pre(class="bg-light")
+                code. 
+                  let text = "This is the letter sigma: \u03a3."
+
+            p In this example, the variable <code>text</code> contains 28 characters, even though the escape sequence is 6 characters long. The escape sequence represents one character and is counted as such.
+
+            p You can find the length of any string using the <code>length</code> property like this:
+
+            pre(class="bg-light")
+                code. 
+                    console.log(text.length); // 28
+
+            p The <code>length</code> property gives the number of 16-bit characters in the string.
+        
+            br
+            br
+
+            h2(id="immutable") Strings are immutable
+
+            p In JavaScript, strings are considered <i>immutable</i>, which means that once a string is created, it <b>cannot be changed or modified directly</b>. Instead of modifying the existing string, any operation that appears to change the string actually creates a new string with the desired modifications while leaving the original string unchanged.
+
+
+            pre(class="bg-light")
+                code. 
+                    let message = "Hello, World!"; // Original string
+
+                    // Trying to change the first character of the string (Doesn't work)
+                    message[0] = "h";
+
+                    // The original string remains unchanged
+                    console.log(message); // Output: "Hello, World!"
+
+                    // Creating a new string with the desired change
+                    let newMessage = "h" + message.slice(1);
+
+                    console.log(newMessage); // Output: "hello, World!"
+
+                
+            p In the example above, we attempt to change the first character of the message string to a lowercase "<code>h</code>" using <code>message[0] = "h";</code>. However, JavaScript won't allow this direct modification, and the original string remains unchanged. Instead, we create a new string <code>newMessage</code> by combining the lowercase "<code>h</code>" with the rest of the message using <code>message.slice(1)</code> to remove the first character. This way, we get the desired result without altering the original string.
+
+            p This immutability property is essential in JavaScript as it ensures the consistency and reliability of strings throughout the program. It helps avoid unintentional changes to data and makes string operations safer and more predictable. Whenever you need to modify a string, you should create a new one with the necessary changes rather than attempting to modify the original string directly.
+
+            br
+            br
+
+            h2(id='converting_to_string') Converting to a String
+
+            p There are two ways to convert a value to a string. One way is by using the <code>toString()</code> method, which most values have. This method simply returns the string representation of the value. Here's an example:
+                        
+            pre(class="bg-light")
+                code. 
+                    let number = 123;
+                    let numberString = number.toString(); // the string "123"
+
+                    let value = true;
+                    let valueString = value.toString(); // the string "true"
+                    
+            p The <code>toString()</code> method is available for <i>numbers, Booleans, objects, and strings</i>. Each string also has its own <code>toString()</code> method that returns a copy of itself. However, if a value is <code>null</code> or <code>undefined</code>, the <code>toString()</code> method is not available for that value.
+
+            p In most cases, the <code>toString()</code> method doesn't require any arguments. However, when used with a <i>number</i>, <code>toString()</code> can take a single argument called the '<i>radix</i>', which determines how the number will be represented. By default, <code>toString()</code> returns the number in decimal format. But when you provide a radix, you can get the number's representation in binary, octal, hexadecimal, or any other valid base, as shown in this example:
+
+            pre(class="bg-light")
+                code. 
+                    let num = 10;
+                    console.log(num.toString());    // "10"
+                    console.log(num.toString(2));   // "1010"
+                    console.log(num.toString(8));   // "12"
+                    console.log(num.toString(10));  // "10"
+                    console.log(num.toString(16));  // "a"
+                    
+            hr
+
+            p If you're unsure whether a value is <code>null</code> or <code>undefined</code>, you can use the <code>String()</code> casting function. It always returns a string, regardless of the original value's type. The <code>String()</code> function follows these rules:    
+                    
+            <ul>
+                <li>If the value has a <code>toString()</code> method, it is called (with no arguments) and the result is returned.</li>
+                <li>If the value is <code>null</code>, <code>"null"</code> is returned.</li>
+                <li>If the value is <code>undefined</code>, <code>"undefined"</code> is returned.</li>
+            </ul>
+                    
+            p Consider the following:
+
+            pre(class="bg-light")
+                code. 
+                    let value1 = 10;
+                    let value2 = true;
+                    let value3 = null;
+                    let value4;
+
+                    console.log(String(value1));    // "10"
+                    console.log(String(value2));    // "true"
+                    console.log(String(value3));    // "null"
+                    console.log(String(value4));    // "undefined"
+
+            hr
+
+            p You can also convert a value to a string by adding an empty string (<code>""</code>) to that value using the <i>plus</i> operator
+
+            pre(class="bg-light")
+                code. 
+                    let number = 123;
+                    let numberString = "" + number; 
+                    console.log(numberString);  // "123"
+
+            br
+            br
+
+            h2(id="template_literals") Template Literals
+
+            p Template literals provide a more flexible and powerful way to work with strings in JavaScript. They are enclosed by backticks (&nbsp;`&nbsp;) instead of the traditional single (&nbsp;'&nbsp;) or double (&nbsp;"&nbsp;) quotes.
+        
+            p Template literals in JavaScript have the unique ability to preserve whitespace and new line characters, making them a convenient choice for creating multiline strings. When you define a string using template literals, any whitespace, including tabs, spaces, and line breaks, is retained as part of the string:
+
+            pre(class="bg-light")
+                code. 
+                    let multiLineString = `first line\nsecond line`;
+                    let multiLineTemplateLiteral = `first line<br>second line`;
+
+                    console.log(multiLineString);
+                    // first line
+                    // second line
+
+                    console.log(multiLineTemplateLiteral);
+                    // first line
+                    // second line
+
+                    console.log(multiLineString === multiLineTemplateLiteral); // true
+
+            p As the name suggests, template literals are especially useful when defining templates, such as HTML:
+
+            pre(class="bg-light")
+                code. 
+                    let htmlTemplate = `
+                    &lt;div&gt;
+                        &lt;h2&gt;Hello World!&lt;/h2&gt;
+                    &lt;/div&gt;`;
+
+
+            br
+            br
+            
+            h3(id='interpolation') Interpolation
+
+            p Template literals have a valuable feature called <i>interpolation</i>, which lets you insert values at one or more locations within a single unbroken definition. Unlike regular strings, template literals are special JavaScript expressions that are immediately evaluated and converted into string instances. When you define a template literal, any variables you interpolate will be taken from its immediate scope.
+            
+            p This can be accomplished using a JavaScript expression inside <code>${}</code>:
+
+            pre(class="bg-light")
+                code. 
+                    let value = 5;
+                    let exponent = 'second';
+
+                    let interpolated = `${ value } to the ${ exponent } power is ${ value * value }`;
+                    
+                    console.log(interpolated); // 5 to the second power is 25
+
+            br
+
+            p In template literals, the values being interpolated will be automatically converted to strings using <code>toString()</code>. You can safely interpolate any JavaScript expression without worries. Nesting template literals is also safe and doesn't require any escaping:
+
+            pre(class="bg-light")
+                code. 
+                    console.log(`Hello, ${ `World` }!`); // Hello, World!
+
+            br
+
+            p <code>toString()</code> is invoked to coerce expression result into string:
+
+            pre(class="bg-light")
+                code. 
+                    let foo = { toString: () => 'World' };
+                    console.log(`Hello, ${ foo }!`); // Hello, World!
+
+
+            br  
+
+            p Invoking functions and methods inside interpolated expressions is allowed:
+
+            pre(class="bg-light")
+                code. 
+                    function capitalize(word) {
+                        return `${ word[0].toUpperCase() }${ word.slice(1) }`;
+                    }
+
+                    console.log(`${ capitalize('hello') }, ${ capitalize('world') }!`); // Hello, World!
+
+            br
+
+            p Additionally, templates can safely interpolate their previous value:
+
+            pre(class="bg-light")
+                code.
+                    let value = '';
+                    function append() {
+                        value = `${value}abc`
+                        console.log(value);
+                    }
+
+                    append(); // abc
+                    append(); // abcabc
+                    append(); // abcabcabc
+
+            br
+            br
+
+            h3(id="tag_functions") Tag Functions
+
+            p Tag functions are a unique feature in JavaScript that allows you to customize the behavior of template literals. When you use a template literal with a tag function, the function gets invoked with the processed parts of the template literal as its arguments. The tag function can then manipulate and combine these parts to create the final result.
+
+            p A tag function is defined as a regular function and is applied to a template literal by being prepended to it:
+
+            pre(class="bg-light")
+                code. 
+                    tagFunction`template literal parts`
+
+            p The tag function will be passed the template literal split into its pieces: the first argument is an array of the raw strings, and the remaining arguments are the results of the evaluated expressions:
+
+            pre(class="bg-light")
+                code. 
+                    function tagFunction(strings, ...values) {
+                        // strings: an array of string literals
+                        // values: the interpolated values as separate arguments
+                        // ... (rest parameter syntax) allows capturing multiple values in an array
+                        // You can process and combine the strings and values as needed
+                        // and return the customized result.
+                    }
+
+            p The return value of this function will be the string evaluated from the template literal.
+
+
+            p Example:
+
+            pre(class="bg-light")
+                code.
+                    function highlight(strings, ...values) {
+                        let result = '';
+                        strings.forEach((string, i) => {
+                            result += string;
+                            if (values[i]) {
+                                result += `&lt;strong&gt;${values[i]}&lt;/strong&gt;`;
+                            }
+                        });
+                        return result;
+                    }
+
+                    const name = "Alice";
+                    const age = 25;
+
+                    const message = highlight`Hello, my name is ${name} and I am ${age} years old.`;
+
+                    console.log(message);
+                    // Hello, my name is &lt;strong&gt;Alice&lt;/strong&gt; and I am &lt;strong&gt;25&lt;/strong&gt; years old.
+
+            p In this example, we define a <code>highlight</code> tag function. The tag function takes the parts of the template literal as separate arguments (<code>strings</code> and <code>values</code>) and customizes the output. In this case, the highlight function adds <code>&lt;strong&gt;</code> tags around the interpolated values to highlight them. 
+
+            hr
+
+            p When you use a tag function with a template literal containing <code>n</code> interpolated values, the tag function will receive <code>n</code> expression arguments and <code>n + 1</code> string pieces as its first argument. You can combine the strings and evaluated expressions into the default returned string by following this approach:
+
+            pre(class="bg-light")
+                code.
+                    function zipTag(strings, ...expressions) {
+                        return strings[0] +
+                            expressions.map((e, i) => `${e}${strings[i + 1]}`)
+                            .join('');
+                    }
+
+                    const name = "Alice";
+                    const age = 25;
+
+                    const message = zipTag`Hello, my name is ${name} and I am ${age} years old.`;
+
+                    console.log(message);
+                    // Hello, my name is Alice and I am 25 years old.
+
+            p Tag functions are a powerful tool for customizing template literals and can be used for various purposes, such as localization, escaping, syntax highlighting, and more. 
+
+            br
+            br
+
+            h2(id='raw_strings') Raw Strings
+
+            p Raw strings, also known as <i>raw template strings</i>, are a feature in JavaScript that allows you to create strings without interpreting escape sequences. Unlike regular template strings, raw template strings preserve backslashes (&nbsp;<b>\</b>&nbsp;) as-is and do not treat them as escape characters. They are particularly useful when you need to work with strings that contain literal backslashes, such as file paths or regular expressions.
+
+            p <code>String.raw</code> is a built-in <i>tag function</i> in JavaScript used with raw template strings. As a tag function, it takes the template string parts and interpolated values as arguments and returns a raw string without processing escape sequences. When you use <code>String.raw</code>, it's as if you wrote a raw template string directly.
+
+            p
+                b Syntax:
+            pre(class="bg-light")
+                code. 
+                    String.raw(callSite, ...substitutions)
+
+            br
+
+            p
+                b Example:
+            pre(class="bg-light")
+                code. 
+                    const path = String.raw`C:\Users\Username\Documents\file.txt`;
+                    console.log(path); // C:\Users\Username\Documents\file.txt
+
+            p In this example, we use <code>String.raw</code> with a raw template string to create the <code>path</code> variable. The raw string preserves the backslashes as-is, resulting in the correct file path representation.
+
+            hr
+
+            p The <code>raw</code> property is a property available on each element in the string piece collection <i>inside the tag function</i>. The <code>raw</code> property returns <i>an array containing the raw strings</i>, i.e., the strings with escape sequences still intact, exactly as they were written.
+            
+            p
+                b Example:
+            pre(class="bg-light")
+                code. 
+                    function myTag(strings, ...values) {
+                        console.log(strings.raw);
+                    }
+
+                    myTag`Hello\nWorld`; // Output: Array [ "Hello\\nWorld" ]
+
+
+
+            p In this example, we define the <code>myTag</code> tag function, which accesses the raw strings using the <code>raw</code> property. When we call <code>myTag</code> with the template literal <code>Hello\nWorld</code>, the output shows that the <code>\n</code> escape sequence is preserved as <code>\\n</code> in the raw array.
+
+            p Raw strings, the <code>String.raw</code> tag function, and the <code>raw</code> property provide a convenient way to work with strings containing backslashes and escape sequences without any additional processing. They are particularly useful when dealing with certain types of content that require literal backslashes, such as file paths and regular expressions.
+
+            br
+            br
+            
+        </div>
+
+        <div class="col-sm-4">
+
+            include see_also.pug
+            
+        </div>
+    </div>

@@ -114,6 +114,16 @@ const pages = [
     
         "title": "Numbers in JavaScript"
     },
+    {
+        "slug": "strings_in_js",
+        "theme": "javascript",
+    
+        "meta_description": "Explore the world of JavaScript strings in this comprehensive guide! Learn how to create, manipulate, and interpolate strings with ease. Discover the power of template literals and raw strings for better code efficiency.",
+        "meta_keywords": "JavaScript strings, String data type, character literals, template literals, raw strings, string manipulation, interpolation, JavaScript guide, web development, programming, JavaScript syntax",
+        "meta_title": "Mastering JavaScript Strings: A Comprehensive Guide to Using and Manipulating Strings in JavaScript | Learn JavaScript Strings, Template Literals, and Raw Strings",
+    
+        "title": "Strings in JavaScript"
+    },
 ];
 
 for(let i=0; i<pages.length; i++){
