@@ -20,6 +20,35 @@
     <script defer src="./resources/js/donate.js" type="module"></script>
     
     <script>if(!sessionStorage.getItem("_swa")&&document.referrer.indexOf(location.protocol+"//"+location.host)!== 0){fetch("https://counter.dev/track?"+new URLSearchParams({referrer:document.referrer,screen:screen.width+"x"+screen.height,user:"nbdfgbmu",utcoffset:"3"}))};sessionStorage.setItem("_swa","1");</script>
+
+    <style>
+.posts-list a {
+  text-decoration: none;
+  display: block;
+  color: #121212;
+  box-shadow: inset 0 -1px 0 #e0e0e0;
+  padding: 8px 0;
+  align-items: center;
+  transition: all .2s;
+}
+.posts-list a::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(123.18deg,#00ffff 0%,#147efb 48.17%);
+  border-radius: 50%;
+  margin-right: 8px;
+  transition: all .2s;
+}
+.posts-list a:hover {
+  color: #147efb;
+  box-shadow: inset 0 -1px 0 #147efb;
+}
+.posts-list a:hover::before {
+  transform: rotate(90deg);
+}
+    </style>
 </head>
 
 
@@ -30,124 +59,47 @@
   <div class="container-fluid">
     <section class="text-center">
       <h1 class="h4 d-flex justify-content-center align-items-center">
-        Interactive math
+        Programming Tips and Articles
       </h1>
     </section>
 
     <div class="d-flex flex-wrap justify-content-evenly mb-3">
 
       <div class="card mt-3" style="width: 18rem;">
-        <img src="/media/vector_addition.jpg" class="card-img-top" alt="Vector addition">
-        <div class="card-body">
-          <h5 class="card-title">Vector addition</h5>
-          <div class="d-grid">
-            <a href="/vector_addition.html" class="btn btn-primary stretched-link">Show me more</a>
-          </div>
+        <div class="card-body posts-list">
+          <h3 class="card-title mb-3">JavaScript</h3>
+            <div class="d-grid">
+              <a href="/dom.html" class="py-2">DOM</a>
+              <a href="/script_tag.html" class="py-2">SCRIPT tag</a>
+              <a href="/variables_in_js.html" class="py-2">Variables</a>
+              <a href="/numbers_in_js.html" class="py-2">Numbers</a>
+              <a href="/strings_in_js.html" class="py-2">Strings</a>
+            </div>
         </div>
       </div>
 
       <div class="card mt-3" style="width: 18rem;">
-        <img src="/media/vector_subtraction.jpg" class="card-img-top" alt="Vector subtraction">
-        <div class="card-body">
-          <h5 class="card-title">Vector subtraction</h5>
-          <div class="d-grid">
-            <a href="/vector_subtraction.html" class="btn btn-primary stretched-link">Show me more</a>
-          </div>
+        <div class="card-body posts-list">
+          <h3 class="card-title mb-3">Interactive Math</h3>
+            <div class="d-grid">
+              <a href="/vector_addition.html" class="py-2">Vector addition</a>
+              <a href="/vector_subtraction.html" class="py-2">Vector subtraction</a>
+              <a href="/vector_length.html" class="py-2">Vector length</a>
+              <a href="/unit_vector.html" class="py-2">Unit vector</a>
+              <a href="/cross_product.html" class="py-2">Cross product</a>
+            </div>
         </div>
       </div>
 
       <div class="card mt-3" style="width: 18rem;">
-        <img src="/media/vector_length.jpg" class="card-img-top" alt="Vector length">
-        <div class="card-body">
-          <h5 class="card-title">Vector length</h5>
-          <div class="d-grid">
-            <a href="/vector_length.html" class="btn btn-primary stretched-link">Show me more</a>
-          </div>
+        <div class="card-body posts-list">
+          <h3 class="card-title mb-3">freebitco.in</h3>
+            <div class="d-grid">
+              <a href="/freebitcoin_autoclick.html" class="py-2">Autoclick Script</a>
+              <a href="/freebitcoin_multiply_btc_roll_counter.html" class="py-2">Roll Counter Script</a>
+            </div>
         </div>
       </div>
-
-      <div class="card mt-3" style="width: 18rem;">
-        <img src="/media/unit_vector.jpg" class="card-img-top" alt="Unit vector">
-        <div class="card-body">
-          <h5 class="card-title">Unit vector</h5>
-          <div class="d-grid">
-            <a href="/unit_vector.html" class="btn btn-primary stretched-link">Play with unit vector</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-3" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Cross product</h5>
-          <div class="d-grid">
-            <a href="/cross_product.html" class="btn btn-primary stretched-link">Interactive 3D</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-3" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Document Object Model</h5>
-          <div class="d-grid">
-            <a href="/dom.html" class="btn btn-primary stretched-link">JavaScript - DOM</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-3" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Inserting JavaScript into an HTML page</h5>
-          <div class="d-grid">
-            <a href="/script_tag.html" class="btn btn-primary stretched-link">JavaScript - SCRIPT tag</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-3" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Variables in JavaScript</h5>
-          <div class="d-grid">
-            <a href="/variables_in_js.html" class="btn btn-primary stretched-link">Learn more</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-3" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Numbers in JavaScript</h5>
-          <div class="d-grid">
-            <a href="/numbers_in_js.html" class="btn btn-primary stretched-link">Learn more</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-3" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">Strings in JavaScript</h5>
-          <div class="d-grid">
-            <a href="/strings_in_js.html" class="btn btn-primary stretched-link">Learn more</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-3" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">freebitco.in Autoroll Autoclick Script</h5>
-          <div class="d-grid">
-            <a href="/freebitcoin_autoclick.html" class="btn btn-primary stretched-link">freebitco.in Autoclick Script</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="card mt-3" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">freebitco.in Multiply BTC Roll Counter Script</h5>
-          <div class="d-grid">
-            <a href="/freebitcoin_multiply_btc_roll_counter.html" class="btn btn-primary stretched-link">freebitco.in Roll Counter Script</a>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
