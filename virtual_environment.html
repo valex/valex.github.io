@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Learn about Python virtual environments, how to create them for project isolation, and manage dependencies using the requirements.txt file. Keep your projects up-to-date and conflict-free with virtual environments, ensuring reliable operations">
+<meta name="keywords" content="Python, virtual environment, venv, project isolation, dependencies, requirements.txt, package management, Python projects, version conflicts, dependency management, collaboration">
+<title>Python Virtual Environments: Isolate Projects &amp; Manage Dependencies</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<script>MathJax = {
+   tex: {
+       inlineMath: [['$', '$'], ['\\(', '\\)']]
+   },
+   svg: {
+       fontCache: 'global'
+   }
+};</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script><script defer src="./resources/js/virtual_environment.js"></script>
+<script defer src="./resources/js/donate.js"></script>
+<link rel="stylesheet" href="./resources/css/basic.css" >
+<link rel="stylesheet" href="./resources/css/virtual_environment.css" >
+<script src="https://cdn.counter.dev/script.js" data-id="b0775af1-0d2d-4956-bf6a-2894dc0d0d57" data-utcoffset="3"></script>
+</head>
+<body>
+<div class="container-fluid">
+<section class="text-center">
+<h1 class="h4 d-flex justify-content-center align-items-center">Python virtual environments</h1>
+</section><div class="row">
+<div class="col-sm-8"><p>Creating a Python virtual environment is a methodology that enables the isolation of dependencies and packages specific to a particular project. This isolation prevents conflicts with other projects and ensures a clean and organized package installation. Virtual environments are particularly valuable when managing multiple projects with different Python library versions or when avoiding interference with the system-wide Python installation.</p><div class="d-flex justify-content-between my-3">
+<div class="toc">
+<div class="toctitle">
+<h4>Fast links</h4>
+</div> 
+<ul>
+<li>
+<a href="#creating_venv"><span class="tocnumber">•</span> <span class="toctext">Creating Python Virtual Environments</span></a> 
+</li>
+<li>
+<a href="#requirements_txt"><span class="tocnumber">•</span> <span class="toctext">requirements.txt</span></a> 
+</li>
+</ul>
+</div>
+</div><br><br><h2 id="creating_venv">Creating Python Virtual Environments for Project Isolation</h2><p>Starting from <i>Python 3.3</i> and above, virtual environments are already integrated into the standard library, and the <a href="https://docs.python.org/3/library/venv.html" target="_blank"><code>venv</code></a> module is used for their creation. Here's how to create and activate a Python virtual environment:</p><ul>
+<li>Launch the command prompt (on Windows) or terminal (on macOS/Linux)</li>
+<li>Create a new directory for your project (if it doesn't exist) and navigate to it:<pre class="bg-light my-3"><code>mkdir my_project
+cd my_project</code></pre></li>
+<li>Create a virtual environment using the <code>venv</code> module. Specify a name for your virtual environment (e.g., "<code>venv_name</code>"):<pre class="bg-light my-3"><code>python -m venv venv_name</code></pre></li>
+<li>Activate the virtual environment:
+<ul>
+<li>on Windows:<pre class="bg-light my-3"><code>venv_name\Scripts\activate</code></pre></li>
+<li>on macOS/Linux:<pre class="bg-light my-3"><code>source venv_name/bin/activate</code></pre></li>
+</ul>
+</li>
+</ul><p>After activation, your terminal or command prompt should indicate that you are inside the virtual environment. For instance, you may see a prefix (<code>venv_name</code>) or the name of the virtual environment at the beginning of the command prompt.</p><p>Now, you can install packages in your virtual environment using <code>pip</code>, and they will be available only within this environment. For example, to install the package <code>requests</code>, execute the following command:</p><pre class="bg-light my-3"><code>pip install requests
+</code></pre><p>When you're done working in the virtual environment, you can deactivate it using:</p><pre class="bg-light my-3"><code>deactivate
+</code></pre><p>By deactivating the virtual environment, you will return to your system's default Python environment.</p><p>That's it! With virtual environments, you can manage dependencies for different projects independently, and it helps to keep your project isolated from the system-wide Python installation.</p><br><br><h2 id="requirements_txt">requirements.txt</h2><p>The <b>requirements.txt</b> file is a plain text file used in Python projects <i>to manage dependencies</i>. It contains the names and versions of packages required for your project. The <b>requirements.txt</b> file is typically used in conjunction with <a href="#creating_venv">virtual environments</a> to install and update packages in the project.</p><h5 class="mt-5">Generating the requirements.txt file:</h5><p>If you already have installed packages in your virtual environment, you can generate a <code>requirements.txt</code> file that contains a list of the installed packages and their versions. Execute the following command:</p><pre class="bg-light my-3"><code>pip freeze > requirements.txt
+</code></pre><p>OR (in more general way)</p><pre class="bg-light my-3"><code>venv_name/bin/python -m pip freeze > requirements.txt
+</code></pre><p>This will save a list of all installed packages in the <code>requirements.txt</code> file.</p><h5 class="mt-5">Installing dependencies from requirements.txt:</h5><p>To install all the dependencies listed in the <code>requirements.txt</code> file, use the following command in the activated virtual environment:</p><pre class="bg-light"><code>pip install -r requirements.txt
+</code></pre><p>This will read the <code>requirements.txt</code> file and install all the specified packages with their specified versions.</p><h5 class="mt-5">Updating dependencies</h5><p>If you want to update packages to their latest versions, you can use the following command:</p><pre class="bg-light"><code>pip install --upgrade -r requirements.txt
+</code></pre><p>This will upgrade the packages listed in the <code>requirements.txt</code> file to their latest available versions.</p><p>It is essential to keep the <code>requirements.txt</code> file up to date and periodically update dependencies to ensure that your project utilizes the latest package versions and operates reliably.</p><p>Please note that using virtual environments and the <code>requirements.txt</code> file is highly recommended for all Python projects, especially when dealing with multiple projects or collaborating with other developers. This practice helps avoid version conflicts and simplifies dependency management.</p><br><br></div>
+<div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action active" href="/virtual_environment.html">Python virtual environments</a></div></div></div></div>
+</div></div> <!--end .container-fluid --><section class="">
+<footer class=" text-white" style="background-color: #0a4275;">
+<div class="container p-4 pb-0">
+<section class="text-center">
+<p class="d-flex justify-content-center align-items-center">If you like all of this, please buy me a coffee</p>
+</section>
+</div>
+<div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+<div class="table-responsive">
+<table class="w-100">
+<tr>
+<td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
+<td ><span class="ms-3" id="btc_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
+<td ><span class="ms-3" id="xmr_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
+<td ><span class="ms-3" id="ltc_donate"></span></td>
+</tr>
+</table>
+</div>
+</div>
+</footer>
+</section></body>
+</html>

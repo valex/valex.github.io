@@ -1,0 +1,138 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+            p Creating a Python virtual environment is a methodology that enables the isolation of dependencies and packages specific to a particular project. This isolation prevents conflicts with other projects and ensures a clean and organized package installation. Virtual environments are particularly valuable when managing multiple projects with different Python library versions or when avoiding interference with the system-wide Python installation.
+
+            <div class="d-flex justify-content-between my-3">
+                <div class="toc">
+                    <div class="toctitle">
+                        <h4>Fast links</h4>
+                    </div> 
+                    
+                    <ul>
+                        <li>
+                            <a href="#creating_venv"><span class="tocnumber">•</span> <span class="toctext">Creating Python Virtual Environments</span></a> 
+                        </li>
+                        <li>
+                            <a href="#requirements_txt"><span class="tocnumber">•</span> <span class="toctext">requirements.txt</span></a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            br
+            br
+
+            h2(id='creating_venv') Creating Python Virtual Environments for Project Isolation
+
+            p Starting from <i>Python 3.3</i> and above, virtual environments are already integrated into the standard library, and the <a href="https://docs.python.org/3/library/venv.html" target="_blank"><code>venv</code></a> module is used for their creation. Here's how to create and activate a Python virtual environment:
+            
+            <ul>
+              <li>Launch the command prompt (on Windows) or terminal (on macOS/Linux)</li>
+              <li>Create a new directory for your project (if it doesn't exist) and navigate to it:
+                pre(class="bg-light my-3")
+                    code. 
+                        mkdir my_project
+                        cd my_project
+              </li>
+              <li>Create a virtual environment using the <code>venv</code> module. Specify a name for your virtual environment (e.g., "<code>venv_name</code>"):
+                    pre(class="bg-light my-3")
+                        code. 
+                            python -m venv venv_name
+              </li>
+              <li>Activate the virtual environment:
+                <ul>
+                    <li>on Windows:
+                        pre(class="bg-light my-3")
+                            code. 
+                                venv_name\Scripts\activate
+                    </li>
+                    <li>on macOS/Linux:
+                        pre(class="bg-light my-3")
+                            code. 
+                                source venv_name/bin/activate
+                    </li>
+                </ul>
+              </li>
+            </ul>
+
+            p After activation, your terminal or command prompt should indicate that you are inside the virtual environment. For instance, you may see a prefix (<code>venv_name</code>) or the name of the virtual environment at the beginning of the command prompt.
+
+            p Now, you can install packages in your virtual environment using <code>pip</code>, and they will be available only within this environment. For example, to install the package <code>requests</code>, execute the following command:
+
+            pre(class="bg-light my-3")
+                code. 
+                    pip install requests
+
+            p When you're done working in the virtual environment, you can deactivate it using:
+
+            pre(class="bg-light my-3")
+                code. 
+                    deactivate
+
+            p By deactivating the virtual environment, you will return to your system's default Python environment.
+
+            p That's it! With virtual environments, you can manage dependencies for different projects independently, and it helps to keep your project isolated from the system-wide Python installation.
+
+            br
+            br
+
+
+            h2(id="requirements_txt") requirements.txt
+
+            p The <b>requirements.txt</b> file is a plain text file used in Python projects <i>to manage dependencies</i>. It contains the names and versions of packages required for your project. The <b>requirements.txt</b> file is typically used in conjunction with <a href="#creating_venv">virtual environments</a> to install and update packages in the project.
+
+            h5(class="mt-5") Generating the requirements.txt file:
+
+            p If you already have installed packages in your virtual environment, you can generate a <code>requirements.txt</code> file that contains a list of the installed packages and their versions. Execute the following command:
+
+            pre(class="bg-light my-3")
+                code. 
+                    pip freeze > requirements.txt
+
+            p OR (in more general way)
+
+            pre(class="bg-light my-3")
+                code. 
+                    venv_name/bin/python -m pip freeze > requirements.txt
+                
+            p This will save a list of all installed packages in the <code>requirements.txt</code> file.
+
+            h5(class="mt-5") Installing dependencies from requirements.txt:
+
+            p To install all the dependencies listed in the <code>requirements.txt</code> file, use the following command in the activated virtual environment:
+
+            pre(class="bg-light")
+                code. 
+                    pip install -r requirements.txt
+                    
+            p This will read the <code>requirements.txt</code> file and install all the specified packages with their specified versions.
+
+            h5(class="mt-5") Updating dependencies
+
+            p If you want to update packages to their latest versions, you can use the following command:
+
+            pre(class="bg-light")
+                code. 
+                    pip install --upgrade -r requirements.txt
+                    
+            p This will upgrade the packages listed in the <code>requirements.txt</code> file to their latest available versions.
+                    
+            p It is essential to keep the <code>requirements.txt</code> file up to date and periodically update dependencies to ensure that your project utilizes the latest package versions and operates reliably.
+
+            p Please note that using virtual environments and the <code>requirements.txt</code> file is highly recommended for all Python projects, especially when dealing with multiple projects or collaborating with other developers. This practice helps avoid version conflicts and simplifies dependency management.
+
+            br
+            br
+            
+        </div>
+
+        <div class="col-sm-4">
+
+            include see_also.pug
+            
+        </div>
+    </div>

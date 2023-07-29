@@ -124,6 +124,16 @@ const pages = [
     
         "title": "Strings in JavaScript"
     },
+    {
+        "slug": "virtual_environment",
+        "theme": "python",
+    
+        "meta_description": "Learn about Python virtual environments, how to create them for project isolation, and manage dependencies using the requirements.txt file. Keep your projects up-to-date and conflict-free with virtual environments, ensuring reliable operations",
+        "meta_keywords": "Python, virtual environment, venv, project isolation, dependencies, requirements.txt, package management, Python projects, version conflicts, dependency management, collaboration",
+        "meta_title": "Python Virtual Environments: Isolate Projects & Manage Dependencies",
+    
+        "title": "Python virtual environments"
+    },
 ];
 
 for(let i=0; i<pages.length; i++){
