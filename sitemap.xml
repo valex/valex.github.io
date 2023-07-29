@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://valex.github.io/virtual_environment.html</loc>
+<lastmod>2023-07-29</lastmod>
+</url>
+<url>
 <loc>https://valex.github.io/strings_in_js.html</loc>
 <lastmod>2023-07-22</lastmod>
 </url>
@@ -30,7 +34,7 @@
 </url>
 <url>
 <loc>https://valex.github.io</loc>
-<lastmod>2023-07-22</lastmod>
+<lastmod>2023-07-29</lastmod>
 </url>
 <url>
 <loc>https://valex.github.io/dom.html</loc>
