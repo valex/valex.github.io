@@ -45,3 +45,22 @@
     padding-left: 0;
     padding-right: .5em;
 }
+
+@keyframes goldGlitter {
+    0% {
+      color: #0d6efd; /* Темный золотой цвет */
+      text-shadow: none;
+    }
+    50% {
+      color: #ffd700; /* Яркий золотой цвет */
+      text-shadow: 0 0 5px #ffd700;
+    }
+    100% {
+      color: #0d6efd; /* Темный золотой цвет */
+      text-shadow: none;
+    }
+}
+  
+.golden-text {
+    animation: goldGlitter 4s infinite;
+}

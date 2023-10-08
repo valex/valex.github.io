@@ -1,0 +1,141 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+            p Die Erstellung einer Python-Virtualumgebung ist eine Methode, die die Isolierung von Abhängigkeiten und Paketen ermöglicht, die spezifisch für ein bestimmtes Projekt sind. Diese Isolierung verhindert Konflikte mit anderen Projekten und gewährleistet eine saubere und organisierte Paketinstallation. Virtuelle Umgebungen sind besonders wertvoll beim Verwalten mehrerer Projekte mit verschiedenen Python-Bibliotheksversionen oder um Interferenzen mit der systemweiten Python-Installation zu vermeiden.
+
+            <div class="d-flex justify-content-between my-3">
+                <div class="toc">
+                    <div class="toctitle">
+                        <h4>Schnellverknüpfungen</h4>
+                    </div> 
+                    
+                    <ul>
+                        <li>
+                            <a href="#creating_venv"><span class="tocnumber">•</span> <span class="toctext">Erstellen von Python Virtualumgebungen</span></a> 
+                        </li>
+                        <li>
+                            <a href="#requirements_txt"><span class="tocnumber">•</span> <span class="toctext">requirements.txt</span></a> 
+                        </li>
+                        <li>
+                            <a class="golden-text" href="#donate"><span class="tocnumber">•</span> <span class="toctext">Kaufen Sie dem Autor einen Kaffee</span></a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            br
+            br
+
+            h2(id='creating_venv') Erstellen von Python-Virtualumgebungen zur Projektabgrenzung
+
+            p Ab <i>Python 3.3</i> und höher sind virtuelle Umgebungen bereits in die Standardbibliothek integriert, und das <a href="https://docs.python.org/3/library/venv.html" target="_blank"><code>venv</code></a>-Modul wird für ihre Erstellung verwendet. Hier erfahren Sie, wie Sie eine Python-Virtualumgebung erstellen und aktivieren:
+            
+            <ul>
+              <li>Starten Sie die Eingabeaufforderung (unter Windows) oder das Terminal (unter macOS/Linux)</li>
+              <li>Erstellen Sie ein neues Verzeichnis für Ihr Projekt (falls es nicht vorhanden ist) und wechseln Sie zu diesem Verzeichnis:
+                pre(class="bg-light my-3")
+                    code. 
+                        mkdir my_project
+                        cd my_project
+              </li>
+              <li>Erstellen Sie eine virtuelle Umgebung mithilfe des <code>venv</code>-Moduls. Geben Sie einen Namen für Ihre virtuelle Umgebung an (z.B. "<code>venv_name</code>"):
+                    pre(class="bg-light my-3")
+                        code. 
+                            python -m venv venv_name
+              </li>
+              <li>Aktivieren Sie die virtuelle Umgebung:
+                <ul>
+                    <li>Auf Windows:
+                        pre(class="bg-light my-3")
+                            code. 
+                                venv_name\Scripts\activate
+                    </li>
+                    <li>Auf macOS/Linux:
+                        pre(class="bg-light my-3")
+                            code. 
+                                source venv_name/bin/activate
+                    </li>
+                </ul>
+              </li>
+            </ul>
+
+            p Nach der Aktivierung sollte Ihre Eingabeaufforderung oder das Terminal anzeigen, dass Sie sich innerhalb der virtuellen Umgebung befinden. Zum Beispiel könnte ein Präfix (<code>venv_name</code>) oder der Name der virtuellen Umgebung am Anfang der Eingabeaufforderung angezeigt werden.
+
+            p Nun können Sie Pakete in Ihrer virtuellen Umgebung mithilfe von <code>pip</code> installieren, und sie werden nur innerhalb dieser Umgebung verfügbar sein. Zum Beispiel, um das Paket <code>requests</code> zu installieren, führen Sie den folgenden Befehl aus:
+
+            pre(class="bg-light my-3")
+                code. 
+                    pip install requests
+
+            p Wenn Sie mit der Arbeit in der virtuellen Umgebung fertig sind, können Sie sie deaktivieren, indem Sie Folgendes verwenden:
+
+            pre(class="bg-light my-3")
+                code. 
+                    deactivate
+
+            p Durch Deaktivieren der virtuellen Umgebung kehren Sie zur standardmäßigen Python-Umgebung Ihres Systems zurück.
+
+            p Das war's! Mit virtuellen Umgebungen können Sie Abhängigkeiten für verschiedene Projekte unabhängig voneinander verwalten, und es hilft dabei, Ihr Projekt von der systemweiten Python-Installation isoliert zu halten.
+
+            br
+            br
+
+
+            h2(id="requirements_txt") requirements.txt
+
+            p Die Datei <b>requirements.txt</b> ist eine einfache Textdatei, die in Python-Projekten verwendet wird, um Abhängigkeiten zu verwalten. Sie enthält die Namen und Versionen der Pakete, die für Ihr Projekt erforderlich sind. Die Datei <b>requirements.txt</b> wird in der Regel in Verbindung mit <a href='#creating_venv'>virtuellen Umgebungen</a> verwendet, um Pakete im Projekt zu installieren und zu aktualisieren.
+
+            h5(class="mt-5") Erstellen der requirements.txt-Datei:
+
+            p Wenn Sie bereits Pakete in Ihrer virtuellen Umgebung installiert haben, können Sie eine <code>requirements.txt</code>-Datei generieren, die eine Liste der installierten Pakete und ihrer Versionen enthält. Führen Sie den folgenden Befehl aus:
+
+            pre(class="bg-light my-3")
+                code. 
+                    pip freeze > requirements.txt
+
+            p ODER (auf allgemeinere Weise)
+
+            pre(class="bg-light my-3")
+                code. 
+                    venv_name/bin/python -m pip freeze > requirements.txt
+                
+            p Dadurch wird eine Liste aller installierten Pakete in der Datei <code>requirements.txt</code> gespeichert.
+
+            h5(class="mt-5") Installation von Abhängigkeiten aus der Datei requirements.txt:
+
+            p Um alle in der Datei <code>requirements.txt</code> aufgelisteten Abhängigkeiten zu installieren, verwenden Sie den folgenden Befehl in der aktivierten virtuellen Umgebung:
+
+            pre(class="bg-light")
+                code. 
+                    pip install -r requirements.txt
+                    
+            p Dadurch wird die Datei <code>requirements.txt</code> gelesen und alle angegebenen Pakete mit ihren angegebenen Versionen installiert.
+
+            h5(class="mt-5") Aktualisierung von Abhängigkeiten
+
+            p Wenn Sie Pakete auf ihre neuesten Versionen aktualisieren möchten, können Sie den folgenden Befehl verwenden:
+
+            pre(class="bg-light")
+                code. 
+                    pip install --upgrade -r requirements.txt
+                    
+            p Dadurch werden die in der Datei <code>requirements.txt</code> aufgelisteten Pakete auf ihre neuesten verfügbaren Versionen aktualisiert.
+                    
+            p Es ist wichtig, die Datei <code>requirements.txt</code> auf dem neuesten Stand zu halten und Abhängigkeiten regelmäßig zu aktualisieren, um sicherzustellen, dass Ihr Projekt die neuesten Paketversionen verwendet und zuverlässig funktioniert.
+
+            p Bitte beachten Sie, dass die Verwendung von virtuellen Umgebungen und der Datei <code>requirements.txt</code> für alle Python-Projekte dringend empfohlen wird, insbesondere wenn Sie es mit mehreren Projekten zu tun haben oder mit anderen Entwicklern zusammenarbeiten. Diese Praxis hilft, Versionskonflikte zu vermeiden und vereinfacht die Verwaltung von Abhängigkeiten.
+
+            br
+            br
+            
+        </div>
+
+        <div class="col-sm-4">
+
+            include see_also.pug
+            
+        </div>
+    </div>

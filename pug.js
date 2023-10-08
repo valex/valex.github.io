@@ -132,11 +132,27 @@ const pages = [
         "meta_keywords": "Python, virtual environment, venv, project isolation, dependencies, requirements.txt, package management, Python projects, version conflicts, dependency management, collaboration",
         "meta_title": "Python Virtual Environments: Isolate Projects & Manage Dependencies",
     
-        "title": "Python virtual environments"
+        "title": "Python virtual environments",
+        "alternates": {
+            "de": {
+                "meta_description": "Erfahren Sie mehr über Python-Virtualumgebungen, wie Sie sie zur Projektabgrenzung erstellen und Abhängigkeiten mithilfe der requirements.txt-Datei verwalten können. Halten Sie Ihre Projekte mit virtuellen Umgebungen auf dem neuesten Stand und frei von Konflikten, um eine zuverlässige Funktionsweise sicherzustellen",
+                "meta_keywords": "Python, virtuelle Umgebung, venv, Projektabgrenzung, Abhängigkeiten, requirements.txt, Paketverwaltung, Python-Projekte, Versionskonflikte, Abhängigkeitsverwaltung, Zusammenarbeit",
+                "meta_title": "Python Virtuelle Umgebungen: Projekte isolieren und Abhängigkeiten verwalten",
+            
+                "title": "Python Virtualumgebungen",
+            }
+        }
     },
 ];
 
+const alternatePages = {
+    "de": []
+};
+
+
+
 for(let i=0; i<pages.length; i++){
+
     // Compile template.pug, and render a set of data
     content = pug.renderFile('src/templates/'+pages[i]['slug']+'.pug', {
         pages,
@@ -144,5 +160,26 @@ for(let i=0; i<pages.length; i++){
     });
 
     fs.writeFile(pages[i]['slug']+'.html', content, function(){});
+
+    if( pages[i].hasOwnProperty('alternates')){
+        for (let alternate in pages[i]['alternates']) {
+            alternatePages[alternate].push( Object.assign({
+                "slug": pages[i]['slug'],
+                "theme": pages[i]['theme'],
+            }, pages[i]['alternates'][alternate]) );
+        }
+    }
 }
+
+for(let i=0; i<alternatePages['de'].length; i++){
+    const alternate = 'de';
+    // Compile template.pug, and render a set of data
+    content = pug.renderFile('src/templates/'+alternate+'/'+alternatePages[alternate][i]['slug']+'.pug', {
+        pages: alternatePages[alternate],
+        index: i
+    });
+    
+    fs.writeFile(alternate+'/'+alternatePages[alternate][i]['slug']+'.html', content, function(){});
+}
+
 

@@ -2,6 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://valex.github.io/virtual_environment.html</loc>
+<xhtml:link
+    rel="alternate"
+    hreflang="de"
+    href="https://valex.github.io/de/virtual_environment.html" />
+<xhtml:link
+    rel="alternate"
+    hreflang="en"
+    href="https://valex.github.io/virtual_environment.html" />
 <lastmod>2023-07-29</lastmod>
 </url>
 <url>

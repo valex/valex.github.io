@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="de">
+<head>
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Erfahren Sie mehr über Python-Virtualumgebungen, wie Sie sie zur Projektabgrenzung erstellen und Abhängigkeiten mithilfe der requirements.txt-Datei verwalten können. Halten Sie Ihre Projekte mit virtuellen Umgebungen auf dem neuesten Stand und frei von Konflikten, um eine zuverlässige Funktionsweise sicherzustellen">
+<meta name="keywords" content="Python, virtuelle Umgebung, venv, Projektabgrenzung, Abhängigkeiten, requirements.txt, Paketverwaltung, Python-Projekte, Versionskonflikte, Abhängigkeitsverwaltung, Zusammenarbeit">
+<link rel="alternate" hreflang="en" href="https://valex.github.io/virtual_environment.html" />
+<title>Python Virtuelle Umgebungen: Projekte isolieren und Abhängigkeiten verwalten</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<script>MathJax = {
+   tex: {
+       inlineMath: [['$', '$'], ['\\(', '\\)']]
+   },
+   svg: {
+       fontCache: 'global'
+   }
+};</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script><script defer src="/resources/js/virtual_environment.js"></script>
+<script defer src="/resources/js/donate.js"></script>
+<link rel="stylesheet" href="/resources/css/basic.css" >
+<link rel="stylesheet" href="/resources/css/virtual_environment.css" >
+<script src="https://cdn.counter.dev/script.js" data-id="b0775af1-0d2d-4956-bf6a-2894dc0d0d57" data-utcoffset="3"></script>
+</head>
+<body>
+<div class="container-fluid">
+<section class="text-center">
+<h1 class="h4 d-flex justify-content-center align-items-center">Python Virtualumgebungen</h1>
+</section><div class="row">
+<div class="col-sm-8"><p>Die Erstellung einer Python-Virtualumgebung ist eine Methode, die die Isolierung von Abhängigkeiten und Paketen ermöglicht, die spezifisch für ein bestimmtes Projekt sind. Diese Isolierung verhindert Konflikte mit anderen Projekten und gewährleistet eine saubere und organisierte Paketinstallation. Virtuelle Umgebungen sind besonders wertvoll beim Verwalten mehrerer Projekte mit verschiedenen Python-Bibliotheksversionen oder um Interferenzen mit der systemweiten Python-Installation zu vermeiden.</p><div class="d-flex justify-content-between my-3">
+<div class="toc">
+<div class="toctitle">
+<h4>Schnellverknüpfungen</h4>
+</div> 
+<ul>
+<li>
+<a href="#creating_venv"><span class="tocnumber">•</span> <span class="toctext">Erstellen von Python Virtualumgebungen</span></a> 
+</li>
+<li>
+<a href="#requirements_txt"><span class="tocnumber">•</span> <span class="toctext">requirements.txt</span></a> 
+</li>
+<li>
+<a class="golden-text" href="#donate"><span class="tocnumber">•</span> <span class="toctext">Kaufen Sie dem Autor einen Kaffee</span></a> 
+</li>
+</ul>
+</div>
+</div><br><br><h2 id="creating_venv">Erstellen von Python-Virtualumgebungen zur Projektabgrenzung</h2><p>Ab <i>Python 3.3</i> und höher sind virtuelle Umgebungen bereits in die Standardbibliothek integriert, und das <a href="https://docs.python.org/3/library/venv.html" target="_blank"><code>venv</code></a>-Modul wird für ihre Erstellung verwendet. Hier erfahren Sie, wie Sie eine Python-Virtualumgebung erstellen und aktivieren:</p><ul>
+<li>Starten Sie die Eingabeaufforderung (unter Windows) oder das Terminal (unter macOS/Linux)</li>
+<li>Erstellen Sie ein neues Verzeichnis für Ihr Projekt (falls es nicht vorhanden ist) und wechseln Sie zu diesem Verzeichnis:<pre class="bg-light my-3"><code>mkdir my_project
+cd my_project</code></pre></li>
+<li>Erstellen Sie eine virtuelle Umgebung mithilfe des <code>venv</code>-Moduls. Geben Sie einen Namen für Ihre virtuelle Umgebung an (z.B. "<code>venv_name</code>"):<pre class="bg-light my-3"><code>python -m venv venv_name</code></pre></li>
+<li>Aktivieren Sie die virtuelle Umgebung:
+<ul>
+<li>Auf Windows:<pre class="bg-light my-3"><code>venv_name\Scripts\activate</code></pre></li>
+<li>Auf macOS/Linux:<pre class="bg-light my-3"><code>source venv_name/bin/activate</code></pre></li>
+</ul>
+</li>
+</ul><p>Nach der Aktivierung sollte Ihre Eingabeaufforderung oder das Terminal anzeigen, dass Sie sich innerhalb der virtuellen Umgebung befinden. Zum Beispiel könnte ein Präfix (<code>venv_name</code>) oder der Name der virtuellen Umgebung am Anfang der Eingabeaufforderung angezeigt werden.</p><p>Nun können Sie Pakete in Ihrer virtuellen Umgebung mithilfe von <code>pip</code> installieren, und sie werden nur innerhalb dieser Umgebung verfügbar sein. Zum Beispiel, um das Paket <code>requests</code> zu installieren, führen Sie den folgenden Befehl aus:</p><pre class="bg-light my-3"><code>pip install requests
+</code></pre><p>Wenn Sie mit der Arbeit in der virtuellen Umgebung fertig sind, können Sie sie deaktivieren, indem Sie Folgendes verwenden:</p><pre class="bg-light my-3"><code>deactivate
+</code></pre><p>Durch Deaktivieren der virtuellen Umgebung kehren Sie zur standardmäßigen Python-Umgebung Ihres Systems zurück.</p><p>Das war's! Mit virtuellen Umgebungen können Sie Abhängigkeiten für verschiedene Projekte unabhängig voneinander verwalten, und es hilft dabei, Ihr Projekt von der systemweiten Python-Installation isoliert zu halten.</p><br><br><h2 id="requirements_txt">requirements.txt</h2><p>Die Datei <b>requirements.txt</b> ist eine einfache Textdatei, die in Python-Projekten verwendet wird, um Abhängigkeiten zu verwalten. Sie enthält die Namen und Versionen der Pakete, die für Ihr Projekt erforderlich sind. Die Datei <b>requirements.txt</b> wird in der Regel in Verbindung mit <a href='#creating_venv'>virtuellen Umgebungen</a> verwendet, um Pakete im Projekt zu installieren und zu aktualisieren.</p><h5 class="mt-5">Erstellen der requirements.txt-Datei:</h5><p>Wenn Sie bereits Pakete in Ihrer virtuellen Umgebung installiert haben, können Sie eine <code>requirements.txt</code>-Datei generieren, die eine Liste der installierten Pakete und ihrer Versionen enthält. Führen Sie den folgenden Befehl aus:</p><pre class="bg-light my-3"><code>pip freeze > requirements.txt
+</code></pre><p>ODER (auf allgemeinere Weise)</p><pre class="bg-light my-3"><code>venv_name/bin/python -m pip freeze > requirements.txt
+</code></pre><p>Dadurch wird eine Liste aller installierten Pakete in der Datei <code>requirements.txt</code> gespeichert.</p><h5 class="mt-5">Installation von Abhängigkeiten aus der Datei requirements.txt:</h5><p>Um alle in der Datei <code>requirements.txt</code> aufgelisteten Abhängigkeiten zu installieren, verwenden Sie den folgenden Befehl in der aktivierten virtuellen Umgebung:</p><pre class="bg-light"><code>pip install -r requirements.txt
+</code></pre><p>Dadurch wird die Datei <code>requirements.txt</code> gelesen und alle angegebenen Pakete mit ihren angegebenen Versionen installiert.</p><h5 class="mt-5">Aktualisierung von Abhängigkeiten</h5><p>Wenn Sie Pakete auf ihre neuesten Versionen aktualisieren möchten, können Sie den folgenden Befehl verwenden:</p><pre class="bg-light"><code>pip install --upgrade -r requirements.txt
+</code></pre><p>Dadurch werden die in der Datei <code>requirements.txt</code> aufgelisteten Pakete auf ihre neuesten verfügbaren Versionen aktualisiert.</p><p>Es ist wichtig, die Datei <code>requirements.txt</code> auf dem neuesten Stand zu halten und Abhängigkeiten regelmäßig zu aktualisieren, um sicherzustellen, dass Ihr Projekt die neuesten Paketversionen verwendet und zuverlässig funktioniert.</p><p>Bitte beachten Sie, dass die Verwendung von virtuellen Umgebungen und der Datei <code>requirements.txt</code> für alle Python-Projekte dringend empfohlen wird, insbesondere wenn Sie es mit mehreren Projekten zu tun haben oder mit anderen Entwicklern zusammenarbeiten. Diese Praxis hilft, Versionskonflikte zu vermeiden und vereinfacht die Verwaltung von Abhängigkeiten.</p><br><br></div>
+<div class="col-sm-4"><div class="card"><div class="card-header">Siehe auch</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action active" href="/virtual_environment.html">Python Virtualumgebungen</a></div></div></div></div>
+</div></div> <!--end .container-fluid --><section id="donate" class="">
+<footer class=" text-white" style="background-color: #0a4275;">
+<div class="container p-4 pb-0">
+<section class="text-center">
+<p class="d-flex justify-content-center align-items-center">Wenn Ihnen das gefällt, kaufen Sie mir bitte einen Kaffee</p>
+</section>
+</div>
+<div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+<div class="table-responsive">
+<table class="w-100">
+<tr>
+<td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
+<td ><span class="ms-3" id="btc_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
+<td ><span class="ms-3" id="xmr_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
+<td ><span class="ms-3" id="ltc_donate"></span></td>
+</tr>
+</table>
+</div>
+</div>
+</footer>
+</section></body>
+</html>

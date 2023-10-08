@@ -3,8 +3,7 @@
 <meta charset=UTF-8>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Learn how to effectively include JavaScript in your web pages using the script-tag and understand the benefits of dynamically loading scripts. Explore techniques such as direct embedding and external file inclusion, along with the 'defer' and 'async' attributes. Discover the use of the link rel='subresource' tag to optimize resource loading, improve performance, and enhance the browsing experience.">
-<meta name="keywords" content="JavaScript inclusion, script tag, direct embedding, external file inclusion, 'defer' attribute, 'async' attribute, dynamic script loading, resource optimization, performance enhancement, 'subresource' tag, web development, front-end programming.">
-<title>Understanding JavaScript Inclusion in HTML: Embedding Scripts, External Files, and Key Considerations</title>
+<meta name="keywords" content="JavaScript inclusion, script tag, direct embedding, external file inclusion, 'defer' attribute, 'async' attribute, dynamic script loading, resource optimization, performance enhancement, 'subresource' tag, web development, front-end programming."><title>Understanding JavaScript Inclusion in HTML: Embedding Scripts, External Files, and Key Considerations</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 <script>MathJax = {
    tex: {
@@ -109,7 +108,7 @@ document.head.appendChild(scriptElement); // Add to the DOM
 </code></pre><p>Note that the request to fetch the script file will be initiated and sent to the server once the <code>scriptElement</code> is attached to the DOM. This is because the browser begins fetching external resources, such as scripts, stylesheets, or images, only when they are added to the DOM.</p><p>By default, scripts that are created in this fashion are <code>async</code>.</p><p>To inform browsers of the existence of these dynamically requested files, you can explicitly declare them in the document <code>head</code>:</p><pre class="bg-light"><code>&lt;link rel="subresource" href="filename.js"&gt;
 </code></pre><br><br></div>
 <div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/dom.html">DOM - Document Object Model</a><a class="list-group-item list-group-item-action active" href="/script_tag.html">Inserting JavaScript into an HTML page</a><a class="list-group-item list-group-item-action" href="/variables_in_js.html">Variables in JavaScript</a><a class="list-group-item list-group-item-action" href="/numbers_in_js.html">Numbers in JavaScript</a><a class="list-group-item list-group-item-action" href="/strings_in_js.html">Strings in JavaScript</a></div></div></div></div>
-</div></div> <!--end .container-fluid --><section class="">
+</div></div> <!--end .container-fluid --><section id="donate" class="">
 <footer class=" text-white" style="background-color: #0a4275;">
 <div class="container p-4 pb-0">
 <section class="text-center">
