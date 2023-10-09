@@ -10,7 +10,7 @@
     rel="alternate"
     hreflang="en"
     href="https://valex.github.io/virtual_environment.html" />
-<lastmod>2023-07-29</lastmod>
+<lastmod>2023-10-08</lastmod>
 </url>
 <url>
 <loc>https://valex.github.io/strings_in_js.html</loc>
@@ -38,7 +38,15 @@
 </url>
 <url>
 <loc>https://valex.github.io/freebitcoin_autoclick.html</loc>
-<lastmod>2023-06-13</lastmod>
+<xhtml:link
+    rel="alternate"
+    hreflang="de"
+    href="https://valex.github.io/de/freebitcoin_autoclick.html" />
+<xhtml:link
+    rel="alternate"
+    hreflang="en"
+    href="https://valex.github.io/freebitcoin_autoclick.html" />
+<lastmod>2023-10-09</lastmod>
 </url>
 <url>
 <loc>https://valex.github.io</loc>

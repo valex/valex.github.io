@@ -92,7 +92,16 @@ const pages = [
         "meta_keywords": "freebitco.in, Autoroll Autoclick script, automate earnings, Bitcoin, cryptocurrency, Tampermonkey, skip CAPTCHA",
         "meta_title": "Automate Bitcoin Earnings with freebitco.in Autoroll Autoclick Script | Boost Your Profits Effortlessly",
     
-        "title": "freebitco.in Autoroll Autoclick Script"
+        "title": "freebitco.in Autoroll Autoclick Script",
+        "alternates": {
+            "de": {
+                "meta_description": "Automatisieren Sie Ihre freebitco.in-Einnahmen mit dem Autoroll Autoclick-Skript. Steigern Sie Ihre Bitcoin-Gewinne mühelos. Überspringen Sie das CAPTCHA-Ärgernis. Installieren Sie es mit Tampermonkey. Legen Sie jetzt los!",
+                "meta_keywords": "freebitco.in, Autoroll Autoklick-Skript, Automatisierung von Einnahmen, Bitcoin, Kryptowährung, Tampermonkey, CAPTCHA überspringen",
+                "meta_title": "Automatisieren Sie Ihre Bitcoin-Einnahmen mit dem freebitco.in Autoroll Autoklick-Skript | Steigern Sie Ihre Gewinne mühelos",
+            
+                "title": "freebitco.in Autoroll Autoklick-Skript",
+            }
+        }
     },
     {
         "slug": "freebitcoin_multiply_btc_roll_counter",
