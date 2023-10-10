@@ -107,11 +107,20 @@ const pages = [
         "slug": "freebitcoin_multiply_btc_roll_counter",
         "theme": "freebitcoin",
     
-        "meta_description": "Track and analyze roll statistics in freebitco.in's Multiply BTC game with the freebitco.in Multiply BTC Roll Counter. Get valuable insights on the number of rolls since the last winning number and optimize your strategy.",
+        "meta_description": "Track and analyze roll statistics in freebitco.in's Multiply BTC game with the freebitco.in Multiply BTC Roll Counter. Get valuable insights on the number of rolls since the last winning number and optimize your strategy",
         "meta_keywords": "freebitco.in, Multiply BTC, roll counter, roll statistics, strategy, gambling",
         "meta_title": "Freebitco.in Multiply BTC Roll Counter | Track and Analyze Roll Statistics",
     
-        "title": "freebitco.in Multiply BTC Roll Counter Script"
+        "title": "freebitco.in Multiply BTC Roll Counter Script",
+        "alternates": {
+            "de": {
+                "meta_description": "Verfolgen und analysieren Sie Rollstatistiken im 'Multiply BTC'-Spiel von freebitco.in mit dem freebitco.in Multiply BTC Roll Counter. Erhalten Sie wertvolle Einblicke in die Anzahl der Rollen seit der letzten Gewinnzahl und optimieren Sie Ihre Strategie",
+                "meta_keywords": "freebitco.in, Multiply BTC, Rollenzähler, Rollstatistiken, Strategie, Glücksspiel",
+                "meta_title": "Freebitco.in Multiply BTC Rollenzähler | Verfolgen und Analysieren von Rollstatistiken",
+            
+                "title": "freebitco.in Multiply BTC Rollenzähler Skript",
+            }
+        }
     },
     {
         "slug": "numbers_in_js",
