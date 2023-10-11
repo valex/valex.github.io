@@ -150,14 +150,14 @@ const pages = [
         "meta_keywords": "Python, virtual environment, venv, project isolation, dependencies, requirements.txt, package management, Python projects, version conflicts, dependency management, collaboration",
         "meta_title": "Python Virtual Environments: Isolate Projects & Manage Dependencies",
     
-        "title": "Python virtual environments",
+        "title": "How to create a Virtual Environment in Python",
         "alternates": {
             "de": {
                 "meta_description": "Erfahren Sie mehr über Python-Virtualumgebungen, wie Sie sie zur Projektabgrenzung erstellen und Abhängigkeiten mithilfe der requirements.txt-Datei verwalten können. Halten Sie Ihre Projekte mit virtuellen Umgebungen auf dem neuesten Stand und frei von Konflikten, um eine zuverlässige Funktionsweise sicherzustellen",
                 "meta_keywords": "Python, virtuelle Umgebung, venv, Projektabgrenzung, Abhängigkeiten, requirements.txt, Paketverwaltung, Python-Projekte, Versionskonflikte, Abhängigkeitsverwaltung, Zusammenarbeit",
                 "meta_title": "Python Virtuelle Umgebungen: Projekte isolieren und Abhängigkeiten verwalten",
             
-                "title": "Python Virtualumgebungen",
+                "title": "Wie erstelle ich eine virtuelle Umgebung in Python",
             }
         }
     },
