@@ -36,7 +36,7 @@ class PAGE_APP {
 
         const camera = new THREE.PerspectiveCamera(60, this.calculations.chartWidth / this.calculations.chartHeight, 0.1, 1000);
         //const camera = new THREE.OrthographicCamera(this.calculations.chartWidth / -this.cameraPlaneDivider, this.calculations.chartWidth / this.cameraPlaneDivider, this.calculations.chartHeight / this.cameraPlaneDivider, this.calculations.chartHeight / -this.cameraPlaneDivider, -200, 500);
-        camera.position.x = -7;
+        camera.position.x = -9;
         camera.position.y = -2;
         camera.position.z = -16;
         camera.lookAt( this.options.cameraTarget );
@@ -98,7 +98,10 @@ class PAGE_APP {
             loadingContainer.style.display = 'none';
         }, (xhr) => {
             // Слушатель события прогресса загрузки
-            const percentComplete = (xhr.loaded / xhr.total) * 100;
+            let percentComplete = (xhr.loaded / xhr.total) * 100;
+            if(percentComplete > 100){
+                percentComplete = 100;
+            }
             loadingProgress.innerHTML = `Loading: ${Math.round(percentComplete)}%`;
         });
     }
