@@ -85,12 +85,21 @@ class PAGE_APP {
         };
 
         const loader = new GLTFLoader();
+        const loadingContainer = document.getElementById('loading-container');
+        const loadingProgress = document.getElementById('loading-progress');
 
         loader.load('./models/10_kopiyok_2013_ukraine.glb', (gltf) => {
             const model = gltf.scene;
 
             scene.add(model);
             render();
+
+            // По завершении загрузки, скрываем индикатор загрузки
+            loadingContainer.style.display = 'none';
+        }, (xhr) => {
+            // Слушатель события прогресса загрузки
+            const percentComplete = (xhr.loaded / xhr.total) * 100;
+            loadingProgress.innerHTML = `Loading: ${Math.round(percentComplete)}%`;
         });
     }
 }
