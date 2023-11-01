@@ -12,7 +12,9 @@ const pages = [
         "meta_keywords": "vector, vectors, add, addition, adding, animation, interactive",
         "meta_title": "Vector addition - Interactive Animation",
     
-        "title": "Vector addition"
+        "title": "Vector addition",
+
+        "script_module": true
     },
     {
         "slug": "vector_subtraction",
@@ -22,7 +24,9 @@ const pages = [
         "meta_keywords": "vector, vectors, sub, subtraction, animation, interactive",
         "meta_title": "Vector subtraction - Interactive Animation",
     
-        "title": "Vector subtraction"
+        "title": "Vector subtraction",
+
+        "script_module": true
     },
     {
         "slug": "vector_length",
@@ -32,7 +36,9 @@ const pages = [
         "meta_keywords": "vector, vectors, length, magnitude, norm, formula, animation, interactive",
         "meta_title": "Vector length, magnitude - Interactive Animation",
     
-        "title": "Vector length or magnitude"
+        "title": "Vector length or magnitude",
+
+        "script_module": true
     },
     {
         "slug": "unit_vector",
@@ -42,7 +48,9 @@ const pages = [
         "meta_keywords": "vector, vectors, length, unit, normalized",
         "meta_title": "Unit vector - Interactive Animation",
     
-        "title": "Unit vector"
+        "title": "Unit vector",
+
+        "script_module": true
     },
     {
         "slug": "cross_product",
@@ -160,6 +168,18 @@ const pages = [
                 "title": "Wie erstelle ich eine virtuelle Umgebung in Python",
             }
         }
+    },
+    {
+        "slug": "10_kopiyok_2013",
+        "theme": "coins",
+
+        "meta_description": "Explore a 3D model of a 10 kopiyok coin from 2013, Ukraine. Get a detailed view of the coin's design and features",
+        "meta_keywords": "10 kopiyok, 2013, Ukraine, coin, 3D model, numismatics",
+        "meta_title": "10 kopiyok 2013, Ukraine, 3D View",
+    
+        "title": "10 kopiyok 2013, Ukraine, 3D View",
+
+        "script_module": true
     },
 ];
 
