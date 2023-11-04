@@ -13,6 +13,9 @@ doctype html
 
     <title>#{pages[index]['meta_title']}</title>
 
+    //- https://discourse.threejs.org/t/solved-importmaps-broken-on-firefox-which-now-supports-importmaps/48413/5
+    block importmaps
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
     <script>
@@ -33,8 +36,7 @@ doctype html
 
     block scripts
 
-    if ! pages[index]['script_module']
-        script(defer=pages[index]['script_module'] ? false : true, type=pages[index]['script_module'] ? 'module' : 'application/javascript', src=`./resources/js/${pages[index]['slug']}.js`)
+    script(defer=pages[index]['script_module'] ? false : true, type=pages[index]['script_module'] ? 'module' : 'application/javascript', src=`./resources/js/${pages[index]['slug']}.js`)
 
     <script defer src="./resources/js/donate.js"></script>
     
@@ -54,9 +56,6 @@ doctype html
     </div> <!--end .container-fluid -->
 
     include footer.pug
-
-    if pages[index]['script_module']
-        script(defer=pages[index]['script_module'] ? false : true, type=pages[index]['script_module'] ? 'module' : 'application/javascript', src=`./resources/js/${pages[index]['slug']}.js`)
 
 </body>
 </html>
