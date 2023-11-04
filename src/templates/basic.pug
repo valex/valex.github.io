@@ -33,7 +33,7 @@ doctype html
 
     block scripts
 
-    script(defer, type=pages[index]['script_module'] ? 'module' : 'application/javascript', src=`./resources/js/${pages[index]['slug']}.js`)
+    script(defer=pages[index]['script_module'] ? false : true, type=pages[index]['script_module'] ? 'module' : 'application/javascript', src=`./resources/js/${pages[index]['slug']}.js`)
 
     <script defer src="./resources/js/donate.js"></script>
     
