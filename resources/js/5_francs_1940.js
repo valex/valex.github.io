@@ -38,7 +38,7 @@ class PAGE_APP {
         //const camera = new THREE.OrthographicCamera(this.calculations.chartWidth / -this.cameraPlaneDivider, this.calculations.chartWidth / this.cameraPlaneDivider, this.calculations.chartHeight / this.cameraPlaneDivider, this.calculations.chartHeight / -this.cameraPlaneDivider, -200, 500);
         camera.position.x = 0;
         camera.position.y = 0;
-        camera.position.z = 60;
+        camera.position.z = 68;
         camera.lookAt( this.options.cameraTarget );
 
 
