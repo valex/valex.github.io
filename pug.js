@@ -181,6 +181,18 @@ const pages = [
 
         "script_module": true
     },
+    {
+        "slug": "5_francs_1940",
+        "theme": "coins",
+
+        "meta_description": "Explore a virtual 3D model of the historical 5 francs coin from 1940, France. Immerse yourself in the world of numismatics, examining every detail and angle of this coin, which is a significant artifact of French history",
+        "meta_keywords": "3D model, 5 francs coin, 1940, France, numismatics, virtual coin study, numismatic item, coin visualization, web coin gallery, historical coin, numismatic collection",
+        "meta_title": "5 francs 1940, France, 3D View",
+    
+        "title": "5 francs 1940, France, 3D View",
+
+        "script_module": true
+    },
 ];
 
 const alternatePages = {
