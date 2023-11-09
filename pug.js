@@ -193,6 +193,18 @@ const pages = [
 
         "script_module": true
     },
+    {
+        "slug": "1_pfennig_1997",
+        "theme": "coins",
+
+        "meta_description": "Explore a 3D model of a 1 pfennig coin from 1997, Germany. Get a detailed view of the coin's design and features",
+        "meta_keywords": "1 pfennig, 1997, Germany, coin, 3D model, numismatics",
+        "meta_title": "1 pfennig 1997, Germany, 3D View",
+    
+        "title": "1 pfennig 1997, Germany, 3D View",
+
+        "script_module": true
+    },
 ];
 
 const alternatePages = {

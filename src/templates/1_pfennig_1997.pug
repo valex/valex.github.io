@@ -1,0 +1,86 @@
+extends basic.pug
+
+block importmaps
+    <script type="importmap">
+    |{
+    |      "imports": {
+    |      "three": "https://unpkg.com/three@0.157.0/build/three.module.js",
+    |      "three/addons/": "https://unpkg.com/three@0.157.0/examples/jsm/"
+    |    }
+    |}
+    </script>
+
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+
+            <div id="webgl_chart">
+                <div id="loading-container">
+                    <div id="loading-progress"></div>
+                </div>
+            </div>
+
+            <div class="alert alert-secondary rounded-0 py-2 user-select-none" role="alert">
+                <p style="font-size: 0.8rem;" class="mb-2"><b>Rotate</b> - by clicking and holding the LEFT mouse button</p>
+                <p style="font-size: 0.8rem;" class="mb-2"><b>Scale</b> - using the mouse wheel</p>
+                <p style="font-size: 0.8rem;" class="mb-2"><b>Pan</b> - by clicking and holding the RIGHT mouse button</p>
+            </div>
+
+            // -
+                <div class="alert alert-warning" role="alert">
+
+                </div>
+
+        </div>
+
+        <div class="col-sm-4">
+
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>Country</td>
+                            <td>Germany</td>
+                        </tr>
+                        <tr>
+                            <td>Year</td>
+                            <td>1997</td>
+                        </tr>
+                        <tr>
+                            <td>Coin type</td>
+                            <td>Circulation coins</td>
+                        </tr>
+                        <tr>
+                            <td>Composition</td>
+                            <td>Copper plated Steel</td>
+                        </tr>
+                        <tr>
+                            <td>Weight</td>
+                            <td>2 gr</td>
+                        </tr>
+                        <tr>
+                            <td>Diameter</td>
+                            <td>16.5 mm</td>
+                        </tr>
+                        <tr>
+                            <td>Thickness</td>
+                            <td>1.38 mm</td>
+                        </tr>
+                        <tr>
+                            <td>Mintage</td>
+                            <td>70 000</td>
+                        </tr>
+                        <tr>
+                            <td>Price for perfect condition</td>
+                            <td>$3.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            include see_also.pug
+
+        </div>
+    </div>
