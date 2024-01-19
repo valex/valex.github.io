@@ -18,17 +18,33 @@ class PAGE_APP {
 
         this.container = null;
 
+        this.initialRotationCompleted = false;
+
         this.init();
     }
 
     init() {
+
+        // Add event listeners for mouse click and touchstart
+        document.addEventListener('mousedown', (event) => this.handleInteraction(event));
+        document.addEventListener('touchstart', (event) => this.handleInteraction(event));
         
+
         this.container = document.getElementById(this.options.containerID);
 
         this.calculations.chartWidth = Math.floor( this.container.clientWidth - 1 );
         this.calculations.chartHeight = Math.floor( this.calculations.chartWidth / this.options.aspectRatio );
 
         this.initScene();
+    }
+
+    handleInteraction(event){
+        this.initialRotationCompleted = true;
+
+        // Remove the event listeners to prevent further checks
+        document.removeEventListener('mousedown', this.handleInteraction);
+        document.removeEventListener('touchstart', this.handleInteraction);
+
     }
 
     initScene() {
@@ -76,10 +92,19 @@ class PAGE_APP {
         const orbitControls = new OrbitControls(camera, renderer.domElement);
         //orbitControls.enablePan = false;
         orbitControls.target = this.options.cameraTarget;
+
+        orbitControls.autoRotate = true;
+        orbitControls.autoRotateSpeed = 2;
+
         orbitControls.update();
 
         const render = () => {
             requestAnimationFrame(render);
+
+            if( orbitControls.autoRotate == true && this.initialRotationCompleted == true ){
+                orbitControls.autoRotate = false;
+            }
+
             orbitControls.update(); 
             renderer.render(scene, camera);
         };
