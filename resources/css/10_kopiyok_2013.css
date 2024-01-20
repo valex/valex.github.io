@@ -19,3 +19,12 @@
     color: #ffffff;
     font-size: 24px;
 }
+
+.fullscreen-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
