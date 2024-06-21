@@ -93,8 +93,18 @@ const pages = [
         "title": "Variables in JavaScript"
     },
     {
+        "slug": "hamster_kombat",
+        "theme": "clickers",
+    
+        "meta_description": "",
+        "meta_keywords": "",
+        "meta_title": "",
+    
+        "title": "Hamster Kombat Game"
+    },
+    {
         "slug": "freebitcoin_autoclick",
-        "theme": "freebitcoin",
+        "theme": "clickers",
     
         "meta_description": "Automate freebitco.in earnings with Autoroll Autoclick script. Boost Bitcoin profits effortlessly. Skip CAPTCHA hassle. Install with Tampermonkey. Start now!",
         "meta_keywords": "freebitco.in, Autoroll Autoclick script, automate earnings, Bitcoin, cryptocurrency, Tampermonkey, skip CAPTCHA",
@@ -113,7 +123,7 @@ const pages = [
     },
     {
         "slug": "freebitcoin_multiply_btc_roll_counter",
-        "theme": "freebitcoin",
+        "theme": "clickers",
     
         "meta_description": "Track and analyze roll statistics in freebitco.in's Multiply BTC game with the freebitco.in Multiply BTC Roll Counter. Get valuable insights on the number of rolls since the last winning number and optimize your strategy",
         "meta_keywords": "freebitco.in, Multiply BTC, roll counter, roll statistics, strategy, gambling",
