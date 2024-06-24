@@ -1,0 +1,163 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Learn about JavaScript functions, including different syntax options, how arguments work, and the behavior of functions in ECMAScript. Explore examples and understand the nuances of defining and using functions in JavaScript">
+<meta name="keywords" content="JavaScript functions, function declaration, function expression, arrow functions, ECMAScript arguments, function behavior"><title>Understanding Functions in JavaScript: Syntax, Usage, and Examples</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<script>MathJax = {
+   tex: {
+       inlineMath: [['$', '$'], ['\\(', '\\)']]
+   },
+   svg: {
+       fontCache: 'global'
+   }
+};</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script><script defer type="application/javascript" src="./resources/js/functions_javascript.js"></script><script defer src="./resources/js/donate.js"></script>
+<link rel="stylesheet" href="./resources/css/basic.css" >
+<link rel="stylesheet" href="./resources/css/functions_javascript.css" >
+<script src="https://cdn.counter.dev/script.js" data-id="b0775af1-0d2d-4956-bf6a-2894dc0d0d57" data-utcoffset="3"></script>
+</head>
+<body>
+<div class="container-fluid">
+<section class="text-center">
+<h1 class="h4 d-flex justify-content-center align-items-center">Functions in JavaScript</h1>
+</section><div class="row">
+<div class="col-sm-8">
+<p>In ECMAScript, functions are objects. Each function is an instance of the <code>Function</code> type, having properties and methods like other reference types. Since functions are considered objects, their names act as pointers to function objects and aren't strictly tied to the function itself.</p>
+<p>Functions are commonly defined using the <i>function-declaration syntax</i>, as demonstrated in this example:</p><pre class="bg-light"><code>function add(a, b) {
+    return a + b;
+}
+</code></pre><p>In this code, a variable <code>add</code> is defined and initialized to be a function. Notice that there's no semicolon (;) at the end. In JavaScript, when you define functions using this syntax, you don't need a semicolon after the closing brace.</p><br><br><p>To define a function, you can use the <i>function expression syntax</i>, which is almost a complete equivalent to the <i>function-declaration syntax</i>:</p><pre class="bg-light"><code>let add = function(a, b) {
+    return a + b;
+};
+</code></pre><p>Note that there is a semicolon (;) after the end of the function.</p><br><br><p>Another way to define a function that is quite similar to a <i>function expression</i> is to use the "<i><b>arrow</b></i>" function syntax, like this:</p><pre class="bg-light"><code>let add = (a, b) => {
+    return a + b;
+};
+</code></pre><br><br><p>To demonstrate that functions are objects and that the function name serves as a pointer to the object, there's another way to define a function:</p><pre class="bg-light"><code>// not recommended
+let add = new Function("a", "b", "return a + b");
+</code></pre><p>The <code>Function</code> constructor can take any number of arguments. The final argument is always treated as the function body, and the preceding arguments define the parameters for the new function.</p><div class="d-flex justify-content-between my-3">
+<div class="toc">
+<div class="toctitle">
+<h4>Fast links</h4>
+</div> 
+<ul>
+<li><a href="#arrow_functions"><span class="tocnumber">•</span> <span class="toctext">ARROW functions</span></a></li>
+<li><a href="#function_names"><span class="tocnumber">•</span> <span class="toctext">Function names</span></a></li>
+<li>
+<a href="#arguments"><span class="tocnumber">•</span> <span class="toctext">Arguments</span></a> 
+<ul>
+<li><a href="#arguments_in_arrow"><span class="tocnumber">•</span> <span class="toctext">Arguments in Arrow Functions</span></a></li>
+</ul>
+</li> 
+</ul>
+</div>
+</div><br><br><h2 id="arrow_functions">ARROW functions</h2><p>In ECMAScript 6, there's a new way to create function expressions using the fat-arrow syntax. Arrow functions mostly work the same as regular function expressions. You can use arrow functions anywhere you'd use a regular function expression:</p><pre class="bg-light"><code>let arrowMultiply = (x, y) => {
+    return x * y;
+};
+
+let functionExpressionMultiply = function(x, y) {
+    return x * y;
+};
+
+console.log(arrowMultiply(3, 4)); // 12
+console.log(functionExpressionMultiply(3, 4)); // 12
+</code></pre><br><br><p>Arrow functions are really handy when you want to write short and simple code, especially in inline situations:</p><pre class="bg-light"><code>let numbers = [1, 2, 3];
+
+console.log(numbers.map(function(number) { return number * 2; })); // [2, 4, 6]
+console.log(numbers.map((number) => { return number * 2 })); // [2, 4, 6]
+</code></pre><br><br><p>Arrow functions don't need parentheses if you have just one parameter. But if you have zero or more than one parameter, you need to use parentheses:</p><pre class="bg-light"><code>// Both are valid
+let doubleValue = (x) => { return 2 * x; };
+let tripleValue = x => { return 3 * x; };
+
+// Zero parameters require an empty pair of parentheses
+let getRandomNumber = () => { return Math.random(); };
+
+// Multiple parameters require parentheses
+let calculateSum = (a, b) => { return a + b; };
+
+// Invalid syntax:
+let invalidMultiply = a, b => { return a * b; };
+</code></pre><br><br><p>Arrow functions don't necessarily require curly braces, but choosing not to use them alters the behavior of the function. When you use curly braces, it's called "block body" syntax, and it works like a regular function expression. You can have multiple lines of code inside. If you skip the curly braces, it's the "concise body" syntax, and you're limited to just one line of code, like an assignment or expression. The value of this line will automatically be returned:</p><pre class="bg-light"><code>// Both are valid and will return the value
+let doubleValue = (x) => { return 2 * x; };
+let tripleValue = (x) => 3 * x;
+
+// Assignment is allowed
+let value = {};
+let setName = (x) => x.name = "Karl";
+setName(value);
+console.log(value.name); // "Karl"
+
+// Invalid syntax:
+let invalidMultiply = (a, b) => return a * b;
+</code></pre><br><br><p>While arrow functions are concise in syntax, they're not suitable for several situations. They don't support the use of <code>arguments</code>, <code>super</code>, or <code>new.target</code>, and they can't be used as constructors. Moreover, function objects created with the arrow syntax lack a defined <code>prototype</code> property.</p><br><br><h2 id="function_names">Function names</h2><p>Since function names are basically pointers to functions, they behave like any other variable holding a pointer to an object. This allows having multiple names for a single function. For instance:</p><pre class="bg-light"><code>function sum(a, b) {
+    return a + b;
+}
+
+console.log(sum(5, 10)); // 15
+
+let anotherSum = sum;
+console.log(anotherSum(5, 10)); // 15
+
+sum = null;
+console.log(anotherSum(5, 10)); // 15
+</code></pre><p>This code creates a function called <code>sum()</code> that adds two numbers. A variable, <code>anotherSum</code>, is declared and assigned the value of <code>sum</code>. When we use the function name without parentheses, it refers to the function itself rather than executing it. At this stage, both <code>anotherSum</code> and <code>sum</code> point to the same function, so calling <code>anotherSum()</code> returns a result. When <code>sum</code> is set to <code>null</code>, it breaks its connection with the function. However, calling <code>anotherSum()</code> still works without any issues.</p><br><br><h2 id="arguments">Arguments</h2><p>In ECMAScript, function arguments work differently compared to many other programming languages. When you define a function in ECMAScript, it doesn't care how many arguments you pass to it or what data types those arguments are. Even if you specify a function to take two arguments, you can actually pass in any number of arguments, including one, three, or none, without causing an issue for the interpreter.</p><p>This flexibility exists because in ECMAScript, arguments are internally represented <i>as an array</i>. This array is always sent to the function, but the function doesn't pay attention to the contents of the array. Whether the array is empty or has multiple items, the function will still work. When you define a function using the <code>function</code> keyword (not an arrow function), there is an <code>arguments</code> object available within the function. This <code>arguments</code> object behaves like an array, allowing you to access each argument using bracket notation (<code>arguments[0]</code> for the first argument, <code>arguments[1]</code> for the second, and so on) and determine the number of arguments passed in using the <code>length</code> property.</p><p>In the following example, the <code>sayHello()</code> function’s first argument is named <code>name</code>:</p><pre class="bg-light"><code>function sayHello(name, message) {
+    console.log("Hello " + name + ", " + message);
+}
+</code></pre><br><br><p>You can access the same value by using <code>arguments[0]</code>. This allows you to rewrite the function without explicitly naming the arguments, like this:</p><pre class="bg-light"><code>function sayHello() {
+    console.log("Hello " + arguments[0] + ", " + arguments[1]);
+}
+</code></pre><p>In this rewritten version, the specific names for the arguments have been taken out. Even without the names "<code>name</code>" and "<code>message</code>", the function will still work correctly. This shows that in ECMAScript, having named arguments is helpful but <i>not mandatory</i>.</p><br><br><p>You can also use the <code>arguments</code> object to count the number of arguments passed into the function using the <code>length</code> property. The next example shows how many arguments are passed into the function every time it is called:</p><pre class="bg-light"><code>function countArgs() {
+    console.log(arguments.length);
+}
+
+countArgs("apple", "banana", "orange"); // 3
+countArgs(1, 2, 3, 4, 5); // 5
+countArgs(true, false); // 2
+</code></pre><br><br><p>If you don't pass a value for a <i>named argument</i> into a function, it will automatically be set as <code>undefined</code>. This is similar to creating a variable without giving it a value.</p><br><br><h3 id="arguments_in_arrow">Arguments in Arrow Functions</h3><p>When you use the <i>arrow function</i> notation to define a function, you can't access the passed arguments using the <code>arguments</code> keyword; you can only access them by their specific names in the function definition.</p><p>For example:</p><pre class="bg-light"><code>function printNumber() {
+    console.log(arguments[0]);
+}
+printNumber(10); // Output: 10
+
+
+let printValue = () => {
+    console.log(arguments[0]);
+};
+printValue(10); // Output: ReferenceError: arguments is not defined</code></pre><br><br><p>Even though the <code>arguments</code> keyword may not work in arrow functions, it's possible for the <code>arguments</code> to be accessible if they are provided from the scope of a surrounding function being called:</p><p>For example:</p><pre class="bg-light"><code>function printNumber() {
+    let printValue = () => {
+        console.log(arguments[0]);
+    };
+    printValue();
+}
+
+printNumber(10); // Output: 10</code></pre><br><br></div>
+<div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/dom.html">DOM - Document Object Model</a><a class="list-group-item list-group-item-action" href="/script_tag.html">Inserting JavaScript into an HTML page</a><a class="list-group-item list-group-item-action" href="/variables_in_js.html">Variables in JavaScript</a><a class="list-group-item list-group-item-action active" href="/functions_javascript.html">Functions in JavaScript</a><a class="list-group-item list-group-item-action" href="/numbers_in_js.html">Numbers in JavaScript</a><a class="list-group-item list-group-item-action" href="/strings_in_js.html">Strings in JavaScript</a></div></div></div></div>
+</div></div> <!--end .container-fluid --><section id="donate" class="">
+<footer class=" text-white" style="background-color: #0a4275;">
+<div class="container p-4 pb-0">
+<section class="text-center">
+<p class="d-flex justify-content-center align-items-center">If you like all of this, please buy me a coffee</p>
+</section>
+</div>
+<div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+<div class="table-responsive">
+<table class="w-100">
+<tr>
+<td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
+<td ><span class="ms-3" id="btc_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
+<td ><span class="ms-3" id="xmr_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
+<td ><span class="ms-3" id="ltc_donate"></span></td>
+</tr>
+</table>
+</div>
+</div>
+</footer>
+</section></body>
+</html>

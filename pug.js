@@ -93,6 +93,16 @@ const pages = [
         "title": "Variables in JavaScript"
     },
     {
+		"slug": "functions_javascript",
+        "theme": "javascript",
+    
+        "meta_description": "Learn about JavaScript functions, including different syntax options, how arguments work, and the behavior of functions in ECMAScript. Explore examples and understand the nuances of defining and using functions in JavaScript",
+        "meta_keywords": "JavaScript functions, function declaration, function expression, arrow functions, ECMAScript arguments, function behavior",
+        "meta_title": "Understanding Functions in JavaScript: Syntax, Usage, and Examples",
+    
+        "title": "Functions in JavaScript"
+	},
+    {
         "slug": "hamster_kombat",
         "theme": "clickers",
     
