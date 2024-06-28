@@ -51,6 +51,9 @@ let add = new Function("a", "b", "return a + b");
 <li><a href="#arguments_in_arrow"><span class="tocnumber">•</span> <span class="toctext">Arguments in Arrow Functions</span></a></li>
 </ul>
 </li> 
+<li><a href="#default_parameter"><span class="tocnumber">•</span> <span class="toctext">Default Parameter Values</span></a></li>
+<li><a href="#spread_arguments"><span class="tocnumber">•</span> <span class="toctext">Spread Arguments</span></a></li>
+<li><a href="#rest_parameter"><span class="tocnumber">•</span> <span class="toctext">Rest Parameter</span></a></li>
 </ul>
 </div>
 </div><br><br><h2 id="arrow_functions">ARROW functions</h2><p>In ECMAScript 6, there's a new way to create function expressions using the fat-arrow syntax. Arrow functions mostly work the same as regular function expressions. You can use arrow functions anywhere you'd use a regular function expression:</p><pre class="bg-light"><code>let arrowMultiply = (x, y) => {
@@ -131,7 +134,104 @@ printValue(10); // Output: ReferenceError: arguments is not defined</code></pre>
     printValue();
 }
 
-printNumber(10); // Output: 10</code></pre><br><br></div>
+printNumber(10); // Output: 10</code></pre><br><br><h2 id="default_parameter">Default Parameter Values</h2><p>In older versions of ECMAScript before 5.1, a popular way to set default parameter values was to check if a parameter was missing in the function call by verifying if it was <code>undefined</code>, and then assigning a value to the parameter if it was indeed undefined. For example:</p><pre class="bg-light"><code>function greetUser(userName) {
+    userName = (typeof userName !== 'undefined') ? userName : 'Guest';
+    return `Hello, ${userName}!`;
+}
+console.log(greetUser()); // 'Hello, Guest!'
+console.log(greetUser('Alice')); // 'Hello, Alice!'</code></pre><br><br><p>In ECMAScript 6, there is no longer a need for the previous workaround, as it allows for defining default parameter values directly in the function signature using the <code>=</code> operator. The equivalent of the previous function using ES6 default parameters would be:</p><pre class="bg-light"><code>function greetUser(userName = 'Guest') {
+    return `Hello, ${userName}!`;
+}
+console.log(greetUser()); // 'Hello, Guest!'
+console.log(greetUser('Alice')); // 'Hello, Alice!'
+</code></pre><br><br><p>When you pass <code>undefined</code> as an argument, it is handled similarly to not passing any argument at all. This feature enables the use of multiple independent default variables. Here's an example using ES6 default parameters:</p><pre class="bg-light"><code>function createCharacter(characterName = 'Alice', role = 'Explorer') {
+    return `${characterName} the ${role}`;
+}
+console.log(createCharacter()); // 'Alice the Explorer'
+console.log(createCharacter('Bob')); // 'Bob the Explorer'
+console.log(createCharacter(undefined, 'Wizard')); // 'Alice the Wizard'
+</code></pre><br><br><p>When using default parameters, the <code>arguments</code> object's value does not show the default value of a parameter, but rather the actual argument passed to the function. This aligns with the behavior in ES5 strict mode and is beneficial because it maintains the values as they were passed during the function invocation:</p><pre class="bg-light"><code>function greetUser(userName = 'Guest') {
+    return `Hello, ${arguments[0]}!`;
+}
+console.log(greetUser()); // 'Hello, undefined!'
+console.log(greetUser('Alice')); // 'Hello, Alice!'
+</code></pre><br><br><p>You can set default parameter values to be <i>the result of a function call</i>, not just fixed values or objects:</p><pre class="bg-light"><code>let colors = ['Red', 'Blue', 'Green'];
+let index = 0;
+
+function getNextColor() {
+    return colors[index++ % colors.length];
+}
+
+function paintHouse(houseNumber, color = getNextColor()) {
+    return `House ${houseNumber} is painted ${color}`;
+}
+
+console.log(paintHouse(1)); // House 1 is painted Red
+console.log(paintHouse(2, 'Yellow')); // House 2 is painted Yellow
+console.log(paintHouse(3)); // House 3 is painted Blue
+console.log(paintHouse(4)); // House 4 is painted Green
+</code></pre><p>The default parameter value is calculated only <b><i>when the function is called</i></b>, not when it's defined. The calculation for the default value only happens if the argument is missing.</p><br><br><p>Arrow functions can also use default parameters similarly, but if a default value is set, parentheses around a single argument become mandatory:</p><pre class="bg-light"><code>let greetUser = (userName = 'Guest') => `Hello, ${userName}!`;
+console.log(greetUser()); // Hello, Guest!
+</code></pre><br><br><h2 id="spread_arguments">Spread Arguments</h2><p>Instead of passing an array as one argument to a function, it's often helpful to split the array into individual values and pass each value separately.</p><p>For example, if you have a function like this that sums all the values passed as arguments:</p><pre class="bg-light"><code>let values = [1, 2, 3, 4];
+
+function getSum() {
+    let sum = 0;
+    for (let i = 0; i < arguments.length; ++i) {
+        sum += arguments[i];
+    }
+    return sum;
+}
+</code></pre><p>This function expects each argument to be a single number that will be added together to find the sum. To pass an array of values to this function, you can use the <code>.apply()</code> method to flatten the array into separate parameters:</p><pre class="bg-light"><code>console.log(getSum.apply(null, values)); // Output: 10
+</code></pre><p>In ECMAScript 6, you can now do this more simply using the <i>spread operator (...)</i>. When you apply the spread operator to an iterable object and pass it as a single argument to a function, it breaks down the object into individual arguments. This allows you to unpack an array directly into separate arguments within the function call. For example:</p><pre class="bg-light"><code>console.log(getSum(...values)); // 10
+</code></pre><br><br><p>Since the array size is known, you can freely place other parameters <i>before or after</i> the spread operator, including additional spread operators:</p><pre class="bg-light"><code>console.log(getSum(-1, ...values)); // Output: 9
+console.log(getSum(...values, 5)); // Output: 15
+console.log(getSum(-1, ...values, 5)); // Output: 14
+console.log(getSum(...values, ...[5, 6, 7])); // Output: 28
+</code></pre><p>In these examples, you can see how you can mix the spread operator with other parameters to pass values efficiently to the function.</p><br><br><p>The spread operator is not recognized by the <code>arguments</code> object; it treats the spread values as individual pieces because that's how they are passed to the function:</p><pre class="bg-light"><code>let values = [1, 2, 3, 4];
+
+function countArguments() {
+    console.log(arguments.length);
+}
+
+countArguments(-1, ...values); // Output: 5
+countArguments(...values, 5); // Output: 5
+countArguments(-1, ...values, 5); // Output: 6
+countArguments(...values, ...[5, 6, 7]); // Output: 7
+
+</code></pre><br><br><h2 id="rest_parameter">Rest Parameter</h2><p>When defining a function, you can use the spread operator to combine variable-length parameters into a single array. This is similar to how the <code>arguments</code> object works, but with the spread operator, the parameters become part of a formal <code>Array</code> object:</p><pre class="bg-light"><code>function getTotal(...numbers) {
+    return numbers.reduce((sum, num) => sum + num, 0);
+}
+
+console.log(getTotal(1, 2, 3)); // Output: 6
+</code></pre><br><br><p>If there are named parameters before the rest parameter, the rest parameter will capture the remaining unnamed parameters as an array, or it will be an empty array if there are no remaining parameters. The rest parameter must always be the last formal parameter because it can vary in size.</p><p>Here's a simple example to illustrate this concept:</p><pre class="bg-light"><code>function printValues(first, second, ...rest) {
+    console.log("First:", first);
+    console.log("Second:", second);
+    console.log("Rest:", rest);
+}
+
+printValues(1, 2, 3, 4, 5);
+// Output:
+// First: 1
+// Second: 2
+// Rest: [3, 4, 5]
+</code></pre><br><br><p>While arrow functions do not support the <code>arguments</code> object, they do support <i>rest parameters</i>, providing functionality that closely resembles <code>arguments</code>:</p><pre class="bg-light"><code>const sumValues = (...args) => {
+    return args.reduce((total, num) => total + num, 0);
+};
+
+console.log(sumValues(1, 2, 3, 4)); // Output: 10
+
+</code></pre><br><br><p>As expected, using a <i>rest parameter</i> does not impact the <code>arguments</code> object — it will continue to reflect exactly what was passed to the function:</p><pre class="bg-light"><code>function exampleFunction(...args) {
+    console.log("Rest Parameter:", args);
+    console.log("Arguments Object:", arguments);
+}
+
+exampleFunction(1, 2, 3);
+
+// Output:
+// Rest Parameter: Array(3) [ 1, 2, 3 ]
+// Arguments Object:Arguments { 0: 1, 1: 2, 2: 3, … }
+
+</code></pre><br><br></div>
 <div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/dom.html">DOM - Document Object Model</a><a class="list-group-item list-group-item-action" href="/script_tag.html">Inserting JavaScript into an HTML page</a><a class="list-group-item list-group-item-action" href="/variables_in_js.html">Variables in JavaScript</a><a class="list-group-item list-group-item-action active" href="/functions_javascript.html">Functions in JavaScript</a><a class="list-group-item list-group-item-action" href="/numbers_in_js.html">Numbers in JavaScript</a><a class="list-group-item list-group-item-action" href="/strings_in_js.html">Strings in JavaScript</a></div></div></div></div>
 </div></div> <!--end .container-fluid --><section id="donate" class="">
 <footer class=" text-white" style="background-color: #0a4275;">
