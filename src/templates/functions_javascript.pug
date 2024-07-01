@@ -74,11 +74,16 @@ block content
                         <li><a href="#declaration_vs_expression"><span class="tocnumber">•</span> <span class="toctext">Differences Between Function Declarations and Function Expressions</span></a></li>
                         <li><a href="#functions_as_values"><span class="tocnumber">•</span> <span class="toctext">Functions as values</span></a></li>
                          
-                                      
-            
-            
-            
-                        
+                        <li>
+                            <a href="#function_inside"><span class="tocnumber">•</span> <span class="toctext">Inside a function</span></a> 
+                            <ul>
+                                <li><a href="#function_inside_arguments"><span class="tocnumber">•</span> <span class="toctext">arguments</span></a></li>
+                                <li><a href="#function_inside_this"><span class="tocnumber">•</span> <span class="toctext">this</span></a></li>
+                                <li><a href="#function_inside_caller"><span class="tocnumber">•</span> <span class="toctext">caller</span></a></li>
+                                <li><a href="#function_inside_new_target"><span class="tocnumber">•</span> <span class="toctext">new.target</span></a></li>
+                            </ul>
+                        </li> 
+          
                     </ul>
                 </div>
             </div>
@@ -597,6 +602,157 @@ block content
 
             p On the other hand, calling <code>createSortingFunction("age")</code> creates a comparison function that sorts the objects based on the <code>age</code> property. This results in the first item being the one with the name "Emma" and an age of 28.
 
+
+            br
+            br
+            
+
+            h2(id='function_inside') Inside a function
+            
+            p Inside a function in JavaScript, there are several special objects that provide additional context and functionality within a function, allowing you to access arguments, refer to the function itself, and determine the calling context.
+
+            br
+            br
+            
+            h3(id='function_inside_arguments') arguments
+            
+            p The <code>arguments</code> object is <i>like an array</i> that holds all the values passed into a function (<a href="#arguments">Learn more</a>). It's there when you define a function using the <code>function</code> keyword (not with arrow functions). Besides storing the function's arguments, it also has a property called <code>callee</code> <small>(<code>arguments.callee</code> property is deprecated in modern JavaScript and should be avoided)</small>, which points back to the function itself. Let's look at a typical factorial function as an example:
+            pre(class="bg-light")
+                code.
+                    function factorial(num) {
+                        if (num <= 1) {
+                            return 1;
+                        } else {
+                            return num * factorial(num - 1);
+                        }
+                    }
+                    
+            p Factorial functions are usually recursive, like in this example. It works well when the function name is fixed as "<code>factorial</code>". However, the function's proper execution is closely tied to this specific name. To make it more flexible, you can use <code>arguments.callee</code> to decouple it from the function name:
+
+            pre(class="bg-light")
+                code.
+                    function factorial(num) {
+                        if (num <= 1) {
+                            return 1;
+                        } else {
+                            return num * arguments.callee(num - 1);
+                        }
+                    }
+
+            p In this updated version of the <code>factorial()</code> function, the function no longer directly references its own name "<code>factorial</code>" within the function body. This change guarantees that the recursive call will always be made to the correct function, regardless of how the function is named or referenced.
+            br
+            br
+            
+            h3(id='function_inside_this') this
+            
+            p In JavaScript, the special object <code>this</code> works differently in standard functions and arrow functions.
+
+            p In a standard function, <code>this</code> refers to the object the function is working with. When used globally, <code>this</code> points to the <code>window</code> object. Consider the following:
+
+            pre(class="bg-light")
+                code.
+                    window.brand = 'Toyota';
+
+                    let car = {
+                        brand: 'Ford'
+                    };
+
+                    function displayBrand() {
+                        console.log(this.brand);
+                    }
+                    
+                    displayBrand(); // 'Toyota'
+                    
+                    car.displayBrand = displayBrand;
+                    car.displayBrand(); // 'Ford'
+
+            p When the function <code>displayBrand()</code> is called globally, it outputs <code>"Toyota"</code> because <code>this</code> points to the <code>window</code> object, and <code>this.brand</code> evaluates to <code>window.brand</code>. Once the <code>displayBrand()</code> function is assigned to the <code>car</code> object and called through <code>car.displayBrand()</code>, <code>this</code> now refers to the <code>car</code> object, and <code>this.brand</code> evaluates to <code>car.brand</code>, resulting in the output <code>"Ford"</code>.
+            
+            br
+            br
+            
+            p Inside an arrow function, <code>this</code> refers to the context in which the arrow function expression is defined. This concept is illustrated in the following example, where two separate invocations of <code>displayBrand</code> both access the property of the <code>window</code> object, which represents the context where the arrow function was originally defined.
+
+            pre(class="bg-light")
+                code.
+                    window.brand = 'Toyota';
+
+                    let car = {
+                        brand: 'Ford'
+                    };
+
+                    let displayBrand = () => console.log(this.brand);
+
+
+                    displayBrand(); // 'Toyota'
+
+                    car.displayBrand = displayBrand;
+                    car.displayBrand(); // 'Toyota'
+
+            br
+            br
+            
+            p This is especially useful in situations where events or timeouts will invoke a function inside a callback where the invoking object is not the intended object. When an arrow function is used in these situations, the context referenced by <code>this</code> is preserved:
+
+            pre(class="bg-light")
+                code.
+                    function Emperor() {
+                        this.royaltyName = 'Julius';
+                        // 'this' will refer to the Emperor instance
+                        setTimeout(() => console.log(this.royaltyName), 1000);
+                    }
+
+                    function Empress() {
+                        this.royaltyName = 'Cleopatra';
+                        // 'this' will refer to the window object
+                        setTimeout(function() { console.log(this.royaltyName); }, 1000);
+                    }
+
+                    new Emperor(); // Output: 'Julius'
+                    new Empress(); // Output: 'undefined'
+            
+            br
+            br
+            
+            h3(id='function_inside_caller') caller
+            
+            p The <code>caller</code> property holds a reference to the function that invoked the current function, or it is <code>null</code> if the function was called from the global scope:
+
+            pre(class="bg-light")
+                code.
+                    function outer() {
+                        inner();
+                    }
+                    
+                    function inner() {
+                        console.log(inner.caller);
+                    }
+                    outer(); //  will display the source text of the outer() function
+
+            p This code displays an alert with the source text of the <code>outer()</code> function. This is because <code>outer()</code> calls <code>inner()</code>, and <code>inner.caller</code> refers back to <code>outer()</code>.
+            
+            br
+            br
+            
+            h3(id='function_inside_new_target') new.target
+            
+            p In JavaScript, functions can act as constructors to create new objects or as regular callable functions. A new feature introduced in ECMAScript 6 is the <code>new.target</code> property, which allows you to determine if a function was invoked with the <code>new</code> keyword.
+
+            p If a function is called normally, <code>new.target</code> will be <code>undefined</code>. However, if a function is called using the <code>new</code> keyword, <code>new.target</code> will reference the constructor or function itself.
+
+            p This feature provides a way to differentiate between regular function calls and constructor calls in JavaScript:
+
+            pre(class="bg-light")
+                code.
+                    function Emperor() {
+                        if ( ! new.target) {
+                            throw 'Emperor must be instantiated using "new"';
+                        }
+                        console.log('Emperor instantiated using "new"');
+                    }
+
+                    new Emperor(); // Output: Emperor instantiated using "new"
+                    // Emperor(); // Throws an error: Emperor must be instantiated using "new"
 
             br
             br

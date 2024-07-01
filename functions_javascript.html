@@ -56,6 +56,15 @@ let add = new Function("a", "b", "return a + b");
 <li><a href="#rest_parameter"><span class="tocnumber">•</span> <span class="toctext">Rest Parameter</span></a></li>
 <li><a href="#declaration_vs_expression"><span class="tocnumber">•</span> <span class="toctext">Differences Between Function Declarations and Function Expressions</span></a></li>
 <li><a href="#functions_as_values"><span class="tocnumber">•</span> <span class="toctext">Functions as values</span></a></li>
+<li>
+<a href="#function_inside"><span class="tocnumber">•</span> <span class="toctext">Inside a function</span></a> 
+<ul>
+<li><a href="#function_inside_arguments"><span class="tocnumber">•</span> <span class="toctext">arguments</span></a></li>
+<li><a href="#function_inside_this"><span class="tocnumber">•</span> <span class="toctext">this</span></a></li>
+<li><a href="#function_inside_caller"><span class="tocnumber">•</span> <span class="toctext">caller</span></a></li>
+<li><a href="#function_inside_new_target"><span class="tocnumber">•</span> <span class="toctext">new.target</span></a></li>
+</ul>
+</li> 
 </ul>
 </div>
 </div><br><br><h2 id="arrow_functions">ARROW functions</h2><p>In ECMAScript 6, there's a new way to create function expressions using the fat-arrow syntax. Arrow functions mostly work the same as regular function expressions. You can use arrow functions anywhere you'd use a regular function expression:</p><pre class="bg-light"><code>let arrowMultiply = (x, y) => {
@@ -283,7 +292,79 @@ console.log(people[0].name); // Output: David
 
 people.sort(createSortingFunction("age"));
 console.log(people[0].name); // Output: Emma
-</code></pre><p>In this code, an array named <code>people</code> is defined with two objects, each containing a <code>name</code> and an <code>age</code> property. By default, the <code>sort()</code> method would use <code>toString()</code> to sort the objects, which might not provide the desired order.</p><p>When <code>createSortingFunction("name")</code> is invoked, it generates a comparison function that sorts the objects based on the <code>name</code> property. Consequently, the first item in the sorted array will have the name "David".</p><p>On the other hand, calling <code>createSortingFunction("age")</code> creates a comparison function that sorts the objects based on the <code>age</code> property. This results in the first item being the one with the name "Emma" and an age of 28.</p><br><br></div>
+</code></pre><p>In this code, an array named <code>people</code> is defined with two objects, each containing a <code>name</code> and an <code>age</code> property. By default, the <code>sort()</code> method would use <code>toString()</code> to sort the objects, which might not provide the desired order.</p><p>When <code>createSortingFunction("name")</code> is invoked, it generates a comparison function that sorts the objects based on the <code>name</code> property. Consequently, the first item in the sorted array will have the name "David".</p><p>On the other hand, calling <code>createSortingFunction("age")</code> creates a comparison function that sorts the objects based on the <code>age</code> property. This results in the first item being the one with the name "Emma" and an age of 28.</p><br><br><h2 id="function_inside">Inside a function</h2><p>Inside a function in JavaScript, there are several special objects that provide additional context and functionality within a function, allowing you to access arguments, refer to the function itself, and determine the calling context.</p><br><br><h3 id="function_inside_arguments">arguments</h3><p>The <code>arguments</code> object is <i>like an array</i> that holds all the values passed into a function (<a href="#arguments">Learn more</a>). It's there when you define a function using the <code>function</code> keyword (not with arrow functions). Besides storing the function's arguments, it also has a property called <code>callee</code> <small>(<code>arguments.callee</code> property is deprecated in modern JavaScript and should be avoided)</small>, which points back to the function itself. Let's look at a typical factorial function as an example:</p><pre class="bg-light"><code>function factorial(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * factorial(num - 1);
+    }
+}
+</code></pre><p>Factorial functions are usually recursive, like in this example. It works well when the function name is fixed as "<code>factorial</code>". However, the function's proper execution is closely tied to this specific name. To make it more flexible, you can use <code>arguments.callee</code> to decouple it from the function name:</p><pre class="bg-light"><code>function factorial(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * arguments.callee(num - 1);
+    }
+}
+</code></pre><p>In this updated version of the <code>factorial()</code> function, the function no longer directly references its own name "<code>factorial</code>" within the function body. This change guarantees that the recursive call will always be made to the correct function, regardless of how the function is named or referenced.</p><br><br><h3 id="function_inside_this">this</h3><p>In JavaScript, the special object <code>this</code> works differently in standard functions and arrow functions.</p><p>In a standard function, <code>this</code> refers to the object the function is working with. When used globally, <code>this</code> points to the <code>window</code> object. Consider the following:</p><pre class="bg-light"><code>window.brand = 'Toyota';
+
+let car = {
+    brand: 'Ford'
+};
+
+function displayBrand() {
+    console.log(this.brand);
+}
+
+displayBrand(); // 'Toyota'
+
+car.displayBrand = displayBrand;
+car.displayBrand(); // 'Ford'
+</code></pre><p>When the function <code>displayBrand()</code> is called globally, it outputs <code>"Toyota"</code> because <code>this</code> points to the <code>window</code> object, and <code>this.brand</code> evaluates to <code>window.brand</code>. Once the <code>displayBrand()</code> function is assigned to the <code>car</code> object and called through <code>car.displayBrand()</code>, <code>this</code> now refers to the <code>car</code> object, and <code>this.brand</code> evaluates to <code>car.brand</code>, resulting in the output <code>"Ford"</code>.</p><br><br><p>Inside an arrow function, <code>this</code> refers to the context in which the arrow function expression is defined. This concept is illustrated in the following example, where two separate invocations of <code>displayBrand</code> both access the property of the <code>window</code> object, which represents the context where the arrow function was originally defined.</p><pre class="bg-light"><code>window.brand = 'Toyota';
+
+let car = {
+    brand: 'Ford'
+};
+
+let displayBrand = () => console.log(this.brand);
+
+
+displayBrand(); // 'Toyota'
+
+car.displayBrand = displayBrand;
+car.displayBrand(); // 'Toyota'
+</code></pre><br><br><p>This is especially useful in situations where events or timeouts will invoke a function inside a callback where the invoking object is not the intended object. When an arrow function is used in these situations, the context referenced by <code>this</code> is preserved:</p><pre class="bg-light"><code>function Emperor() {
+    this.royaltyName = 'Julius';
+    // 'this' will refer to the Emperor instance
+    setTimeout(() => console.log(this.royaltyName), 1000);
+}
+
+function Empress() {
+    this.royaltyName = 'Cleopatra';
+    // 'this' will refer to the window object
+    setTimeout(function() { console.log(this.royaltyName); }, 1000);
+}
+
+new Emperor(); // Output: 'Julius'
+new Empress(); // Output: 'undefined'
+</code></pre><br><br><h3 id="function_inside_caller">caller</h3><p>The <code>caller</code> property holds a reference to the function that invoked the current function, or it is <code>null</code> if the function was called from the global scope:</p><pre class="bg-light"><code>function outer() {
+    inner();
+}
+
+function inner() {
+    console.log(inner.caller);
+}
+outer(); //  will display the source text of the outer() function
+</code></pre><p>This code displays an alert with the source text of the <code>outer()</code> function. This is because <code>outer()</code> calls <code>inner()</code>, and <code>inner.caller</code> refers back to <code>outer()</code>.</p><br><br><h3 id="function_inside_new_target">new.target</h3><p>In JavaScript, functions can act as constructors to create new objects or as regular callable functions. A new feature introduced in ECMAScript 6 is the <code>new.target</code> property, which allows you to determine if a function was invoked with the <code>new</code> keyword.</p><p>If a function is called normally, <code>new.target</code> will be <code>undefined</code>. However, if a function is called using the <code>new</code> keyword, <code>new.target</code> will reference the constructor or function itself.</p><p>This feature provides a way to differentiate between regular function calls and constructor calls in JavaScript:</p><pre class="bg-light"><code>function Emperor() {
+    if ( ! new.target) {
+        throw 'Emperor must be instantiated using "new"';
+    }
+    console.log('Emperor instantiated using "new"');
+}
+
+new Emperor(); // Output: Emperor instantiated using "new"
+// Emperor(); // Throws an error: Emperor must be instantiated using "new"
+</code></pre><br><br></div>
 <div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/dom.html">DOM - Document Object Model</a><a class="list-group-item list-group-item-action" href="/script_tag.html">Inserting JavaScript into an HTML page</a><a class="list-group-item list-group-item-action" href="/variables_in_js.html">Variables in JavaScript</a><a class="list-group-item list-group-item-action active" href="/functions_javascript.html">Functions in JavaScript</a><a class="list-group-item list-group-item-action" href="/numbers_in_js.html">Numbers in JavaScript</a><a class="list-group-item list-group-item-action" href="/strings_in_js.html">Strings in JavaScript</a></div></div></div></div>
 </div></div> <!--end .container-fluid --><section id="donate" class="">
 <footer class=" text-white" style="background-color: #0a4275;">
