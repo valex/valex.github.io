@@ -83,7 +83,14 @@ block content
                                 <li><a href="#function_inside_new_target"><span class="tocnumber">•</span> <span class="toctext">new.target</span></a></li>
                             </ul>
                         </li> 
-          
+                        <li>
+                            <a href="#props_methods"><span class="tocnumber">•</span> <span class="toctext">Properties and methods</span></a> 
+                            <ul>
+                                <li><a href="#method_apply"><span class="tocnumber">•</span> <span class="toctext">apply()</span></a></li>
+                                <li><a href="#method_call"><span class="tocnumber">•</span> <span class="toctext">call()</span></a></li>
+                                <li><a href="#method_bind"><span class="tocnumber">•</span> <span class="toctext">bind()</span></a></li>
+                            </ul>
+                        </li> 
                     </ul>
                 </div>
             </div>
@@ -753,6 +760,137 @@ block content
 
                     new Emperor(); // Output: Emperor instantiated using "new"
                     // Emperor(); // Throws an error: Emperor must be instantiated using "new"
+
+            br
+            br
+            
+           
+            h2(id='props_methods') Properties and methods
+            
+            p In ECMAScript, functions are treated <i>as objects</i>, which means they have <b>properties</b> and <b>methods</b>. Every function in JavaScript has two key properties: <code>length</code> and <code>prototype</code>. The <code>length</code> property specifies the number of named arguments that the function expects, as illustrated in the following example:
+
+            pre(class="bg-light")
+                code.
+                    function greetUser(user) {
+                        console.log("Hello, " + user);
+                    }
+
+                    function calculateTotal(price, quantity) {
+                        return price * quantity;
+                    }
+
+                    function sayHello() {
+                        console.log("Hello there!");
+                    }
+
+                    console.log(greetUser.length); // Output: 1
+                    console.log(calculateTotal.length); // Output: 2
+                    console.log(sayHello.length); // Output: 0
+
+            p In this code snippet, there are three functions defined, each with a different number of named arguments. The <code>greetUser()</code> function expects one argument, so its <code>length</code> property is set to 1. Similarly, the <code>calculateTotal()</code> function requires two arguments, resulting in a <code>length</code> property of 2. Lastly, the <code>sayHello()</code> function does not have any named arguments, leading to a <code>length</code> property value of 0.
+
+            br
+            br
+
+            p The <code>prototype</code> property is a crucial aspect of the ECMAScript core. It serves as the actual storage location for all instance methods of reference types. This means that methods like <code>toString()</code> and <code>valueOf()</code> are stored on the <code>prototype</code> and accessed from object instances. The <code>prototype</code> property plays a significant role in defining custom reference types and implementing inheritance. In ECMAScript 5, the <code>prototype</code> property is non-enumerable, which means it won't be discovered using a <code>for-in</code> loop.
+
+            br
+            br
+            
+            h3(id='method_apply') apply()
+            p In JavaScript, functions have two useful methods: <code>apply()</code> and <code>call()</code>. These methods allow you to call a function while specifying a particular <code>this</code> value, essentially setting the context within the function.
+
+            p The <code>apply()</code> method takes two arguments: the value of this inside the function and an array of arguments. The second argument can be an array or the <code>arguments</code> object itself. Consider the following:
+
+            pre(class="bg-light")
+                code.
+                    function multiply(num1, num2) {
+                        return num1 * num2;
+                    }
+
+                    function callMultiply1(num1, num2) {
+                        return multiply.apply(this, arguments);
+                    }
+
+                    function callMultiply2(num1, num2) {
+                        return multiply.apply(this, [num1, num2]);
+                    }
+
+                    console.log(callMultiply1(5, 5)); // Output: 25
+                    console.log(callMultiply2(5, 5)); // Output: 25
+
+
+            p In this example, <code>callMultiply1()</code> call the <code>multiply()</code> function, passing in <code>this</code> as the <code>this</code> value (which is equal to <code>window</code> because it’s being called in the global scope) and also passing in the <code>arguments</code> object. The <code>callMultiply2()</code> method also calls <code>multiply()</code>, but it passes in an array of the arguments instead. Both functions will execute and return the correct result.
+
+            br
+            br
+            
+            h3(id='method_call') call()
+            p The <code>call()</code> method functions similarly to <code>apply()</code>, but the way arguments are passed differs. In <code>call()</code>, the first argument is the <code>this</code> value, while the subsequent arguments are passed directly into the function. When using <code>call()</code>, arguments need to be explicitly listed, as shown in this example:
+
+            pre(class="bg-light")
+                code.
+                    function multiply(num1, num2) {
+                        return num1 * num2;
+                    }
+
+                    function callMultiply(num1, num2) {
+                        return multiply.call(this, num1, num2);
+                    }
+
+                    console.log(callMultiply(5, 5)); // Output: 25
+
+            p The <code>callMultiply()</code> method needs to explicitly list each of its arguments when using the <code>call()</code> method. The result is equivalent to using <code>apply()</code>. The choice between <code>apply()</code> and <code>call()</code> depends on the most convenient way for passing arguments into the function. If you plan to pass the <code>arguments</code> object directly or already have an array of data to pass in, then <code>apply()</code> is the preferred option. Otherwise, <code>call()</code> might be more suitable. If there are no arguments to pass in, these methods behave identically.
+
+            br
+            br
+            
+            p The real strength of <code>apply()</code> and <code>call()</code> lies in their capability to modify the <code>this</code> value within the function. Let's explore this concept with the following example:
+
+            pre(class="bg-light")
+                code.
+                    window.brand = 'Toyota';
+
+                    let car = {
+                        brand: 'Ford'
+                    };
+
+                    function displayBrand() {
+                        console.log(this.brand);
+                    }
+
+                    displayBrand(); // 'Toyota'
+
+                    displayBrand.call(this); // 'Toyota'
+                    displayBrand.call(window); // 'Toyota'
+                    displayBrand.call(car);  // 'Ford'
+
+            p In this example <code>displayBrand()</code> is defined as a global function, and when it’s called in the global scope, it displays "<code>Toyota</code>" because <code>this.brand</code> evaluates to <code>window.brand</code>. You can then call the function explicitly in the global scope by using <code>displayBrand.call(this)</code> and <code>displayBrand.call(window)</code>, which both display "<code>Toyota</code>". Running <code>displayBrand.call(car)</code> switches the context of the function such that <code>this</code> points to <code>car</code>, resulting in a display of "<code>Ford</code>".
+
+            br
+            br
+            
+            h3(id='method_bind') bind()
+            p ECMAScript 5 introduces a new method called <code>bind()</code>. The <code>bind()</code> method generates a new function instance where the <code>this</code> value is bound to the value provided to <code>bind()</code>. Here is an example:
+
+            pre(class="bg-light")
+                code.
+                    window.brand = 'Toyota';
+
+                    let car = {
+                        brand: 'Ford'
+                    };
+
+                    function displayBrand() {
+                        console.log(this.brand);
+                    }
+
+                    let boundDisplayBrand = displayBrand.bind(car);
+                    boundDisplayBrand(); // 'Ford'
+
+            p Here, a new function called <code>boundDisplayBrand()</code> is created from <code>displayBrand()</code> by calling <code>bind()</code> and passing in the object <code>car</code>. The <code>boundDisplayBrand()</code> function has a <code>this</code> value equivalent to <code>car</code>, so calling the function, even as a global call, results in the string "<code>Ford</code>" being displayed.
+
+
 
             br
             br
