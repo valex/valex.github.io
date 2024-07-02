@@ -91,6 +91,7 @@ block content
                                 <li><a href="#method_bind"><span class="tocnumber">•</span> <span class="toctext">bind()</span></a></li>
                             </ul>
                         </li> 
+                        <li><a href="#function_expressions"><span class="tocnumber">•</span> <span class="toctext">Function expressions</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -890,10 +891,111 @@ block content
 
             p Here, a new function called <code>boundDisplayBrand()</code> is created from <code>displayBrand()</code> by calling <code>bind()</code> and passing in the object <code>car</code>. The <code>boundDisplayBrand()</code> function has a <code>this</code> value equivalent to <code>car</code>, so calling the function, even as a global call, results in the string "<code>Ford</code>" being displayed.
 
+            br
+            br
+            
+            h2(id='function_expressions') Function expressions
+            p One of the more powerful, and often confusing, parts of JavaScript is <i>function expressions</i>. There are two primary ways to define a function: through <i>function declaration</i> and <i>function expression</i>. Function declaration takes the form:
 
+            pre(class="bg-light")
+                code.
+                    function functionName(arg0, arg1, arg2) {
+                        // function body
+                    }
+
+            p One of the key characteristics of function declarations is <b><i>function declaration hoisting</i></b>, a behavior where function declarations are read before the code executes. This allows a function declaration to be placed after the code that calls it and still function correctly:
+
+            pre(class="bg-light")
+                code.
+                    sayHello();
+                    function sayHello() {
+                        console.log("Hello!");
+                    }
+
+            p This example doesn’t throw an error because of <i>function declaration hoisting</i>. The function declaration is processed first before the code execution begins, allowing the function to be called successfully even though it appears after the call in the code.
 
             br
             br
+            
+            p Another method to create a function in JavaScript is through a <i>function expression</i>. Function expressions come in various forms, with the most common being:
+            
+            pre(class="bg-light")
+                code.
+                    let functionName = function(arg0, arg1, arg2) {
+                        // function body
+                    };
+
+            p This pattern of function expression looks like a normal variable assignment. A function is created and assigned to the variable <code>functionName</code>. The created function is considered to be an <i>anonymous function</i>, because it has no identifier after the <code>function</code> keyword. (Anonymous functions are also sometimes called <i>lambda functions</i>.) This means the <code>name</code> property is the empty string.
+
+            p Function expressions behave like other expressions in JavaScript and must be assigned before they are used:
+            
+            pre(class="bg-light")
+                code.
+                    sayHello(); // Error! function doesn't exist yet
+                    function sayHello() {
+                        console.log("Hello!");
+                    }
+            br
+            br
+            
+            p Understanding <i>function hoisting</i> is key to understanding the differences between function declarations and function expressions. For instance, the result of the following code may be surprising:
+
+            pre(class="bg-light")
+                code.
+                    // Never do this!
+                    if (condition) {
+                        function greet() {
+                            greeting = 'Hello!';
+                        }
+                    } else {
+                        function greet() {
+                            greeting = 'Hi!';
+                        }
+                    }
+
+            p The code appears to suggest using one definition for <code>greet()</code> if a <code>condition</code> is <code>true</code>, and another definition if <code>false</code>. However, this is not valid syntax in ECMAScript. JavaScript engines attempt to error-correct, but browsers may not consistently handle this situation. Most browsers return the second declaration regardless of the condition, while Firefox returns the first if the condition is <code>true</code>. This approach is unreliable and should be avoided. Instead, it is acceptable to use <i>function expressions</i> in a conditional manner:
+            pre(class="bg-light")
+                code.
+                    // OK
+                    let greet;
+                    if (condition) {
+                        greet = function() {
+                            console.log("Hello!");
+                        };
+                    } else {
+                        greet = function() {
+                            console.log("Hi!");
+                        };
+                    }
+
+            p This example behaves the way you would expect, assigning the correct function expression to the variable <code>greet</code> based on condition.
+
+            br
+            br
+            
+            p The ability to create functions for assignment to variables also allows you to return functions as the value of other functions:
+
+            pre(class="bg-light")
+                code.
+                    function createSortingFunction(property) {
+                        return function(obj1, obj2) {
+                            let value1 = obj1[property];
+                            let value2 = obj2[property];
+                            if (value1 < value2) {
+                                return -1;
+                            } else if (value1 > value2) {
+                                return 1;
+                            } else {
+                                return 0;
+                            }
+                        };
+                    }
+
+            p <code>createSortingFunction()</code> returns an anonymous function. The returned function will, presumably, be either assigned to a variable or otherwise called, but within <code>createSortingFunction()</code> it is anonymous. Any time a function is being used as a value, it is a <i>function expression</i>.
+
+            br
+            br
+            
         </div>
 
         <div class="col-sm-4">
