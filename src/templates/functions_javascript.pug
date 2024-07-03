@@ -92,6 +92,12 @@ block content
                             </ul>
                         </li> 
                         <li><a href="#function_expressions"><span class="tocnumber">•</span> <span class="toctext">Function expressions</span></a></li>
+                        <li>
+                            <a href="#closures"><span class="tocnumber">•</span> <span class="toctext">Closures</span></a> 
+                            <ul>
+                                <li><a href="#this_in_closures"><span class="tocnumber">•</span> <span class="toctext">this in closures</span></a></li>
+                            </ul>
+                        </li> 
                     </ul>
                 </div>
             </div>
@@ -1011,7 +1017,108 @@ block content
 
             br
             br
+
+            h2(id='closures') Closures
+            p A <b>closure</b> in JavaScript is a function that has access to variables from an <i>outer scope</i>, even after the outer function has finished executing. Closures allow functions to retain access to variables from their parent scope even after the parent function has completed its execution.
+
+            p Here is an example of a closure in JavaScript:
+
+            pre(class="bg-light")
+                code.
+                    function outerFunction() {
+                        let outerVariable = 'I am from the outer function';
+
+                        function innerFunction() {
+                            console.log(outerVariable); // The inner function has access to outerVariable from the outer function
+                        }
+
+                        return innerFunction;
+                    }
+
+                    let closureExample = outerFunction();
+                    closureExample(); // Outputs: "I am from the outer function"
+
+            p In this example, <code>innerFunction</code> is a closure because it retains access to the variable <code>outerVariable</code> from the outer function <code>outerFunction</code>, even after <code>outerFunction</code> has finished executing.
+
+            br
+            br
             
+            h3(id='this_in_closures') this in closures
+            p Using <code>this</code> in JavaScript closures can be challenging due to the dynamic nature of <code>this</code>. Unlike variables, which are lexically scoped, <code>this</code> is determined at runtime based on the context <i>in which a function is called</i>. This dynamic binding means that the value of <code>this</code> can change depending on how a function is invoked, leading to potential confusion when using <code>this</code> inside closures.
+
+            p One common issue arises when <code>this</code> inside a closure does not refer to the expected object. Instead, it can refer to the global object (in non-strict mode) or be <code>undefined</code> (in strict mode). To address this, developers have devised several strategies.
+
+            p One popular approach is to save the value of <code>this</code> in a variable before entering the closure. This variable, often named <code>self</code> or <code>that</code>, ensures the correct reference is maintained. For instance, consider the following example:
+
+            pre(class="bg-light")
+                code.
+                    function outerFunction() {
+                        let self = this; // Save the context
+
+                        function innerFunction() {
+                            console.log(self); // Use the saved context
+                        }
+
+                        return innerFunction;
+                    }
+
+                    let obj = { outerFunction: outerFunction };
+                    let closureExample = obj.outerFunction();
+                    closureExample(); // Outputs: { outerFunction: [Function: outerFunction] }
+
+            p In this example, <code>outerFunction</code> saves <code>this</code> as <code>self</code> before defining <code>innerFunction</code>. When <code>innerFunction</code> is called later, it accesses <code>self</code>, which holds the correct reference to <code>obj</code>.
+
+            br
+            br
+            p Another elegant solution involves <i>using arrow functions</i>. Arrow functions do not have their own <code>this</code> binding; instead, they inherit <code>this</code> from the enclosing lexical context. This feature makes arrow functions particularly useful for preserving <code>this</code> in closures. Here’s an example:
+
+            pre(class="bg-light")
+                code.
+                    function outerFunction() {
+                        this.outerVariable = 'I am from the outer function';
+
+                        const innerFunction = () => {
+                            console.log(this.outerVariable); // Arrow function uses `this` from outerFunction
+                        };
+
+                        return innerFunction;
+                    }
+
+                    let obj = new outerFunction();
+                    let closureExample = obj;
+                    closureExample(); // Outputs: "I am from the outer function"
+
+            p In this scenario, <code>innerFunction</code> is defined as an arrow function within <code>outerFunction</code>. The arrow function automatically uses the <code>this</code> value from <code>outerFunction</code>, ensuring the correct reference is maintained.
+
+            br
+            br
+            p A third method involves using <code>Function.prototype.bind</code> to manually set the value of <code>this</code> when the closure is created. By binding <code>this</code> to the desired context, you ensure that <code>this</code> within the closure refers to the correct object, regardless of how the function is later invoked. For example:
+
+            pre(class="bg-light")
+                code.
+                    function outerFunction() {
+                        this.outerVariable = 'I am from the outer function';
+
+                        function innerFunction() {
+                            console.log(this.outerVariable);
+                        }
+
+                        return innerFunction.bind(this); // Bind `this` to outerFunction's `this`
+                    }
+
+                    let obj = new outerFunction();
+                    let closureExample = obj;
+                    closureExample(); // Outputs: "I am from the outer function"
+
+            p In this case, <code>innerFunction</code> is explicitly bound to the <code>this</code> value of <code>outerFunction</code> using <code>bind</code>. This ensures that when <code>innerFunction</code> is called, it accesses the correct <code>this</code> context.
+            
+            br
+            br
+            
+            p Understanding these strategies is essential for effectively working with <code>this</code> in closures, ensuring that your code behaves as intended.
+
+            br
+            br
         </div>
 
         <div class="col-sm-4">
