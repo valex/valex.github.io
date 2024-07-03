@@ -651,6 +651,22 @@ block content
             br
             br
             
+            p In strict mode, the value of <code>arguments.callee</code> is not accessible and attempting to read it will result in an error. To overcome this limitation, you can utilize <i>named function expressions</i> to achieve the same result. Here is an example:
+            pre(class="bg-light")
+                code.
+                    const factorial = (function f(num) {
+                        if (num <= 1) {
+                            return 1;
+                        } else {
+                            return num * f(num - 1);
+                        }
+                    });
+                    
+            p In this code, a named function expression <code>f()</code> is created and assigned to the variable <code>factorial</code>. The name <code>f</code> remains the same even if the function is assigned to another variable, so the recursive call will always execute correctly. This pattern works in both nonstrict mode and strict mode.
+
+            br
+            br
+            
             h3(id='function_inside_this') this
             
             p In JavaScript, the special object <code>this</code> works differently in standard functions and arrow functions.

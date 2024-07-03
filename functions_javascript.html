@@ -315,7 +315,14 @@ console.log(people[0].name); // Output: Emma
         return num * arguments.callee(num - 1);
     }
 }
-</code></pre><p>In this updated version of the <code>factorial()</code> function, the function no longer directly references its own name "<code>factorial</code>" within the function body. This change guarantees that the recursive call will always be made to the correct function, regardless of how the function is named or referenced.</p><br><br><h3 id="function_inside_this">this</h3><p>In JavaScript, the special object <code>this</code> works differently in standard functions and arrow functions.</p><p>In a standard function, <code>this</code> refers to the object the function is working with. When used globally, <code>this</code> points to the <code>window</code> object. Consider the following:</p><pre class="bg-light"><code>window.brand = 'Toyota';
+</code></pre><p>In this updated version of the <code>factorial()</code> function, the function no longer directly references its own name "<code>factorial</code>" within the function body. This change guarantees that the recursive call will always be made to the correct function, regardless of how the function is named or referenced.</p><br><br><p>In strict mode, the value of <code>arguments.callee</code> is not accessible and attempting to read it will result in an error. To overcome this limitation, you can utilize <i>named function expressions</i> to achieve the same result. Here is an example:</p><pre class="bg-light"><code>const factorial = (function f(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * f(num - 1);
+    }
+});
+</code></pre><p>In this code, a named function expression <code>f()</code> is created and assigned to the variable <code>factorial</code>. The name <code>f</code> remains the same even if the function is assigned to another variable, so the recursive call will always execute correctly. This pattern works in both nonstrict mode and strict mode.</p><br><br><h3 id="function_inside_this">this</h3><p>In JavaScript, the special object <code>this</code> works differently in standard functions and arrow functions.</p><p>In a standard function, <code>this</code> refers to the object the function is working with. When used globally, <code>this</code> points to the <code>window</code> object. Consider the following:</p><pre class="bg-light"><code>window.brand = 'Toyota';
 
 let car = {
     brand: 'Ford'
