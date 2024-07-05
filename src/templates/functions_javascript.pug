@@ -96,6 +96,12 @@ block content
                             <a href="#closures"><span class="tocnumber">•</span> <span class="toctext">Closures</span></a> 
                             <ul>
                                 <li><a href="#this_in_closures"><span class="tocnumber">•</span> <span class="toctext">this in closures</span></a></li>
+                                <li>
+                                    <a href="#memory_leaks"><span class="tocnumber">•</span> <span class="toctext">Memory Leaks</span></a>
+                                    <ul>
+                                        <li><a href="#managing_memory_with_closures"><span class="tocnumber">•</span> <span class="toctext">Managing Memory with Closures</span></a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li> 
                     </ul>
@@ -1119,6 +1125,115 @@ block content
 
             br
             br
+            
+            h3(id='memory_leaks') Memory Leaks
+            
+            p Closures in JavaScript can sometimes lead to <i>memory issues</i> because they retain references to their enclosing scope. This means that <i>variables from the outer function are kept in memory as long as the closure exists</i>, even if the outer function has finished executing. This can cause increased memory usage, particularly in long-running applications or those that create many closures.
+
+            p For example:
+
+            pre(class="bg-light")
+                code.
+                    function createClosure() {
+                        let largeArray = new Array(1000000).fill('Some data'); // Large object
+
+                        return function() {
+                            console.log(largeArray[0]); // Closure retains reference to largeArray
+                        };
+                    }
+
+                    let closure = createClosure();
+                    
+            p Even after <code>createClosure()</code> finishes, <code>largeArray</code> is not garbage collected because the closure holds a reference to it.
+
+            br
+            br
+            
+            p If a function repeatedly creates closures and these closures are not needed or properly managed, they can accumulate and consume memory unnecessarily. For instance:
+
+
+            pre(class="bg-light")
+                code.
+                    let closures = [];
+
+                    for (let i = 0; i < 1000; i++) {
+                        closures.push(function() {
+                            console.log(i);
+                        });
+                    }
+
+            p The <code>closures</code> array holds references to 1000 closures, each with its own lexical environment.
+            
+            br
+            br
+            
+            h4(id='managing_memory_with_closures') Managing Memory with Closures
+            p To avoid memory issues related to closures, consider the following strategies:
+
+            <ul>
+                <li>
+                    <p>Avoid Unnecessary Closures: Only create closures when necessary. Avoid using closures for simple tasks that do not require preserving the lexical scope.</p>
+                </li>
+                
+                <li>
+                    <p>Nullify References When Possible: If a closure is no longer needed, explicitly nullify references to it so that the garbage collector can reclaim the memory. Here’s an example:</p>
+
+                    pre(class="bg-light")
+                        code.
+                            function createClosure() {
+                                let largeArray = new Array(1000000).fill('Some data'); // Large object
+
+                                function closure() {
+                                    console.log(largeArray[0]); // Closure retains reference to largeArray
+                                }
+
+                                function cleanup() {
+                                    largeArray = null; // Nullify the reference when done
+                                }
+
+                                return { closure, cleanup };
+                            }
+
+                            let { closure, cleanup } = createClosure();
+                            closure(); // Outputs: "Some data"
+
+                            // When done with closure, call cleanup to free memory
+                            cleanup();
+
+
+                    <p>In this approach, the <code>createClosure</code> function returns an <code>object</code> containing both the <code>closure</code> and a <code>cleanup</code> function. You use the <code>closure</code> as needed, and when you are finished with it, you call <code>cleanup</code> to nullify the reference to <code>largeArray</code>, ensuring that memory can be reclaimed. This way, you avoid memory leaks while still allowing the closure to function correctly until it is no longer needed.</p>
+                </li>
+                
+                <li>
+                    p Use Weak References: In cases where you need to hold references to closures but want to allow them to be garbage collected when no longer needed, consider using weak references if your environment supports them (e.g., <code>WeakMap</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap" target="_blank">MDN web docs</a>)):
+                    
+                    pre(class="bg-light")
+                        code.
+                            let weakMap = new WeakMap();
+
+                            function createClosure() {
+                                let largeArray = new Array(1000000).fill('Some data'); // Large object
+
+                                let closure = function() {
+                                    console.log(largeArray[0]); // Closure retains reference to largeArray
+                                };
+
+                                // Use weak reference to hold largeArray
+                                weakMap.set(closure, largeArray);
+
+                                return closure;
+                            }
+
+                            // Usage example
+                            let closure = createClosure();
+                            closure(); // Outputs: "Some data"
+
+                    p <code>WeakMap</code> allows you to associate <code>closure</code> with <code>largeArray</code> weakly, meaning that if <code>closure</code> is the only remaining reference to <code>largeArray</code>, both can be garbage collected.
+                </li>
+            </ul>
+
+
+
         </div>
 
         <div class="col-sm-4">
