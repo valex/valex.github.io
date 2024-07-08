@@ -87,6 +87,7 @@ let add = new Function("a", "b", "return a + b");
 </ul>
 </li> 
 <li><a href="#iife"><span class="tocnumber">•</span> <span class="toctext">Immediately Invoked Function Expressions</span></a></li>
+<li><a href="#private_variables"><span class="tocnumber">•</span> <span class="toctext">Private Variables and Functions</span></a></li>
 </ul>
 </div>
 </div><br><br><h2 id="arrow_functions">ARROW functions</h2><p>In ECMAScript 6, there's a new way to create function expressions using the fat-arrow syntax. Arrow functions mostly work the same as regular function expressions. You can use arrow functions anywhere you'd use a regular function expression:</p><pre class="bg-light"><code>let arrowMultiply = (x, y) => {
@@ -634,7 +635,41 @@ console.log(secret); // Throws an error
     console.log(secret); // Outputs: 'hidden message'
 }
 console.log(secret); // Throws an error
-</code></pre><br><br></div>
+</code></pre><br><br><h2 id="private_variables">Private Variables and Functions</h2><p>Strictly speaking, JavaScript has no concept of private members; all object properties are public. There is, however, <i>a concept of private variables</i>. Any variable defined inside a function or block <i>is private</i> because it can't be accessed from outside that function. This includes function arguments, local variables, and inner functions. For example, in the function below:</p><pre class="bg-light"><code>function multiply(num1, num2) {
+    let mul = num1 * num2;
+    return mul;
+}</code></pre><p>The variables <code>num1</code>, <code>num2</code>, and <code>mul</code> are private. They can be accessed within the function but not outside of it. If a closure is created within this function, it can access these private variables through its scope chain. This allows you to create public methods that can interact with private variables.</p><p>A <b><i>privileged method</i></b> is a public method that can access private variables and functions. One way to create privileged methods is by defining them inside a constructor function. Here’s a simple example:</p><pre class="bg-light"><code>function MyObject() {
+    // Private variables and functions
+    let privateVariable = 10;
+    function privateFunction() {
+        return false;
+    }
+
+    // Privileged method
+    this.publicMethod = function() {
+        privateVariable++;
+        return privateFunction();
+    };
+}
+</code></pre><p>This pattern defines all private variables and functions inside the constructor. Then privileged methods can be created to access those private members. This works because the privileged methods, when defined in the constructor, become closures with full access to all variables and functions defined inside the constructor’s scope. In the example, the variable <code>privateVariable</code> and the function <code>privateFunction</code> can only be accessed by <code>publicMethod()</code>. Once an instance of <code>MyObject</code> is created, <code>privateVariable</code> and <code>privateFunction</code> can't be accessed directly; they can only be accessed through <code>publicMethod()</code>.</p><br><br><p>You can create private and privileged members to protect data from being directly modified, like in this example:</p><pre class="bg-light"><code>function Car(make) {
+    // Private variable
+    let carMake = make;
+
+    // Privileged methods
+    this.getMake = function() {
+        return carMake;
+    };
+
+    this.setMake = function(value) {
+        carMake = value;
+    };
+}
+
+let myCar = new Car('Toyota');
+console.log(myCar.getMake()); // Outputs: 'Toyota'
+myCar.setMake('Honda');
+console.log(myCar.getMake()); // Outputs: 'Honda'
+</code></pre><p>In this example, <code>carMake</code> is a private variable. The methods <code>getMake</code> and <code>setMake</code> are privileged methods that allow access to the private variable <code>carMake</code>. This ensures that the <code>carMake</code> variable can only be accessed and modified through these methods, providing controlled access to the private data.</p><br><br></div>
 <div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/dom.html">DOM - Document Object Model</a><a class="list-group-item list-group-item-action" href="/script_tag.html">Inserting JavaScript into an HTML page</a><a class="list-group-item list-group-item-action" href="/variables_in_js.html">Variables in JavaScript</a><a class="list-group-item list-group-item-action active" href="/functions_javascript.html">Functions in JavaScript</a><a class="list-group-item list-group-item-action" href="/numbers_in_js.html">Numbers in JavaScript</a><a class="list-group-item list-group-item-action" href="/strings_in_js.html">Strings in JavaScript</a></div></div></div></div>
 </div></div> <!--end .container-fluid --><section id="donate" class="">
 <footer class=" text-white" style="background-color: #0a4275;">
