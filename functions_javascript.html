@@ -86,6 +86,7 @@ let add = new Function("a", "b", "return a + b");
 </li>
 </ul>
 </li> 
+<li><a href="#iife"><span class="tocnumber">•</span> <span class="toctext">Immediately Invoked Function Expressions</span></a></li>
 </ul>
 </div>
 </div><br><br><h2 id="arrow_functions">ARROW functions</h2><p>In ECMAScript 6, there's a new way to create function expressions using the fat-arrow syntax. Arrow functions mostly work the same as regular function expressions. You can use arrow functions anywhere you'd use a regular function expression:</p><pre class="bg-light"><code>let arrowMultiply = (x, y) => {
@@ -618,8 +619,22 @@ function createClosure() {
 let closure = createClosure();
 closure(); // Outputs: "Some data"
 </code></pre><p><code>WeakMap</code> allows you to associate <code>closure</code> with <code>largeArray</code> weakly, meaning that if <code>closure</code> is the only remaining reference to <code>largeArray</code>, both can be garbage collected.</p></li>
-</ul>
-</div>
+</ul><br><br><h2 id="iife">Immediately Invoked Function Expressions</h2><p>An <i>anonymous function</i> that is called immediately is called an <b>Immediately Invoked Function Expression</b> (<b>IIFE</b>). It looks like a regular function declaration, but since it’s wrapped in parentheses, it’s treated as a function expression. The function is then immediately called using <i>another set of parentheses at the end</i>. The basic syntax looks like this:</p><pre class="bg-light"><code>(function() {
+    // block code here
+})();
+
+</code></pre><p>Using an <i>Immediately Invoked Function Expression</i> (IIFE) can create a scope similar to block scope by defining and executing a function immediately. This is particularly useful in older versions of JavaScript (before ECMAScript 6) where block-scoped variables were not available. Here's an example:</p><pre class="bg-light"><code>// IIFE
+(function () {
+    var secret = 'hidden message';
+    console.log(secret); // Outputs: 'hidden message'
+})();
+console.log(secret); // Throws an error
+</code></pre><p>In this example, the variable <code>secret</code> is defined inside the IIFE and is not accessible outside of it. When <code>console.log(secret)</code> is called outside the IIFE, it results in an error because <code>secret</code> is not defined in that scope. This technique was especially useful to prevent variable bleed in ECMAScript 5.1 and earlier versions, and it also helps to avoid <a href="#memory_leaks">memory issues</a> related to closures by ensuring the scope chain is destroyed immediately after the function completes.</p><br><br><p>With ECMAScript 6, you don't need to use an IIFE to create block scope, because block-scoped variables (<code>let</code> and <code>const</code>) provide the same functionality:</p><pre class="bg-light"><code>{
+    const secret = 'hidden message';
+    console.log(secret); // Outputs: 'hidden message'
+}
+console.log(secret); // Throws an error
+</code></pre><br><br></div>
 <div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/dom.html">DOM - Document Object Model</a><a class="list-group-item list-group-item-action" href="/script_tag.html">Inserting JavaScript into an HTML page</a><a class="list-group-item list-group-item-action" href="/variables_in_js.html">Variables in JavaScript</a><a class="list-group-item list-group-item-action active" href="/functions_javascript.html">Functions in JavaScript</a><a class="list-group-item list-group-item-action" href="/numbers_in_js.html">Numbers in JavaScript</a><a class="list-group-item list-group-item-action" href="/strings_in_js.html">Strings in JavaScript</a></div></div></div></div>
 </div></div> <!--end .container-fluid --><section id="donate" class="">
 <footer class=" text-white" style="background-color: #0a4275;">

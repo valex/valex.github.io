@@ -104,6 +104,7 @@ block content
                                 </li>
                             </ul>
                         </li> 
+                        <li><a href="#iife"><span class="tocnumber">•</span> <span class="toctext">Immediately Invoked Function Expressions</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -1231,8 +1232,47 @@ block content
                     p <code>WeakMap</code> allows you to associate <code>closure</code> with <code>largeArray</code> weakly, meaning that if <code>closure</code> is the only remaining reference to <code>largeArray</code>, both can be garbage collected.
                 </li>
             </ul>
+            
+            br
+            br
+            
+            h2(id='iife') Immediately Invoked Function Expressions
+
+            p An <i>anonymous function</i> that is called immediately is called an <b>Immediately Invoked Function Expression</b> (<b>IIFE</b>). It looks like a regular function declaration, but since it’s wrapped in parentheses, it’s treated as a function expression. The function is then immediately called using <i>another set of parentheses at the end</i>. The basic syntax looks like this:
+            pre(class="bg-light")
+                code.
+                    (function() {
+                        // block code here
+                    })();
 
 
+            p Using an <i>Immediately Invoked Function Expression</i> (IIFE) can create a scope similar to block scope by defining and executing a function immediately. This is particularly useful in older versions of JavaScript (before ECMAScript 6) where block-scoped variables were not available. Here's an example:
+            pre(class="bg-light")
+                code.
+                    // IIFE
+                    (function () {
+                        var secret = 'hidden message';
+                        console.log(secret); // Outputs: 'hidden message'
+                    })();
+                    console.log(secret); // Throws an error
+
+            p In this example, the variable <code>secret</code> is defined inside the IIFE and is not accessible outside of it. When <code>console.log(secret)</code> is called outside the IIFE, it results in an error because <code>secret</code> is not defined in that scope. This technique was especially useful to prevent variable bleed in ECMAScript 5.1 and earlier versions, and it also helps to avoid <a href="#memory_leaks">memory issues</a> related to closures by ensuring the scope chain is destroyed immediately after the function completes.
+            
+            br
+            br
+            
+            p With ECMAScript 6, you don't need to use an IIFE to create block scope, because block-scoped variables (<code>let</code> and <code>const</code>) provide the same functionality:
+
+            pre(class="bg-light")
+                code.
+                    {
+                        const secret = 'hidden message';
+                        console.log(secret); // Outputs: 'hidden message'
+                    }
+                    console.log(secret); // Throws an error
+
+            br
+            br
 
         </div>
 
