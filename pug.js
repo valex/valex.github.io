@@ -113,6 +113,16 @@ const pages = [
         "title": "Hamster Kombat Game"
     },
     {
+        "slug": "moonbix",
+        "theme": "clickers",
+    
+        "meta_description": "Discover Moonbix, Binance's latest play-to-earn mini-game on Telegram! Learn how to catch golden balls, earn crypto rewards, and invite friends to maximize your earnings. Join the space adventure and get 100 free coins to start your journey!",
+        "meta_keywords": "Moonbix game, Binance play-to-earn, Binance Telegram game, Moonbix rewards, crypto gaming, P2E games, Moonbix referral program, Binance crypto games, Telegram mini-games, Moonbix tutorial",
+        "meta_title": "Moonbix by Binance: Play-to-Earn Game on Telegram with Crypto Rewards",
+    
+        "title": "Binance Moonbix Game"
+    },
+    {
         "slug": "freebitcoin_autoclick",
         "theme": "clickers",
     
