@@ -1,6 +1,8 @@
 extends basic.pug
 
 block scripts
+    script(async, src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js')
+    script(defer, src='https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js')
     script(defer, src='https://unpkg.com/three@0.147.0/build/three.min.js')
     script(defer, src='https://unpkg.com/three@0.147.0/examples/js/controls/OrbitControls.js')
     script(defer, src='https://unpkg.com/three@0.147.0/examples/js/controls/DragControls.js')

@@ -22,14 +22,14 @@ class Donate {
     }
 
     init(){
-        d3.select('#btc_donate').text(this.btc);
-        d3.select('#xmr_donate').text(this.xmr);
-        d3.select('#ltc_donate').text(this.ltc);
-
 
         const btcDonateElement = document.getElementById("btc_donate");
         const xmrDonateElement = document.getElementById("xmr_donate");
         const ltcDonateElement = document.getElementById("ltc_donate");
+
+        btcDonateElement.appendChild( document.createTextNode(this.btc) );
+        xmrDonateElement.appendChild( document.createTextNode(this.xmr) );
+        ltcDonateElement.appendChild( document.createTextNode(this.ltc) );
 
         document.body.appendChild(this.tooltip);
 

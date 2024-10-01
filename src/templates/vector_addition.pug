@@ -1,5 +1,11 @@
 extends basic.pug
 
+block scripts
+    script(async, src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js')
+    script(defer, src='https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js')
+
+    
+
 block content
 
     <div class="row">
