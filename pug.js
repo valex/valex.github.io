@@ -103,16 +103,6 @@ const pages = [
         "title": "Functions in JavaScript"
 	},
     {
-        "slug": "hamster_kombat",
-        "theme": "clickers",
-    
-        "meta_description": "Learn how to play Hamster Kombat, a Telegram-based game where you can earn Hamster Coin by tapping, collecting coins, and developing strategies. Discover various ways to maximize your earnings, from inviting new players to solving ciphers and completing daily tasks.",
-        "meta_keywords": "Hamster Kombat, Hamster Coin, Telegram game, crypto exchange game, earn tokens, tapping game, passive income, referral bonuses, secret combos, game ciphers, daily tasks, mobile game, in-game utility token, cryptocurrency game",
-        "meta_title": "Hamster Kombat Game: How to Play and Earn Hamster Coin",
-    
-        "title": "Hamster Kombat Game"
-    },
-    {
         "slug": "moonbix",
         "theme": "clickers",
     
