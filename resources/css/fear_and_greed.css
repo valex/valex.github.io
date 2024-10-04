@@ -1,0 +1,61 @@
+/* Default styles for all arcs */
+.arc {
+    fill: #f0f0f0; /* Default color */
+    stroke: none;
+    transition: fill 0.3s ease;
+}
+
+/* Active arc styles */
+.arc.active {
+    fill: #fcd8d8; /* Color for active arcs */
+    stroke: #ce0000; /* Optional stroke for emphasis */
+    font-weight: bold;
+}
+
+/* Labels for arcs */
+.arc-label {
+    fill: #222222;
+    text-transform: uppercase;
+    font-weight: bold;
+    user-select: none;
+}
+
+/* Center circle */
+.gauge-center-circle {
+    fill: #ffffff; /* Background color for the circle */
+    stroke: #cccccc; /* Optional border */
+    stroke-width: 2px;
+    filter: drop-shadow( 0 -0.1rem 4px #CCCCCC);
+}
+
+/* Center text */
+.gauge-center-text {
+    fill: #222222; /* Text color */
+    font-weight: bold; /* Make the text bold */
+    user-select: none;
+}
+
+
+.percent-label {
+    font-size: 0.75rem;      /* Set the font size */
+    fill: #888888;        /* Text color */
+    font-weight: bold;    /* Make the text bold */
+    text-transform: uppercase;  /* Make text uppercase */
+    user-select: none;
+}
+
+/* Style for the small dots */
+.percent-dot {
+    fill: #888888;           /* Dot color */
+}
+
+span.fgi_component{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px; /* Вертикальное центрирование текста */
+    border-radius: 10px; /* Скругленные углы */
+    font-weight: bold;
+    color: white; /* Цвет текста */
+}

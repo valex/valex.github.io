@@ -171,6 +171,16 @@ const pages = [
         "title": "Strings in JavaScript"
     },
     {
+        "slug": "fear_and_greed",
+        "theme": "crypto",
+    
+        "meta_description": "Explore the Fear and Greed Index in cryptocurrency trading with real-time insights. This article explains how the index is calculated, its significance in market sentiment, and trading strategies, featuring an SVG graph displaying the current index value.",
+        "meta_keywords": "Fear and Greed Index, cryptocurrency trading, market sentiment, trading strategies, cryptocurrency investing, market analysis, emotional trading, crypto market indicators, real-time index value",
+        "meta_title": "Understanding the Fear and Greed Index in Cryptocurrency Trading",
+    
+        "title": "Fear and Greed Index"
+    },
+    {
         "slug": "virtual_environment",
         "theme": "python",
     
