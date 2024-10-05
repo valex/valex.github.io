@@ -49,13 +49,15 @@
     fill: #888888;           /* Dot color */
 }
 
-span.fgi_component{
+button.fgi_component {
     display: inline-block;
     width: 50px;
     height: 50px;
     text-align: center;
     line-height: 50px; /* Вертикальное центрирование текста */
-    border-radius: 10px; /* Скругленные углы */
+    border-radius: 10px;
     font-weight: bold;
-    color: white; /* Цвет текста */
+    color: white;
+    border: none;
+    cursor: pointer;
 }

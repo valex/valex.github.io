@@ -313,13 +313,22 @@ class Gauge{
 
             d3.select('#fgi_today')
                 .style('background-color', colorScale(data.today))
-                .text(data.today.toFixed(0));
+                .text(data.today.toFixed(0))
+                .on('click', function() {
+                    gauge.percent = data.today.toFixed(0) / 100;
+                });
             d3.select('#fgi_yesterday')
                 .style('background-color', colorScale(data.yesterday))
-                .text(data.yesterday.toFixed(0));
+                .text(data.yesterday.toFixed(0))
+                .on('click', function() {
+                    gauge.percent = data.yesterday.toFixed(0) / 100;
+                });
             d3.select('#fgi_last_week')
                 .style('background-color', colorScale(data.last_week))
-                .text(data.last_week.toFixed(0));
+                .text(data.last_week.toFixed(0))
+                .on('click', function() {
+                    gauge.percent = data.last_week.toFixed(0) / 100;
+                });
 
             this.percent = data.today/100;
         } catch (error) {
