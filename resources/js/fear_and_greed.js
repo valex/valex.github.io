@@ -310,24 +310,61 @@ class Gauge{
                 .domain([0, 50, 100]) 
                 .range(['#8B0000', '#FFD700', '#006400']); 
         
+            const darkenColor = function (color, amount) {
+                const colorObj = d3.color(color); // Преобразуем цвет в объект d3
+                // Преобразуем цвет в HSL (Hue, Saturation, Lightness)
+                const hslColor = d3.hsl(colorObj); // d3.hsl() автоматически преобразует RGB в HSL
+
+                // Проверяем, что преобразование прошло успешно
+                if (hslColor) {
+                    hslColor.l = Math.max(0, hslColor.l - amount); // Уменьшаем яркость (luminance) на заданное значение
+                    return hslColor.toString(); // Преобразуем обратно в строку
+                }
+                return color; // Если не удалось преобразовать цвет
+            }
 
             d3.select('#fgi_today')
                 .style('background-color', colorScale(data.today))
                 .text(data.today.toFixed(0))
                 .on('click', function() {
                     gauge.percent = data.today.toFixed(0) / 100;
+                })
+                .on('mouseover', function() {
+                    d3.select(this)
+                        .style('background-color', darkenColor(colorScale(data.today), 0.1)); 
+                })
+                .on('mouseout', function() {
+                    d3.select(this)
+                        .style('background-color', colorScale(data.today)); 
                 });
+
             d3.select('#fgi_yesterday')
                 .style('background-color', colorScale(data.yesterday))
                 .text(data.yesterday.toFixed(0))
                 .on('click', function() {
                     gauge.percent = data.yesterday.toFixed(0) / 100;
+                })
+                .on('mouseover', function() {
+                    d3.select(this)
+                        .style('background-color', darkenColor(colorScale(data.yesterday), 0.1)); 
+                })
+                .on('mouseout', function() {
+                    d3.select(this)
+                        .style('background-color', colorScale(data.yesterday)); 
                 });
             d3.select('#fgi_last_week')
                 .style('background-color', colorScale(data.last_week))
                 .text(data.last_week.toFixed(0))
                 .on('click', function() {
                     gauge.percent = data.last_week.toFixed(0) / 100;
+                })
+                .on('mouseover', function() {
+                    d3.select(this)
+                        .style('background-color', darkenColor(colorScale(data.last_week), 0.1)); 
+                })
+                .on('mouseout', function() {
+                    d3.select(this)
+                        .style('background-color', colorScale(data.last_week)); 
                 });
 
             this.percent = data.today/100;
