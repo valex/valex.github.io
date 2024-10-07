@@ -299,6 +299,23 @@ class Gauge{
     }
 
     async fetchDataAndUpdate() {
+        const colorScale = d3.scaleLinear()
+            .domain([0, 50, 100]) 
+            .range(['#8B0000', '#FFD700', '#006400']); 
+
+        const darkenColor = function (color, amount) {
+            const colorObj = d3.color(color); // Преобразуем цвет в объект d3
+            // Преобразуем цвет в HSL (Hue, Saturation, Lightness)
+            const hslColor = d3.hsl(colorObj); // d3.hsl() автоматически преобразует RGB в HSL
+
+            // Проверяем, что преобразование прошло успешно
+            if (hslColor) {
+                hslColor.l = Math.max(0, hslColor.l - amount); // Уменьшаем яркость (luminance) на заданное значение
+                return hslColor.toString(); // Преобразуем обратно в строку
+            }
+            return color; // Если не удалось преобразовать цвет
+        }
+
         try {
             const response = await fetch('https://effxtu.3utilities.com/');
             if (!response.ok) {
@@ -306,22 +323,7 @@ class Gauge{
             }
             const data = await response.json();
 
-            const colorScale = d3.scaleLinear()
-                .domain([0, 50, 100]) 
-                .range(['#8B0000', '#FFD700', '#006400']); 
-        
-            const darkenColor = function (color, amount) {
-                const colorObj = d3.color(color); // Преобразуем цвет в объект d3
-                // Преобразуем цвет в HSL (Hue, Saturation, Lightness)
-                const hslColor = d3.hsl(colorObj); // d3.hsl() автоматически преобразует RGB в HSL
 
-                // Проверяем, что преобразование прошло успешно
-                if (hslColor) {
-                    hslColor.l = Math.max(0, hslColor.l - amount); // Уменьшаем яркость (luminance) на заданное значение
-                    return hslColor.toString(); // Преобразуем обратно в строку
-                }
-                return color; // Если не удалось преобразовать цвет
-            }
 
             d3.select('#fgi_today')
                 .style('background-color', colorScale(data.today))
@@ -369,7 +371,75 @@ class Gauge{
 
             this.percent = data.today/100;
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error network fetching data:', error);
+
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const day = date.getDate(); 
+                const monthNames = [
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                ];
+                const month = monthNames[date.getMonth()]; 
+                return `${day} ${month}`; 
+            }
+
+
+            fetch('data/fear_greed_index.json')    
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network error: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const getLast = 14
+                    const data_sliced = data.slice(-getLast);
+
+                    data_sliced.forEach(item => {
+                            item.formattedDate = formatDate(item.last_update);
+                        });
+
+                    const tableBody = document.querySelector('#fgi_history_table tbody');
+                    tableBody.innerHTML = '';
+                    data_sliced.forEach(item => {
+                        const row = document.createElement('tr');
+            
+                        const dateCell = document.createElement('th');
+                        dateCell.textContent = item.formattedDate;
+                        row.appendChild(dateCell);
+            
+                        const indexCell = document.createElement('td');
+                        const button = document.createElement('button');
+                        button.className = 'fgi_component';
+                        //button.textContent = item.today;
+                        indexCell.appendChild(button);
+                        row.appendChild(indexCell);
+            
+                        tableBody.insertBefore(row, tableBody.firstChild);
+            
+                        d3.select(button)
+                            .style('background-color', colorScale(item.today))
+                            .text(item.today.toFixed(0))
+                            .on('click', function() {
+                                gauge.percent = item.today.toFixed(0) / 100;
+                            })
+                            .on('mouseover', function() {
+                                d3.select(this)
+                                    .style('background-color', darkenColor(colorScale(item.today), 0.1));
+                            })
+                            .on('mouseout', function() {
+                                d3.select(this)
+                                    .style('background-color', colorScale(item.today));
+                            });
+                    });
+
+                    gauge.percent = data_sliced[data_sliced.length - 1].today.toFixed(0) / 100;
+                    
+                })
+                .catch(error => {
+                    console.error('Error file loading:', error);
+                });
         }
     }
 
