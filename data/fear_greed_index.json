@@ -52,5 +52,11 @@
         "yesterday": 32,
         "last_week": 49,
         "last_update": "2024-10-12T03:06:54Z"
+    },
+    {
+        "today": 50,
+        "yesterday": 49,
+        "last_week": 50,
+        "last_update": "2024-10-13T01:38:58Z"
     }
 ]
