@@ -64,5 +64,17 @@
         "yesterday": 50,
         "last_week": 50,
         "last_update": "2024-10-14T02:08:46Z"
+    },
+    {
+        "today": 65,
+        "yesterday": 48,
+        "last_week": 49,
+        "last_update": "2024-10-15T01:21:52Z"
+    },
+    {
+        "today": 73,
+        "yesterday": 65,
+        "last_week": 49,
+        "last_update": "2024-10-16T03:02:36Z"
     }
 ]
