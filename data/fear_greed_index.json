@@ -124,5 +124,29 @@
         "yesterday": 71,
         "last_week": 71,
         "last_update": "2024-10-24T18:22:24Z"
+    },
+    {
+        "today": 72,
+        "yesterday": 69,
+        "last_week": 73,
+        "last_update": "2024-10-25T10:40:12Z"
+    },
+    {
+        "today": 72,
+        "yesterday": 72,
+        "last_week": 72,
+        "last_update": "2024-10-26T10:40:12Z"
+    },
+    {
+        "today": 74,
+        "yesterday": 72,
+        "last_week": 72,
+        "last_update": "2024-10-27T00:44:04Z"
+    },
+    {
+        "today": 72,
+        "yesterday": 74,
+        "last_week": 73,
+        "last_update": "2024-10-28T01:14:48Z"
     }
 ]
