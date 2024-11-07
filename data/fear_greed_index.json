@@ -202,5 +202,11 @@
         "yesterday": 70,
         "last_week": 77,
         "last_update": "2024-11-06T11:54:53Z"
+    },
+    {
+        "today": 77,
+        "yesterday": 70,
+        "last_week": 77,
+        "last_update": "2024-11-07T10:57:25Z"
     }
 ]
