@@ -226,5 +226,17 @@
         "yesterday": 75,
         "last_week": 74,
         "last_update": "2024-11-10T11:44:07Z"
+    },
+    {
+        "today": 76,
+        "yesterday": 78,
+        "last_week": 70,
+        "last_update": "2024-11-11T20:06:04Z"
+    },
+    {
+        "today": 80,
+        "yesterday": 76,
+        "last_week": 70,
+        "last_update": "2024-11-12T01:25:03Z"
     }
 ]
