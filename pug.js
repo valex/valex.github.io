@@ -181,6 +181,16 @@ const pages = [
         "title": "Fear and Greed Index"
     },
     {
+        "slug": "neuro_trader",
+        "theme": "crypto",
+    
+        "meta_description": "Discover pre-trained neural network models for automated trading on Binance Futures. Easy Python setup, flexible configurations, and AI-powered decisions for crypto trading",
+        "meta_keywords": "Binance Futures trading, automated trading, neural networks, Python trading tools, crypto trading bots, AI for trading, Binance API, pre-trained models, algorithmic trading, Python scripts for trading",
+        "meta_title": "Automate Binance Futures Trading with Neural Networks | Python AI Tools",
+    
+        "title": "Trade on Binance Futures with Neural Networks"
+    },
+    {
         "slug": "virtual_environment",
         "theme": "python",
     
