@@ -388,5 +388,17 @@
         "yesterday": 72,
         "last_week": 84,
         "last_update": "2024-12-07T20:20:26Z"
+    },
+    {
+        "today": 79,
+        "yesterday": 75,
+        "last_week": 81,
+        "last_update": "2024-12-08T14:26:45Z"
+    },
+    {
+        "today": 78,
+        "yesterday": 79,
+        "last_week": 80,
+        "last_update": "2024-12-09T13:39:11Z"
     }
 ]
