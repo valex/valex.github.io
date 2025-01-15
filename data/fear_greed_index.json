@@ -604,5 +604,23 @@
         "yesterday": 69,
         "last_week": 72,
         "last_update": "2025-01-12T18:57:32Z"
+    },
+    {
+        "today": 61,
+        "yesterday": 62,
+        "last_week": 76,
+        "last_update": "2025-01-13T13:01:06Z"
+    },
+    {
+        "today": 63,
+        "yesterday": 61,
+        "last_week": 78,
+        "last_update": "2025-01-14T13:53:44Z"
+    },
+    {
+        "today": 70,
+        "yesterday": 63,
+        "last_week": 70,
+        "last_update": "2025-01-15T15:16:37Z"
     }
 ]
