@@ -904,5 +904,11 @@
         "yesterday": 26,
         "last_week": 49,
         "last_update": "2025-03-03T14:22:36Z"
+    },
+    {
+        "today": 15,
+        "yesterday": 33,
+        "last_week": 25,
+        "last_update": "2025-03-04T12:57:16Z"
     }
 ]
