@@ -963,6 +963,18 @@
         "today": 45,
         "yesterday": 34,
         "last_week": 25,
-        "last_update": "2025-03-13T11:47:24Z"
+        "last_update": "2025-03-13T22:39:58Z"
+    },
+    {
+        "today": 27,
+        "yesterday": 45,
+        "last_week": 34,
+        "last_update": "2025-03-14T11:47:24Z"
+    },
+    {
+        "today": 46,
+        "yesterday": 27,
+        "last_week": 28,
+        "last_update": "2025-03-15T11:47:24Z"
     }
 ]
