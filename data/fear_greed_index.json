@@ -1000,5 +1000,17 @@
         "yesterday": 34,
         "last_week": 34,
         "last_update": "2025-03-19T11:47:24Z"
+    },
+    {
+        "today": 49,
+        "yesterday": 32,
+        "last_week": 45,
+        "last_update": "2025-03-20T11:47:24Z"
+    },
+    {
+        "today": 31,
+        "yesterday": 49,
+        "last_week": 27,
+        "last_update": "2025-03-21T11:47:24Z"
     }
 ]
