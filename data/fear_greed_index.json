@@ -1120,5 +1120,35 @@
         "yesterday": 23,
         "last_week": 34,
         "last_update": "2025-04-08T12:55:34Z"
+    },
+    {
+        "today": 18,
+        "yesterday": 24,
+        "last_week": 44,
+        "last_update": "2025-04-09T12:37:29Z"
+    },
+    {
+        "today": 39,
+        "yesterday": 18,
+        "last_week": 25,
+        "last_update": "2025-04-10T13:43:58Z"
+    },
+    {
+        "today": 25,
+        "yesterday": 39,
+        "last_week": 28,
+        "last_update": "2025-04-11T21:15:54Z"
+    },
+    {
+        "today": 43,
+        "yesterday": 25,
+        "last_week": 30,
+        "last_update": "2025-04-12T21:15:54Z"
+    },
+    {
+        "today": 45,
+        "yesterday": 43,
+        "last_week": 34,
+        "last_update": "2025-04-13T11:55:17Z"
     }
 ]
