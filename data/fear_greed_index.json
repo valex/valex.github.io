@@ -1246,5 +1246,17 @@
         "yesterday": 54,
         "last_week": 47,
         "last_update": "2025-04-29T11:50:44Z"
+    },
+    {
+        "today": 56,
+        "yesterday": 60,
+        "last_week": 72,
+        "last_update": "2025-04-30T10:30:14Z"
+    },
+    {
+        "today": 53,
+        "yesterday": 56,
+        "last_week": 63,
+        "last_update": "2025-05-01T11:50:03Z"
     }
 ]
