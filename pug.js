@@ -141,6 +141,16 @@ const pages = [
         }
     },
     {
+        "slug": "fun_token_chat",
+        "theme": "clickers",
+    
+        "meta_description": "Earn free FUN tokens by chatting about crypto and answering quizzes in the official FUN Token Telegram bot. Learn how to join and start earning now!",
+        "meta_keywords": "FUN token, earn crypto, Telegram bot, crypto rewards, cryptocurrency, passive income, crypto chat, telegram quiz",
+        "meta_title": "Earn FUN Tokens by Chatting – Join the Telegram Bot",
+    
+        "title": "Earn FUN Tokens by Simply Chatting – Join the Official FUN Token Telegram Bot"
+    },
+    {
         "slug": "numbers_in_js",
         "theme": "javascript",
     
