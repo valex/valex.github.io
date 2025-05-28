@@ -1384,5 +1384,41 @@
         "yesterday": 69,
         "last_week": 71,
         "last_update": "2025-05-22T11:12:16Z"
+    },
+    {
+        "today": 76,
+        "yesterday": 73,
+        "last_week": 69,
+        "last_update": "2025-05-23T12:43:50Z"
+    },
+    {
+        "today": 67,
+        "yesterday": 76,
+        "last_week": 68,
+        "last_update": "2025-05-24T11:40:10Z"
+    },
+    {
+        "today": 67,
+        "yesterday": 67,
+        "last_week": 66,
+        "last_update": "2025-05-25T12:58:22Z"
+    },
+    {
+        "today": 69,
+        "yesterday": 67,
+        "last_week": 71,
+        "last_update": "2025-05-26T13:51:37Z"
+    },
+    {
+        "today": 68,
+        "yesterday": 69,
+        "last_week": 68,
+        "last_update": "2025-05-27T12:47:55Z"
+    },
+    {
+        "today": 68,
+        "yesterday": 68,
+        "last_week": 69,
+        "last_update": "2025-05-28T10:24:22Z"
     }
 ]
