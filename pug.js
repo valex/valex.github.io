@@ -141,16 +141,6 @@ const pages = [
         }
     },
     {
-        "slug": "fun_token_chat",
-        "theme": "clickers",
-    
-        "meta_description": "Earn free FUN tokens by chatting about crypto and answering quizzes in the official FUN Token Telegram bot. Learn how to join and start earning now!",
-        "meta_keywords": "FUN token, earn crypto, Telegram bot, crypto rewards, cryptocurrency, passive income, crypto chat, telegram quiz",
-        "meta_title": "Earn FUN Tokens by Chatting – Join the Telegram Bot",
-    
-        "title": "Earn FUN Tokens by Simply Chatting – Join the Official FUN Token Telegram Bot"
-    },
-    {
         "slug": "numbers_in_js",
         "theme": "javascript",
     
@@ -179,16 +169,6 @@ const pages = [
         "meta_title": "Understanding the Fear and Greed Index in Cryptocurrency Trading",
     
         "title": "Fear and Greed Index"
-    },
-    {
-        "slug": "neuro_trader",
-        "theme": "crypto",
-    
-        "meta_description": "Discover pre-trained neural network models for automated trading on Binance Futures. Easy Python setup, flexible configurations, and AI-powered decisions for crypto trading",
-        "meta_keywords": "Binance Futures trading, automated trading, neural networks, Python trading tools, crypto trading bots, AI for trading, Binance API, pre-trained models, algorithmic trading, Python scripts for trading",
-        "meta_title": "Automate Binance Futures Trading with Neural Networks | Python AI Tools",
-    
-        "title": "Trade on Binance Futures with Neural Networks"
     },
     {
         "slug": "virtual_environment",
