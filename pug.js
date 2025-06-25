@@ -83,6 +83,16 @@ const pages = [
         "title": "Inserting JavaScript into an HTML page"
     },
     {
+        "slug": "spanish_vs_portuguese",
+        "theme": "geoguessing",
+    
+        "meta_description": "A practical guide to visually distinguishing Spanish from Portuguese using street signs, public text, and common written patterns. Designed for language spotters and those engaged in geographic identification through visual clues",
+        "meta_keywords": "Spanish vs Portuguese, street signs language identification, visual language clues, geographic language analysis, Iberian languages, language spotting, how to recognize Portuguese, how to recognize Spanish, language identification on signs",
+        "meta_title": "How to Visually Distinguish Spanish from Portuguese",
+    
+        "title": "Spanish vs Portuguese: Visual Language Clues"
+    },
+    {
         "slug": "variables_in_js",
         "theme": "javascript",
     
