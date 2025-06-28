@@ -1,0 +1,48 @@
+extends basic.pug
+
+block scripts
+    script(defer, src='https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js')
+
+block content
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="position-relative">
+                <div id="svg_chart"></div>
+                <div class="svg_tooltip" id="svg_tooltip"></div>
+            </div>
+
+            <div class="alert alert-warning" role="alert">
+                <p><b>Navigate</b>: Scroll to zoom, drag to pan</p>
+                <p>Double-click to <b>reset zoom</b> (double-tap on mobile)</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <form>
+                <div class="mb-3">
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="markerType" id="roadDistanceMarker" value="road_distance_marker" checked>
+                        <label class="form-check-label" for="roadDistanceMarker">
+                            | Road Distance Marker
+                        </label>
+                    </div>
+                    
+                    // - <div class="form-check">
+                    // -    <input class="form-check-input" type="radio" name="markerType" id="touristAttraction" value="tourist_attraction">
+                    // -    <label class="form-check-label" for="touristAttraction">
+                    // -    | Tourist Attractions
+                    // -    </label>
+                    // - </div>
+
+
+                </div>
+
+            </form>
+
+
+            include see_also.pug
+            
+        </div>
+    </div>

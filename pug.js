@@ -83,6 +83,18 @@ const pages = [
         "title": "Inserting JavaScript into an HTML page"
     },
     {
+        "slug": "geoint_map",
+        "theme": "geoguessing",
+    
+        "meta_description": "Improve your GeoGuessr game with our comprehensive training tool. Interactive world map featuring road signs, distance markers, and landmarks from different countries. Perfect for learning location-specific clues.",
+        "meta_keywords": "road distance markers, geoguessr clues, interactive world map, location guessing game, country identification, geoguessr tips, world geography practice, geoguessr street clues",
+        "meta_title": "GeoGuessr Training Tool - Learn Country-Specific Street Elements & Road Markers",
+    
+        "title": "GeoGuessr Clue Map",
+
+        "script_module": true
+    },
+    {
         "slug": "spanish_vs_portuguese",
         "theme": "geoguessing",
     

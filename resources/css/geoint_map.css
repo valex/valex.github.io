@@ -1,0 +1,20 @@
+.country {
+    transition: fill 0.3s ease;
+}
+
+svg {
+    user-select: none;
+}
+
+.svg_tooltip {
+    position: absolute;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 4px;
+    pointer-events: auto;
+    font-size: 14px;
+    visibility: hidden;
+    user-select: none;
+    z-index:1111;
+}
