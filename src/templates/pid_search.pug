@@ -1,0 +1,266 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+            <p>Every program running in Linux gets a unique number called a <b>PID</b> (<i>Process ID</i>). This identifier is the key to managing processes: you can stop them, change their priority, and more. Knowing how to quickly <i>find a PID</i> is one of the basic skills for any Linux user. Let’s go through the simplest and most effective tools for this task.</p>
+
+            <div class="d-flex justify-content-between my-3">
+                <div class="toc">
+                    <div class="toctitle">
+                        <h4>Fast links</h4>
+                    </div> 
+                    
+                    <ul>
+                        <li>
+                            <a href="#pgrep"><span class="tocnumber">•</span> <span class="toctext">pgrep</span></a> 
+                        </li> 
+                        <li>
+                            <a href="#pidof"><span class="tocnumber">•</span> <span class="toctext">pidof</span></a> 
+                        </li>
+                        <li>
+                            <a href="#ps"><span class="tocnumber">•</span> <span class="toctext">ps aux</span></a> 
+                        </li>
+                        <li>
+                            <a href="#top_htop"><span class="tocnumber">•</span> <span class="toctext">top and htop</span></a> 
+                        </li>
+                        <li>
+                            <a href="#advanced"><span class="tocnumber">•</span> <span class="toctext">Advanced methods</span></a> 
+                            <ul>
+                                <li><a href="#systemctl"><span class="tocnumber">•</span> <span class="toctext">systemctl</span></a></li>
+                                <li><a href="#lsof"><span class="tocnumber">•</span> <span class="toctext">lsof</span></a></li>
+                                <li><a href="#fuser"><span class="tocnumber">•</span> <span class="toctext">fuser</span></a></li>
+                                <li><a href="#proc"><span class="tocnumber">•</span> <span class="toctext">/proc filesystem</span></a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            h2(id='pgrep') 1. pgrep — the simplest and fastest way
+            <p><code>pgrep</code> was made specifically for finding PIDs by process name.</p>
+             
+              
+            br
+
+            strong How to use it:
+            p Just type <code>pgrep</code> followed by the process name. For example, to find Firefox:
+
+            pre(class="bg-light")
+                code.
+                    > pgrep firefox
+
+            <p>If several Firefox instances are running, you’ll see multiple PIDs, <b><i>each on a new line</i></b>.</p>
+
+            br
+
+            <p><b>Useful options:</b></p>
+
+            <ul>
+                <li>
+                    <code>-l</code> — show PID with process name:
+                    pre(class="bg-light")
+                        code.
+                            > pgrep -l fire
+
+                </li>
+                <li>
+                    <code>-a</code> — show full command line:
+                    pre(class="bg-light")
+                        code.
+                            > pgrep -a fire
+
+                </li>
+                <li>
+                    <code>-u</code> — search by user:
+                    pre(class="bg-light")
+                        code.
+                            > pgrep -u root
+                            > pgrep -u root ssh
+
+                </li>
+                <li>
+                    <code>-x</code> — exact match (find <code>nginx</code> but not <code>nginx-proxy</code>):
+                    pre(class="bg-light")
+                        code.
+                            > pgrep -x nginx
+
+                </li>
+                <li>
+                    <code>-f</code> — search by full command, including arguments:
+                    pre(class="bg-light")
+                        code.
+                            > pgrep -f "my_script.py"
+
+                </li>
+                <li>
+                    <code>-o</code> — find the oldest process.
+                </li>                
+                <li>
+                    <code>-n</code> — find the newest process.
+                </li>
+            </ul>
+
+            p <b>Pros:</b> Perfect for scripts and quick searches. Faster and cleaner than <code>ps | grep</code>.
+            p <b>Cons:</b> No extra info like CPU or memory usage.
+
+            br
+            br
+
+            h2(id='pidof') 2. pidof — for exact process names
+
+            <p><code>pidof</code> is even simpler. It only finds processes by their exact name.</p>
+
+            <p><strong>Examples:</strong></p>
+
+            pre(class="bg-light")
+                code.
+                    > pidof firefox          # find all PIDs of firefox
+                    > pidof -s firefox       # show only one PID (the first found)
+
+            <p>Unlike <code>pgrep</code>, <code>pidof</code> won’t match partial names (<code>fire</code> won’t find <code>firefox</code>).</p>
+
+            p <b>Pros:</b> Outputs multiple PIDs separated by spaces.
+            p <b>Cons:</b> Less flexible than <code>pgrep</code> (no user filters, etc.).
+
+
+            br
+            br
+
+            h2(id='ps') 3. ps — the classic method
+            
+            <p><code>ps</code> (<i>process status</i>) is a powerful tool to list all running processes. It shows much more than just PIDs, but you can filter it.</p>
+
+            br
+
+            <p><b>Typical usage with grep:</b></p>
+
+            pre(class="bg-light")
+                code.
+                    > ps aux | grep firefox
+
+            br
+            <p><b>Explanation:</b></p>
+
+            <ul>
+                <li><code>a</code> — show processes of all users.</li>
+                <li><code>u</code> — show the user who started the process.</li>
+                <li><code>x</code> — show processes not attached to a terminal (like daemons).</li>
+            </ul>
+
+            p The pipe <code>&nbsp;|&nbsp;</code> passes the output of <code>ps</code> into <code>grep</code>.
+            p <code>grep firefox</code> filters only lines containing “<code>firefox</code>”
+
+            br
+            <p>⚠️ <b>Gotcha:</b> you’ll see two lines — the actual Firefox process and the <code>grep firefox</code> command itself.</p>
+
+            p <b>Fix with square brackets trick:</b>
+            pre(class="bg-light")
+                code.
+                    > ps aux | grep [f]irefox
+
+            <p>Now only the real process is shown.</p>
+
+            p <b>Pros:</b> Works everywhere, no need to install extra tools.
+            p <b>Cons:</b> Output is verbose; requires hacks to clean up grep results.
+
+
+
+            br
+            br
+
+            h2(id='top_htop') 4. top and htop — interactive monitoring
+
+            <p><code>top</code> is like a dashboard for processes. It shows PID, CPU, memory usage in real time.</p>
+
+            p <b>Run:</b>
+            pre(class="bg-light")
+                code.
+                    > top
+
+            <p>Inside <code>top</code>:</p>
+
+            <ul>
+                <li>Press <b>k</b> and enter PID to kill a process.</li>
+                <li>Press <b>L</b> to search by process name.</li>
+                <li>Press <b>M</b> to sort by memory.</li>
+                <li>Press <b>P</b> to sort by CPU.</li>
+            </ul>
+
+            <p><code>htop</code> is an improved version (install with <code>sudo apt install htop</code> on Ubuntu). It has colors, mouse support, and easier navigation.</p>
+
+            p <b>Pros:</b> Great for live monitoring and sorting.
+            p <b>Cons:</b> Not script-friendly, more for manual use.
+
+
+
+            br
+            br
+            h2(id='advanced') 5. More advanced methods
+
+            br
+            br
+            h3(id='systemctl') 🔹 systemctl
+
+            <p>If the process is managed by <b>systemd</b> (like <code>nginx</code>, <code>mysql</code>, etc.):</p>
+
+            pre(class="bg-light")
+                code.
+                    > systemctl status nginx
+
+            <p>This will show the PID along with a lot of useful information.</p>
+
+            br
+            br
+            h3(id='lsof') 🔹 lsof
+
+
+            <p>A very powerful tool. If you know which port the process is using:</p>
+
+            pre(class="bg-light")
+                code.
+                    > sudo lsof -i :8080
+
+
+            <p>This will display the PID of the process holding port <code>8080</code>.</p>
+            <p>Useful when you get the error “port already in use” but don’t know which process is responsible.</p>
+
+            br
+            br
+            h3(id='fuser') 🔹 fuser — find the process using a file
+
+            pre(class="bg-light")
+                code.
+                    > fuser /var/log/syslog
+
+            p This will show the PID of the process that is currently using this file.
+
+            br
+            br
+            h3(id='proc') 🔹 /proc filesystem
+
+            p Every process in Linux has its own directory in <code>/proc/&lt;PID&gt;</code>.
+            p For example, to find a PID by process name:
+
+            pre(class="bg-light")
+                code.
+                    > grep -i firefox /proc/*/comm
+
+            <p>⚠️ Not the most convenient method, but it works even without <code>ps</code> or <code>pgrep</code>.</p>
+
+
+
+
+            br
+            br
+
+        </div>
+
+        <div class="col-sm-4">
+
+            include see_also.pug
+            
+        </div>
+    </div>

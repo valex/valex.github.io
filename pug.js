@@ -5,6 +5,16 @@ let content;
 
 const pages = [
     {
+        "slug": "pid_search",
+        "theme": "linux",
+    
+        "meta_description": "Learn how to find process IDs (PID) in Linux with simple commands like pgrep, pidof, ps, top, and htop. Step-by-step guide for beginners with practical examples and tips",
+        "meta_keywords": "linux pid, find pid linux, pgrep command, pidof command, ps aux grep, top htop linux, process id linux, how to find pid, linux process management, beginner linux guide",
+        "meta_title": "Finding PID in Linux: Beginner’s Guide to pgrep, pidof, ps, top and More",
+    
+        "title": "Finding PID in Linux: A Complete Beginner’s Guide"
+    },
+    {
         "slug": "vector_addition",
         "theme": "vectors",
     
