@@ -93,7 +93,13 @@
 <li><code>u</code> — show the user who started the process.</li>
 <li><code>x</code> — show processes not attached to a terminal (like daemons).</li>
 </ul><p>The pipe <code>&nbsp;|&nbsp;</code> passes the output of <code>ps</code> into <code>grep</code>.</p><p><code>grep firefox</code> filters only lines containing “<code>firefox</code>”</p><br><p>⚠️ <b>Gotcha:</b> you’ll see two lines — the actual Firefox process and the <code>grep firefox</code> command itself.</p><p><b>Fix with square brackets trick:</b></p><pre class="bg-light"><code>> ps aux | grep [f]irefox
-</code></pre><p>Now only the real process is shown.</p><p><b>Pros:</b> Works everywhere, no need to install extra tools.</p><p><b>Cons:</b> Output is verbose; requires hacks to clean up grep results.</p><br><br><h2 id="top_htop">4. top and htop — interactive monitoring</h2><p><code>top</code> is like a dashboard for processes. It shows PID, CPU, memory usage in real time.</p><p><b>Run:</b></p><pre class="bg-light"><code>> top
+</code></pre><p>Now only the real process is shown.</p><br><p><b>Pros:</b> Works everywhere, no need to install extra tools.</p><p><b>Cons:</b> Output is verbose; requires hacks to clean up grep results.</p><br><br><h4>More Examples &amp; Advanced Usage</h4><pre class="bg-light"><code># Show process hierarchy as a tree
+ps aux --forest
+
+# Custom columns with tree view
+ps -eo pid,ppid,pgrp,comm,cmd --forest
+
+</code></pre><br><br><h2 id="top_htop">4. top and htop — interactive monitoring</h2><p><code>top</code> is like a dashboard for processes. It shows PID, CPU, memory usage in real time.</p><p><b>Run:</b></p><pre class="bg-light"><code>> top
 </code></pre><p>Inside <code>top</code>:</p>
 <ul>
 <li>Press <b>k</b> and enter PID to kill a process.</li>
@@ -108,7 +114,7 @@
 <p>Useful when you get the error “port already in use” but don’t know which process is responsible.</p><br><br><h3 id="fuser">🔹 fuser — find the process using a file</h3><pre class="bg-light"><code>> fuser /var/log/syslog
 </code></pre><p>This will show the PID of the process that is currently using this file.</p><br><br><h3 id="proc">🔹 /proc filesystem</h3><p>Every process in Linux has its own directory in <code>/proc/&lt;PID&gt;</code>.</p><p>For example, to find a PID by process name:</p><pre class="bg-light"><code>> grep -i firefox /proc/*/comm
 </code></pre><p>⚠️ Not the most convenient method, but it works even without <code>ps</code> or <code>pgrep</code>.</p><br><br></div>
-<div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action active" href="/pid_search.html">Finding PID in Linux: A Complete Beginner’s Guide</a></div></div></div></div>
+<div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/kill_process.html">Process Termination in Linux: How to Kill Processes the Right Way</a><a class="list-group-item list-group-item-action active" href="/pid_search.html">Finding PID in Linux: A Complete Beginner’s Guide</a></div></div></div></div>
 </div></div> <!--end .container-fluid --><section id="donate" class="">
 <footer class=" text-white" style="background-color: #0a4275;">
 <div class="container p-4 pb-0">

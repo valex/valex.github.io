@@ -1,0 +1,234 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+            p Managing processes is one of the core tasks in Linux system administration. Improper process termination can lead to data loss, system instability, or frozen applications. This guide will help you understand how to safely and effectively stop processes, what different termination signals mean, and how to follow best practices when doing so.
+
+            <div class="d-flex justify-content-between my-3">
+                <div class="toc">
+                    <div class="toctitle">
+                        <h4>Fast links</h4>
+                    </div> 
+                    
+                    <ul>
+                        <li>
+                            <a href="#signals"><span class="tocnumber">•</span> <span class="toctext">What Are Signals</span></a> 
+                        </li> 
+                        <li>
+                            <a href="#kill"><span class="tocnumber">•</span> <span class="toctext">kill: Your Primary Tool</span></a> 
+                        </li>
+                        <li>
+                            <a href="#kill_by_name"><span class="tocnumber">•</span> <span class="toctext">Killing Processes by Name</span></a> 
+                            <ul>
+                                <li><a href="#pkill"><span class="tocnumber">•</span> <span class="toctext">pkill</span></a></li>
+                                <li><a href="#killall"><span class="tocnumber">•</span> <span class="toctext">killall</span></a></li>
+                            </ul>
+                        </li>
+                        <li> 
+                            <a href="#kill_groups"><span class="tocnumber">•</span> <span class="toctext">Killing Process Groups and Users</span></a> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            br
+            br
+
+            h2(id='signals') Basics: What Are Signals
+            br
+
+            p In Linux, processes communicate through a mechanism called <b>signals</b>. A signal is a message sent to a process by the operating system or another process to notify it of an event or request an action.
+            
+            p <strong>Common Signals Used for Termination:</strong>
+            <ul>
+                <li><b>SIGTERM (15)</b> — <i>"Graceful"</i> termination (default).</li>
+                <li><b>SIGKILL (9)</b> — Forceful termination (cannot be intercepted or ignored)</li>
+                <li><b>SIGHUP (1)</b> — Reload configuration or <i>"hang up"</i> signal.</li>
+                <li><b>SIGINT (2)</b> — Interrupt signal (same as pressing <kbd>Ctrl+C</kbd> in a terminal).</li>
+            </ul>
+
+            p (To see the complete list of all available signals, open a Linux terminal and run the command <code>kill -l</code>)
+            
+            p 👉 <b>Rule of thumb</b>: always start with <b>SIGTERM</b> and use <b>SIGKILL</b> only as a last resort.
+  
+
+            br
+            br
+
+            h2(id='kill') The <code>kill</code> Command: Your Primary Tool
+            br
+
+            <p><strong>Basic Syntax:</strong></p>
+
+            pre(class="bg-light")
+                code.
+                    kill [-s sigspec | -n signum | -sigspec] pid
+
+            p Where:
+            <ul>
+                <li><b>sigspec</b> — signal name (e.g., TERM, KILL, HUP)</li>
+                <li><b>signum</b> — signal number (e.g., 15, 9, 1)</li>
+                <li><b>pid</b> — process ID</li>
+            </ul>
+
+            br
+            br
+
+            p <strong>Main Principles:</strong>
+            <ul>
+                <li>Use <b>SIGTERM</b> by default.</li>
+                <li>Give processes time to shut down gracefully.</li>
+                <li>Use <b>SIGKILL</b> only if the process doesn’t respond.</li>
+                <li>Inspect the process before killing it (<code>ps</code>, <code>top</code>, <code>htop</code>).</li>
+                <li>For system services, prefer <code>systemctl stop</code> over <code>kill</code>.</li>
+            </ul>
+            
+            br
+            br
+
+            h4 <strong>Practical Examples</strong>
+
+            p <strong>Graceful Termination (Recommended)</strong>
+            pre(class="bg-light")
+                code.
+                    > kill 1234
+                    > kill -TERM 1234
+                    > kill -s TERM 1234
+                    > kill -n 15 1234
+
+
+            br
+
+
+            p <strong>Forceful Termination (Last Resort)</strong>
+            pre(class="bg-light")
+                code.
+                    > kill -9 1234
+                    > kill -KILL 1234
+                    > kill -s KILL 1234
+                    > kill -n 9 1234
+
+            br
+
+            p <strong>Reload Configuration</strong>
+            pre(class="bg-light")
+                code.
+                    > kill -HUP 1234
+                    > kill -s HUP 1234
+                    > kill -n 1 1234
+
+            br
+            br
+
+            h4 Special Signal: Checking if a Process Exists
+            
+            p You can use a <i>“zero signal”</i> to check if a process is running — without killing it.
+            pre(class="bg-light")
+                code.
+                    > kill -0 PID
+
+            p <strong>Return values:</strong>
+            <ul>
+                <li><b>0</b> — the process exists and is accessible.</li>
+                <li><b>1</b> — the process does not exist or you lack permission.</li>
+            </ul>
+
+            p 💡 <b>Pro tip</b>: <code>kill -0</code> does not send any signal — it only checks process existence and permissions!
+
+            p Since the command itself doesn't print any output, you can check its result using the <code>echo $?</code> command, which displays the <i>exit status</i> of the <i>last executed command</i>, or use it <i>directly in a shell script</i> with conditional statements (<code>if/else</code>):
+            pre(class="bg-light")
+                code.
+                    if kill -0 1234 2&gt;/dev/null; then
+                        echo "Process 1234 is running"
+                    else
+                        echo "Process 1234 not found"
+                    fi
+
+            br
+            br
+
+            h2(id='kill_by_name') Killing Processes by Name
+
+            br
+
+            h3(id='pkill') Using <code>pkill</code>
+
+            br
+
+            p <code>pkill</code> terminates processes <b>by matching a pattern</b> (regular expression).
+            p This makes it a flexible tool for finding and killing processes not only by exact name but also by parts of the command line.
+
+            pre(class="bg-light")
+                code.
+                    # Graceful termination by name
+                    > pkill -TERM firefox
+
+                    # Forceful termination
+                    > pkill -KILL firefox
+
+                    # Match full command line
+                    > pkill -f "python my_script.py"
+
+                    # Interactive mode (asks for confirmation)
+                    > pkill -i firefox
+
+                    # Regex pattern with full command line
+                    > pkill -f "^node"        # Processes where command starts with "node"
+                    > pkill -f "node.*"       # Processes with "node" in command line
+
+
+            br
+            br
+
+            h3(id='killall') Using <code>killall</code>
+
+            p <code>killall</code> stops processes by <b>exact name only</b> — simple and safer when you know the exact program name.
+
+            pre(class="bg-light")
+                code.
+                    # Graceful termination of all 'firefox' processes
+                    > killall firefox
+
+                    # Forceful termination
+                    > killall -9 firefox
+
+                    # Kill all 'firefox' processes owned by a specific user
+                    > killall -u username firefox
+
+            br
+            br
+
+            h2(id='kill_groups') Killing Process Groups and Users
+         
+            p To terminate a process group (a parent process and all its children):
+
+            pre(class="bg-light")
+                code.
+                    > kill -TERM -1234
+
+            <p>Here, <code>-1234</code> is the <b>Process Group ID</b> (<b>PGID</b>).</p>
+            p This command stops the parent and all of its spawned processes.
+
+            br
+            br
+
+            p To terminate all processes owned by a specific <b>user</b>:
+
+            pre(class="bg-light")
+                code.
+                    > pkill -u username
+                    > killall -u username
+                    
+            br
+            br
+
+        </div>
+
+        <div class="col-sm-4">
+
+            include see_also.pug
+            
+        </div>
+    </div>

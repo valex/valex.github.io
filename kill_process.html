@@ -1,0 +1,147 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset=UTF-8>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Learn how to safely terminate processes in Linux using kill, pkill, and killall. Understand the difference between SIGTERM, SIGKILL, and SIGHUP, and master best practices for managing processes like a pro">
+<meta name="keywords" content="linux process management, kill command linux, pkill, killall, sigterm, sigkill, linux signals, process termination, check process linux, systemctl stop"><title>How to Safely Kill Processes in Linux — Complete Guide to Signals and Commands</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+<script>MathJax = {
+   tex: {
+       inlineMath: [['$', '$'], ['\\(', '\\)']]
+   },
+   svg: {
+       fontCache: 'global'
+   }
+};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script><script defer type="application/javascript" src="./resources/js/kill_process.js"></script><script defer src="./resources/js/donate.js"></script>
+<link rel="stylesheet" href="./resources/css/basic.css" >
+<link rel="stylesheet" href="./resources/css/kill_process.css" >
+<script src="https://cdn.counter.dev/script.js" data-id="b0775af1-0d2d-4956-bf6a-2894dc0d0d57" data-utcoffset="3"></script>
+</head>
+<body>
+<div class="container-fluid"><header class="py-3 border-bottom">
+<div class="d-flex justify-content-between align-items-center">
+<a href="/" class="text-decoration-none text-dark">
+<span class="fw-bold fs-5">valex.github.io</span>
+</a>
+</div>
+</header><section class="text-center py-5">
+<h1 class="h4 d-flex justify-content-center align-items-center">Process Termination in Linux: How to Kill Processes the Right Way</h1>
+</section><div class="row">
+<div class="col-sm-8"><p>Managing processes is one of the core tasks in Linux system administration. Improper process termination can lead to data loss, system instability, or frozen applications. This guide will help you understand how to safely and effectively stop processes, what different termination signals mean, and how to follow best practices when doing so.</p><div class="d-flex justify-content-between my-3">
+<div class="toc">
+<div class="toctitle">
+<h4>Fast links</h4>
+</div> 
+<ul>
+<li>
+<a href="#signals"><span class="tocnumber">•</span> <span class="toctext">What Are Signals</span></a> 
+</li> 
+<li>
+<a href="#kill"><span class="tocnumber">•</span> <span class="toctext">kill: Your Primary Tool</span></a> 
+</li>
+<li>
+<a href="#kill_by_name"><span class="tocnumber">•</span> <span class="toctext">Killing Processes by Name</span></a> 
+<ul>
+<li><a href="#pkill"><span class="tocnumber">•</span> <span class="toctext">pkill</span></a></li>
+<li><a href="#killall"><span class="tocnumber">•</span> <span class="toctext">killall</span></a></li>
+</ul>
+</li>
+<li> 
+<a href="#kill_groups"><span class="tocnumber">•</span> <span class="toctext">Killing Process Groups and Users</span></a> 
+</li>
+</ul>
+</div>
+</div><br><br><h2 id="signals">Basics: What Are Signals</h2><br><p>In Linux, processes communicate through a mechanism called <b>signals</b>. A signal is a message sent to a process by the operating system or another process to notify it of an event or request an action.</p><p><strong>Common Signals Used for Termination:</strong></p><ul>
+<li><b>SIGTERM (15)</b> — <i>"Graceful"</i> termination (default).</li>
+<li><b>SIGKILL (9)</b> — Forceful termination (cannot be intercepted or ignored)</li>
+<li><b>SIGHUP (1)</b> — Reload configuration or <i>"hang up"</i> signal.</li>
+<li><b>SIGINT (2)</b> — Interrupt signal (same as pressing <kbd>Ctrl+C</kbd> in a terminal).</li>
+</ul><p>(To see the complete list of all available signals, open a Linux terminal and run the command <code>kill -l</code>)</p><p>👉 <b>Rule of thumb</b>: always start with <b>SIGTERM</b> and use <b>SIGKILL</b> only as a last resort.</p><br><br><h2 id="kill">The <code>kill</code> Command: Your Primary Tool</h2><br><p><strong>Basic Syntax:</strong></p><pre class="bg-light"><code>kill [-s sigspec | -n signum | -sigspec] pid
+</code></pre><p>Where:</p><ul>
+<li><b>sigspec</b> — signal name (e.g., TERM, KILL, HUP)</li>
+<li><b>signum</b> — signal number (e.g., 15, 9, 1)</li>
+<li><b>pid</b> — process ID</li>
+</ul><br><br><p><strong>Main Principles:</strong></p><ul>
+<li>Use <b>SIGTERM</b> by default.</li>
+<li>Give processes time to shut down gracefully.</li>
+<li>Use <b>SIGKILL</b> only if the process doesn’t respond.</li>
+<li>Inspect the process before killing it (<code>ps</code>, <code>top</code>, <code>htop</code>).</li>
+<li>For system services, prefer <code>systemctl stop</code> over <code>kill</code>.</li>
+</ul><br><br><h4><strong>Practical Examples</strong></h4><p><strong>Graceful Termination (Recommended)</strong></p><pre class="bg-light"><code>> kill 1234
+> kill -TERM 1234
+> kill -s TERM 1234
+> kill -n 15 1234
+
+</code></pre><br><p><strong>Forceful Termination (Last Resort)</strong></p><pre class="bg-light"><code>> kill -9 1234
+> kill -KILL 1234
+> kill -s KILL 1234
+> kill -n 9 1234
+</code></pre><br><p><strong>Reload Configuration</strong></p><pre class="bg-light"><code>> kill -HUP 1234
+> kill -s HUP 1234
+> kill -n 1 1234
+</code></pre><br><br><h4>Special Signal: Checking if a Process Exists</h4><p>You can use a <i>“zero signal”</i> to check if a process is running — without killing it.</p><pre class="bg-light"><code>> kill -0 PID
+</code></pre><p><strong>Return values:</strong></p><ul>
+<li><b>0</b> — the process exists and is accessible.</li>
+<li><b>1</b> — the process does not exist or you lack permission.</li>
+</ul><p>💡 <b>Pro tip</b>: <code>kill -0</code> does not send any signal — it only checks process existence and permissions!</p><p>Since the command itself doesn't print any output, you can check its result using the <code>echo $?</code> command, which displays the <i>exit status</i> of the <i>last executed command</i>, or use it <i>directly in a shell script</i> with conditional statements (<code>if/else</code>):</p><pre class="bg-light"><code>if kill -0 1234 2&gt;/dev/null; then
+    echo "Process 1234 is running"
+else
+    echo "Process 1234 not found"
+fi
+</code></pre><br><br><h2 id="kill_by_name">Killing Processes by Name</h2><br><h3 id="pkill">Using <code>pkill</code></h3><br><p><code>pkill</code> terminates processes <b>by matching a pattern</b> (regular expression).</p><p>This makes it a flexible tool for finding and killing processes not only by exact name but also by parts of the command line.</p><pre class="bg-light"><code># Graceful termination by name
+> pkill -TERM firefox
+
+# Forceful termination
+> pkill -KILL firefox
+
+# Match full command line
+> pkill -f "python my_script.py"
+
+# Interactive mode (asks for confirmation)
+> pkill -i firefox
+
+# Regex pattern with full command line
+> pkill -f "^node"        # Processes where command starts with "node"
+> pkill -f "node.*"       # Processes with "node" in command line
+
+</code></pre><br><br><h3 id="killall">Using <code>killall</code></h3><p><code>killall</code> stops processes by <b>exact name only</b> — simple and safer when you know the exact program name.</p><pre class="bg-light"><code># Graceful termination of all 'firefox' processes
+> killall firefox
+
+# Forceful termination
+> killall -9 firefox
+
+# Kill all 'firefox' processes owned by a specific user
+> killall -u username firefox
+</code></pre><br><br><h2 id="kill_groups">Killing Process Groups and Users</h2><p>To terminate a process group (a parent process and all its children):</p><pre class="bg-light"><code>> kill -TERM -1234
+</code></pre><p>Here, <code>-1234</code> is the <b>Process Group ID</b> (<b>PGID</b>).</p><p>This command stops the parent and all of its spawned processes.</p><br><br><p>To terminate all processes owned by a specific <b>user</b>:</p><pre class="bg-light"><code>> pkill -u username
+> killall -u username
+</code></pre><br><br></div>
+<div class="col-sm-4"><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action active" href="/kill_process.html">Process Termination in Linux: How to Kill Processes the Right Way</a><a class="list-group-item list-group-item-action" href="/pid_search.html">Finding PID in Linux: A Complete Beginner’s Guide</a></div></div></div></div>
+</div></div> <!--end .container-fluid --><section id="donate" class="">
+<footer class=" text-white" style="background-color: #0a4275;">
+<div class="container p-4 pb-0">
+<section class="text-center">
+<p class="d-flex justify-content-center align-items-center">If you like all of this, please buy me a coffee</p>
+</section>
+</div>
+<div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+<div class="table-responsive">
+<table class="w-100 mb-3">
+<tr>
+<td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
+<td ><span class="ms-3" id="btc_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
+<td ><span class="ms-3" id="xmr_donate"></span></td>
+</tr>
+<tr>
+<td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
+<td ><span class="ms-3" id="ltc_donate"></span></td>
+</tr>
+</table>
+</div>
+</div>
+</footer>
+</section></body>
+</html>

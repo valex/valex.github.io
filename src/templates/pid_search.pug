@@ -163,9 +163,23 @@ block content
 
             <p>Now only the real process is shown.</p>
 
+            br
+
             p <b>Pros:</b> Works everywhere, no need to install extra tools.
             p <b>Cons:</b> Output is verbose; requires hacks to clean up grep results.
 
+
+            br
+            br
+            
+            h4 More Examples &amp; Advanced Usage
+            pre(class="bg-light")
+                code.
+                    # Show process hierarchy as a tree
+                    ps aux --forest
+
+                    # Custom columns with tree view
+                    ps -eo pid,ppid,pgrp,comm,cmd --forest
 
 
             br

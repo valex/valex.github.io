@@ -5,6 +5,16 @@ let content;
 
 const pages = [
     {
+        "slug": "kill_process",
+        "theme": "linux",
+    
+        "meta_description": "Learn how to safely terminate processes in Linux using kill, pkill, and killall. Understand the difference between SIGTERM, SIGKILL, and SIGHUP, and master best practices for managing processes like a pro",
+        "meta_keywords": "linux process management, kill command linux, pkill, killall, sigterm, sigkill, linux signals, process termination, check process linux, systemctl stop",
+        "meta_title": "How to Safely Kill Processes in Linux — Complete Guide to Signals and Commands",
+    
+        "title": "Process Termination in Linux: How to Kill Processes the Right Way"
+    },
+    {
         "slug": "pid_search",
         "theme": "linux",
     
