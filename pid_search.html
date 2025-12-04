@@ -99,6 +99,9 @@ ps aux --forest
 # Custom columns with tree view
 ps -eo pid,ppid,pgrp,comm,cmd --forest
 
+# Display top processes by RAM usage (sorted by RSS)
+ps -eo pid,comm,%mem,rss --sort=-rss | head -n 11
+ps -eo pid,comm,%mem,rss --sort=-rss | sed 1d | head -n 10
 </code></pre><br><br><h2 id="top_htop">4. top and htop — interactive monitoring</h2><p><code>top</code> is like a dashboard for processes. It shows PID, CPU, memory usage in real time.</p><p><b>Run:</b></p><pre class="bg-light"><code>> top
 </code></pre><p>Inside <code>top</code>:</p>
 <ul>
