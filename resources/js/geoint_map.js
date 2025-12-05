@@ -8,6 +8,7 @@ const DB = {
         'FRA': ['fra1.jpg','fra2.jpg'],
         'HUN': ['hun1.jpg','hun2.jpg','hun3.jpg'],
         'GRC': ['grc1.jpg','grc2.jpg'],
+        'LUX': ['lux1.jpg','lux2.jpg','lux3.jpg'],
         'MNE': [],
         'NOR': [],
         'OSA': [],
