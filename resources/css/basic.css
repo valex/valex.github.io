@@ -64,3 +64,28 @@
 .golden-text {
     animation: goldGlitter 4s infinite;
 }
+
+.discord-invite-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #4752C4;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.discord-invite-btn:hover {
+    color: white;
+    background-color: #4752C4;
+    transform: translateY(-2px);
+}
+
+.discord-invite-btn:active {
+    transform: translateY(0px);
+}
