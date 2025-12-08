@@ -3,6 +3,7 @@ const DB = {
         'AUS': [],
         'BEL': ['bel1.jpg','bel2.jpg','bel3.jpg'],
         'CZE': ['cze1.jpg','cze2.jpg','cze3.jpg'],
+        'DNK': ['dnk1.jpg','dnk2.jpg','dnk3.jpg'],
         'ESP': ['esp1.jpg','esp2.jpg','esp3.jpg','esp4.jpg',],
         'EST': ['est1.jpg','est2.jpg','est3.jpg'],
         'FRA': ['fra1.jpg','fra2.jpg'],
