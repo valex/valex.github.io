@@ -10,6 +10,7 @@ const DB = {
         'GRC': ['grc1.jpg','grc2.jpg'],
         'LUX': ['lux1.jpg','lux2.jpg','lux3.jpg'],
         'MNE': [],
+        'NLD': ['nld1.jpg','nld2.jpg','nld3.jpg'],
         'NOR': [],
         'OSA': [],
         'PRT': ['portugal1.jpg','portugal2.jpg','portugal3.jpg'],
