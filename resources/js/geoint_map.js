@@ -121,7 +121,7 @@ class PAGE_APP {
 
         const that = this;
         d3.json("./data/world.geojson").then(function(world) {
-
+            
             that.projection.fitSize([that.calculations.mainGroupWidth, that.calculations.mainGroupHeight], world)
 
             that.mapGroup.selectAll(".country")
@@ -135,9 +135,7 @@ class PAGE_APP {
                 .style("stroke-width", "0.1px")
                 .attr("fill", d => {
                     const countryId = d.id;
-                    return (countryId in DB.road_distance_marker && DB.road_distance_marker[countryId].length > 0) 
-                        ? "#69b3a2"
-                        : "#ccc";
+                    return that.countryBackgroundColor(countryId)
                 })
                 .on("click", function(event, d) {
 
@@ -186,12 +184,23 @@ class PAGE_APP {
         );
     }
 
+    countryBackgroundColor(countryId){
+      const markerType = this.getCurrentMarkerType();
+      let backgroundColor = "#ccc"
+
+      if(countryId in DB[markerType]){
+        backgroundColor = DB[markerType][countryId].length > 0 ? "#69b3a2" : "#bbbbbb"
+      }
+
+      return backgroundColor
+    }
+
     updateMapColors(markerType) {
         this.mapGroup.selectAll(".country")
             .attr("fill", d => {
                 const countryId = d.id;
-                const hasData = countryId in DB[markerType] && DB[markerType][countryId].length > 0;
-                return hasData ? "#69b3a2" : "#ccc";
+
+                return this.countryBackgroundColor(countryId)
             });
     }
 
@@ -367,6 +376,8 @@ class PAGE_APP {
     }
 
     hideTooltip() {
+        const that = this;
+
         if (!this.tooltipState.isVisible) {
             return;
         }
@@ -381,7 +392,7 @@ class PAGE_APP {
             const hasData = countryId in DB[markerType] && DB[markerType][countryId].length > 0;
             
             d3.select(this.tooltipState.currentElement)
-                .attr("fill", hasData ? "#69b3a2" : "#ccc")
+                .attr("fill", that.countryBackgroundColor(countryId))
                 .style("opacity", 1);
         }
 
