@@ -2,6 +2,7 @@ const DB = {
     'road_distance_marker': {
         'AUS': [],
         'BEL': ['bel1.jpg','bel2.jpg','bel3.jpg'],
+        'CHE': ['che1.jpg','che2.jpg','che3.jpg','che4.jpg'],
         'CZE': ['cze1.jpg','cze2.jpg','cze3.jpg'],
         'DNK': ['dnk1.jpg','dnk2.jpg','dnk3.jpg'],
         'ESP': ['esp1.jpg','esp2.jpg','esp3.jpg','esp4.jpg',],
