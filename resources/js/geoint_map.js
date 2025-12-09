@@ -18,6 +18,7 @@ const DB = {
         'PRT': ['portugal1.jpg','portugal2.jpg','portugal3.jpg'],
         'SRB': ['srb1.jpg','srb2.jpg'],
         'SVK': ['svk1.jpg','svk2.jpg','svk3.jpg','svk4.jpg',],
+        'SVN': ['svn1.jpg','svn2.jpg','svn3.jpg'],
     },
 
     tourist_attraction: {
