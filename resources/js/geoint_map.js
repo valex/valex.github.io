@@ -22,6 +22,7 @@ const DB = {
         'SVN': ['svn1.jpg','svn2.jpg','svn3.jpg'],
     },
     pedestrian_crossing_sign: {
+        'AUS': ['aus1.jpg'],
         'CHE': ['che1.jpg','che2.jpg','che3.jpg'],
     },
     tourist_attraction: {
