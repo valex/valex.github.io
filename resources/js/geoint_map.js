@@ -21,7 +21,9 @@ const DB = {
         'SVK': ['svk1.jpg','svk2.jpg','svk3.jpg','svk4.jpg',],
         'SVN': ['svn1.jpg','svn2.jpg','svn3.jpg'],
     },
-
+    pedestrian_crossing_sign: {
+        'CHE': ['che1.jpg','che2.jpg','che3.jpg'],
+    },
     tourist_attraction: {
         'FRA': ['france-tower.jpg', 'france-louvre.jpg'],
         'ITA': ['italy-colosseum.jpg'],
@@ -165,6 +167,7 @@ class PAGE_APP {
         d3.selectAll('input[name="markerType"]')
             .on('change', (event) => {
                 const selectedValue = event.target.value;
+      
                 //console.log('Selected marker type:', selectedValue);
                 this.hideTooltip();
                 this.updateMapColors(selectedValue);
