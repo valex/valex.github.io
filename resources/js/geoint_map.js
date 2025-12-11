@@ -24,6 +24,7 @@ const DB = {
     pedestrian_crossing_sign: {
         'AUS': ['aus1.jpg'],
         'CHE': ['che1.jpg','che2.jpg','che3.jpg'],
+        'JPN': ['jpn1.jpg','jpn2.jpg','jpn3.jpg'],
     },
     tourist_attraction: {
         'FRA': ['france-tower.jpg', 'france-louvre.jpg'],
