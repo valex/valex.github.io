@@ -1,4 +1,4 @@
-import SVGComplexNumber from "./SVGComplexNumber";
+import SVGComplexNumber from "./SVGComplexNumber.js";
 
 
 class ComplexNumberVizualization{
