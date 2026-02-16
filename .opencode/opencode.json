@@ -1,0 +1,25 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "plan",
+  "model": "opencode/kimi-k2.5-free",
+  "small_model": "opencode/gpt-5-nano",
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "grep *": "allow",
+      "ls *": "allow",
+      "tail *": "allow",
+      "head *": "allow",
+      "wc *": "allow",
+    },
+    "edit": {
+      "*": "ask"
+    },
+    "git": {
+      "*": "ask",
+      "log *": "allow",
+      "status *": "allow",
+      "diff *": "allow"
+    }
+  }
+}

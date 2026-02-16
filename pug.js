@@ -267,6 +267,18 @@ const pages = [
 
         "script_module": true
     },
+    {
+        "slug": "complex_numbers",
+        "theme": "math",
+
+        "meta_description": "Comprehensive guide to complex numbers: from imaginary unit i and complex plane to advanced operations. Learn algebraic, trigonometric, and exponential forms, Euler's formula, De Moivre's formula, and extracting roots with interactive D3.js visualizations.",
+        "meta_keywords": "complex numbers, imaginary unit i, complex plane, Euler's formula, De Moivre's formula, trigonometric form, exponential form, complex number operations, polar coordinates, extracting roots, interactive visualization, real part, imaginary part, modulus, argument",
+        "meta_title": "Complex Numbers: Complete Guide with Interactive Visualizations | Euler's Formula & De Moivre's Formula",
+
+        "title": "Complex Numbers: An Introduction",
+
+        "script_module": true
+    },
 ];
 
 const alternatePages = {
