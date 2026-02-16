@@ -408,9 +408,6 @@ class ComplexNumberVizualization{
 
     drawInfoBlock(){
 
-        if(this.calculations.svgWidth < 500)
-            return;
-
         this.mainGroup.append('text')
             .attr('id', 'z_number_algebraic')
             .html(this.z_number_algebraic())
