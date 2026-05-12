@@ -1,9 +1,0 @@
-{
-  "telemetry": {
-    "enabled": false
-  },
-  "privacy": {
-    "usageStatisticsEnabled": false
-  },
-  "$version": 3
-}
