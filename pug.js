@@ -135,7 +135,7 @@ const pages = [
         "title": "Variables in JavaScript"
     },
     {
-		"slug": "functions_javascript",
+	"slug": "functions_javascript",
         "theme": "javascript",
     
         "meta_description": "Learn about JavaScript functions, including different syntax options, how arguments work, and the behavior of functions in ECMAScript. Explore examples and understand the nuances of defining and using functions in JavaScript",
@@ -143,44 +143,6 @@ const pages = [
         "meta_title": "Understanding Functions in JavaScript: Syntax, Usage, and Examples",
     
         "title": "Functions in JavaScript"
-	},
-    {
-        "slug": "freebitcoin_autoclick",
-        "theme": "clickers",
-    
-        "meta_description": "Automate freebitco.in earnings with Autoroll Autoclick script. Boost Bitcoin profits effortlessly. Skip CAPTCHA hassle. Install with Tampermonkey. Start now!",
-        "meta_keywords": "freebitco.in, Autoroll Autoclick script, automate earnings, Bitcoin, cryptocurrency, Tampermonkey, skip CAPTCHA",
-        "meta_title": "Automate Bitcoin Earnings with freebitco.in Autoroll Autoclick Script | Boost Your Profits Effortlessly",
-    
-        "title": "freebitco.in Autoroll Autoclick Script",
-        "alternates": {
-            "de": {
-                "meta_description": "Automatisieren Sie Ihre freebitco.in-Einnahmen mit dem Autoroll Autoclick-Skript. Steigern Sie Ihre Bitcoin-Gewinne mühelos. Überspringen Sie das CAPTCHA-Ärgernis. Installieren Sie es mit Tampermonkey. Legen Sie jetzt los!",
-                "meta_keywords": "freebitco.in, Autoroll Autoklick-Skript, Automatisierung von Einnahmen, Bitcoin, Kryptowährung, Tampermonkey, CAPTCHA überspringen",
-                "meta_title": "Automatisieren Sie Ihre Bitcoin-Einnahmen mit dem freebitco.in Autoroll Autoklick-Skript | Steigern Sie Ihre Gewinne mühelos",
-            
-                "title": "freebitco.in Autoroll Autoklick-Skript",
-            }
-        }
-    },
-    {
-        "slug": "freebitcoin_multiply_btc_roll_counter",
-        "theme": "clickers",
-    
-        "meta_description": "Track and analyze roll statistics in freebitco.in's Multiply BTC game with the freebitco.in Multiply BTC Roll Counter. Get valuable insights on the number of rolls since the last winning number and optimize your strategy",
-        "meta_keywords": "freebitco.in, Multiply BTC, roll counter, roll statistics, strategy, gambling",
-        "meta_title": "Freebitco.in Multiply BTC Roll Counter | Track and Analyze Roll Statistics",
-    
-        "title": "freebitco.in Multiply BTC Roll Counter Script",
-        "alternates": {
-            "de": {
-                "meta_description": "Verfolgen und analysieren Sie Rollstatistiken im 'Multiply BTC'-Spiel von freebitco.in mit dem freebitco.in Multiply BTC Roll Counter. Erhalten Sie wertvolle Einblicke in die Anzahl der Rollen seit der letzten Gewinnzahl und optimieren Sie Ihre Strategie",
-                "meta_keywords": "freebitco.in, Multiply BTC, Rollenzähler, Rollstatistiken, Strategie, Glücksspiel",
-                "meta_title": "Freebitco.in Multiply BTC Rollenzähler | Verfolgen und Analysieren von Rollstatistiken",
-            
-                "title": "freebitco.in Multiply BTC Rollenzähler Skript",
-            }
-        }
     },
     {
         "slug": "numbers_in_js",
