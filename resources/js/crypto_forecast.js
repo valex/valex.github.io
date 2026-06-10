@@ -142,9 +142,14 @@ class CryptoForecastApp{
 
     async fetchAndBuildData(symbol = this._currentSymbol) {
       
+        const limit = 200;
+        const now = new Date();
+        now.setUTCDate(now.getUTCDate() - limit);
+        const ymd = now.toISOString().split('T')[0]
+
         let data;
         try {
-            const response = await fetch(`https://stochastic.fastapicloud.dev/forecast?symbol=${symbol}&interval=1d`);
+            const response = await fetch(`https://stochastic.fastapicloud.dev/forecast?symbol=${symbol}&interval=1d&from=${ymd}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
