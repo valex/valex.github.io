@@ -5,6 +5,16 @@ let content;
 
 const pages = [
     {
+        "slug": "crypto_forecast",
+        "theme": "crypto",
+    
+        "meta_description": "Interactive cryptocurrency price forecast visualization using stochastic modeling. View probabilistic price projections for BTCUSDT, ETHUSDT, and LTCUSDT with 95% prediction intervals, mean forecast paths, and real-time tooltips. Powered by D3.js.",
+        "meta_keywords": "crypto price forecast, cryptocurrency prediction, stochastic modeling, BTCUSDT forecast, ETHUSDT forecast, LTCUSDT forecast, prediction interval, confidence bands, interactive D3 visualization, crypto trading tools, price projection",
+        "meta_title": "Cryptocurrency Price Forecast - Interactive Stochastic Modeling with 95% Prediction Intervals",
+    
+        "title": "Crypto Price Forecast"
+    },
+    {
         "slug": "kill_process",
         "theme": "linux",
     

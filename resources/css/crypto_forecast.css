@@ -1,0 +1,75 @@
+/* ===== AXES ===== */
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #999;
+    shape-rendering: crispEdges;
+}
+.axis text {
+    font-size: 10px;
+    fill: #666;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.axis .domain {
+    stroke: #ccc;
+    stroke-width: 1;
+}
+/* ===== FORECAST PATHS ===== */
+.forecast-paths .forecast-path,
+.mean-path,
+.prediction-lower,
+.prediction-upper {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+}
+
+.prediction-band {
+    pointer-events: none;
+}
+
+.forecast-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: monospace;
+    white-space: nowrap;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 0.1s;
+    border-left: 3px solid #8B0000;
+}
+.forecast-tooltip .label { color: #aaa; margin-right: 6px; }
+.forecast-tooltip .value { color: #fff; }
+.forecast-tooltip .mean .value { color: #ff6b6b; }
+.forecast-tooltip .lower .value { color: #ffaaaa; }
+.forecast-tooltip .upper .value { color: #ffaaaa; }
+
+/* ===== SYMBOL SELECTOR ===== */
+#symbol-selector .list-group-item small { color: #666; }
+#symbol-selector .list-group-item.active {
+    background-color: #0a4275;
+    border-color: #0a4275;
+    color: white;
+}
+#symbol-selector .list-group-item.active small { color: rgba(255,255,255,0.7); }
+
+/* ===== LOADING STATE ===== */
+#svg_chart.loading { opacity: 0.6; pointer-events: none; position: relative; }
+#svg_chart.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 24px; height: 24px;
+    margin: -12px 0 0 -12px;
+    border: 3px solid #0a4275;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

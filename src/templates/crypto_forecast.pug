@@ -1,0 +1,44 @@
+extends basic.pug
+
+block scripts
+    script(defer, src='https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js')
+
+    
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8">
+
+            <div id="svg_chart"></div>
+
+            <div class="mt-5 py-2" >
+
+            </div>
+        </div>
+        <div class="col-sm-4">
+            div(class='card')
+                div(class='card-header') Forecast Symbol
+                div(class='card-body')
+                    <div id="symbol-selector" class='list-group'>
+                        a(class='list-group-item list-group-item-action active', 
+                        href='#', data-symbol='BTCUSDT', id='symbol-btc') 
+                            strong BTCUSDT
+                            br
+                            small Bitcoin / USDT
+                        a(class='list-group-item list-group-item-action', 
+                        href='#', data-symbol='ETHUSDT', id='symbol-eth')
+                            strong ETHUSDT
+                            br
+                            small Ethereum / USDT
+                        a(class='list-group-item list-group-item-action', 
+                        href='#', data-symbol='LTCUSDT', id='symbol-ltc')
+                            strong LTCUSDT
+                            br
+                            small Litecoin / USDT
+                    </div>
+
+            include see_also.pug
+
+        </div>
+    </div>
