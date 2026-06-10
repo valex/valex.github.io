@@ -8,7 +8,7 @@ class CryptoForecastApp{
                 top: 10,
                 right: 10,
                 bottom: 30,
-                left: 80,
+                left: 10,
             },
             breakpoints: {
                 extraSmall: 576
@@ -33,6 +33,14 @@ class CryptoForecastApp{
         this.line = null;
         this._colors = d3.schemePastel2; 
         this._currentSymbol = 'BTCUSDT';
+
+        this._symbolSettings = {
+            'BTCUSDT': { leftMargin: 60 },
+            'ETHUSDT': { leftMargin: 50 },
+            'LTCUSDT': { leftMargin: 40 },
+        };
+
+        this.options.margins.left = this._symbolSettings['BTCUSDT'].leftMargin;
 
         this._data = {
             t0: null,
@@ -121,7 +129,19 @@ class CryptoForecastApp{
         }
     }
 
+    _recalculateDimensions() {
+        this.calculations.mainGroupWidth = this.calculations.svgWidth - this.options.margins.left - this.options.margins.right;
+
+        // Update mainGroup transform
+        this._mainGroup.attr('transform', `translate(${this.options.margins.left},${this.options.margins.top})`);
+
+        // Update hover rect size
+        this._mainGroup.select('.chart-hover-area')
+            .attr('width', this.calculations.mainGroupWidth);
+    }
+
     async fetchAndBuildData(symbol = this._currentSymbol) {
+      
         let data;
         try {
             const response = await fetch(`https://stochastic.fastapicloud.dev/forecast?symbol=${symbol}&interval=1d`);
@@ -178,6 +198,8 @@ class CryptoForecastApp{
         const allDates = this._data.paths.flatMap(p => p.map(d => d.date));
         this._data.x_extent = d3.extent(allDates)
 
+        this._recalculateDimensions();
+
         this.scaleX = d3.scaleTime()
             .domain(this._data.x_extent)
             .range([0, this.calculations.mainGroupWidth]);
@@ -192,6 +214,7 @@ class CryptoForecastApp{
             .y(d => this.scaleY(d.value))
             .curve(d3.curveLinear);
 
+
         this._draw()
         this._showLoading(false);
     }// end fetchAndBuildData()
@@ -200,6 +223,12 @@ class CryptoForecastApp{
         if (symbol === this._currentSymbol) return;
         
         this._currentSymbol = symbol;
+        
+        // Apply symbol-specific settings
+        const settings = this._symbolSettings[symbol];
+        if (settings) {
+            this.options.margins.left = settings.leftMargin;
+        }
         
         // Update active UI
         document.querySelectorAll('#symbol-selector .list-group-item').forEach(el => {
@@ -334,7 +363,7 @@ class CryptoForecastApp{
         const [x] = d3.pointer(event, this._mainGroup.node());
         const date = this.scaleX.invert(x);
         
-        const bisect = d3.bisector(d => d.date).left;
+        const bisect = d3.bisector(d => d.date).center;
         const idx = Math.min(
             bisect(this._data.mean_path, date),
             this._data.mean_path.length - 1
