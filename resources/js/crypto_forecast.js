@@ -35,9 +35,18 @@ class CryptoForecastApp{
         this._currentSymbol = 'BTCUSDT';
 
         this._symbolSettings = {
-            'BTCUSDT': { leftMargin: 60 },
-            'ETHUSDT': { leftMargin: 50 },
-            'LTCUSDT': { leftMargin: 40 },
+            'BTCUSDT': { 
+                leftMargin: 40,
+                toFixed: 0
+            },
+            'ETHUSDT': { 
+                leftMargin: 30,
+                toFixed: 0
+            },
+            'LTCUSDT': { 
+                leftMargin: 20,
+                toFixed: 2
+            },
         };
 
         this.options.margins.left = this._symbolSettings['BTCUSDT'].leftMargin;
@@ -271,7 +280,12 @@ class CryptoForecastApp{
         // X axis - time
         const axisX = d3.axisBottom(this.scaleX)
             .ticks(d3.timeDay.every(2))
-            .tickFormat(d => d.getDate() + ' ' + d3.timeFormat('%b')(d));
+            .tickFormat((d, i, nodes) => {
+                const month = d.getMonth();
+                const prevMonth = i > 0 ? new Date(nodes[i - 1].__data__).getMonth() : -1;
+                const showMonth = month !== prevMonth;
+                return (showMonth ? d3.timeFormat('%b')(d) + ' ' : '') + d.getDate();
+            });
         this._mainGroup.append('g')
             .attr('class', 'axis axis-x')
             .attr('transform', `translate(0,${this.calculations.mainGroupHeight})`)
@@ -380,13 +394,14 @@ class CryptoForecastApp{
         
         const dateStr = `${mean.date.getDate()} ${d3.timeFormat('%b')(mean.date)}`;
         
+        const toFixed = this._symbolSettings[this._currentSymbol].toFixed;
         this._tooltip
             .style('opacity', 1)
             .html(`
                 <div><span class="label">${dateStr}</span></div>
-                <div class="upper"><span class="label">Upper:</span> <span class="value">${upper.value.toFixed(6)}</span></div>
-                <div class="mean"><span class="label">Mean:</span> <span class="value">${mean.value.toFixed(6)}</span></div>
-                <div class="lower"><span class="label">Lower:</span> <span class="value">${lower.value.toFixed(6)}</span></div>
+                <div class="upper"><span class="label">Upper:</span> <span class="value">${upper.value.toFixed(toFixed)}</span></div>
+                <div class="mean"><span class="label">Mean:</span> <span class="value">${mean.value.toFixed(toFixed)}</span></div>
+                <div class="lower"><span class="label">Lower:</span> <span class="value">${lower.value.toFixed(toFixed)}</span></div>
             `)
             .style('left', (event.pageX + 12) + 'px')
             .style('top', (event.pageY - 28) + 'px');
