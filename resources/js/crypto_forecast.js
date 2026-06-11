@@ -7,7 +7,7 @@ class CryptoForecastApp{
             margins: {
                 top: 10,
                 right: 10,
-                bottom: 30,
+                bottom: 40,
                 left: 10,
             },
             breakpoints: {
@@ -117,6 +117,7 @@ class CryptoForecastApp{
             .attr('width', this.calculations.mainGroupWidth)
             .attr('height', this.calculations.mainGroupHeight)
             .attr('fill', 'none')
+            .attr('stroke-width', 1.5)
             .attr('pointer-events', 'all')
             .on('mousemove', (event) => this._showTooltip(event))
             .on('mouseout', () => this._hideTooltip());
@@ -269,12 +270,35 @@ class CryptoForecastApp{
         this._mainGroup.selectAll(':not(.chart-hover-area)').remove();
         
         this._drawAxes();
+        this._drawLabels();
         this._drawPaths();
         this._drawPredictionBand();
         this._drawLowerBound();
         this._drawUpperBound();
         this._drawMeanPath();
     }
+
+    _drawLabels(){
+        // Build timestamp in bottom-left
+        if (this._data.build_at_utc) {
+            const dateStr = this._data.build_at_utc.toISOString().split('T')[0];
+            this._mainGroup.append('text')
+                .attr('class', 'build-timestamp')
+                .attr('x', 0)
+                .attr('y', this.calculations.svgHeight - 13)
+                .attr('fill', '#999')
+                .attr('font-size', '10px')
+                .text(`Forecast built on ${dateStr}`);
+        }
+
+        this._mainGroup.append('text')
+            .attr('x', this.calculations.mainGroupWidth)
+            .attr('y', this.calculations.svgHeight - 13)
+            .attr('fill', '#999')
+            .attr('font-size', '10px')
+            .attr('text-anchor', 'end')
+            .text(`valex.github.io`);
+    }// end _drawLabels
 
     _drawAxes() {
         // X axis - time
@@ -297,7 +321,9 @@ class CryptoForecastApp{
         this._mainGroup.append('g')
             .attr('class', 'axis axis-y')
             .call(axisY);
-    }
+
+
+    } // end _drawAxes()
 
     _drawPaths() {
         const pathsGroup = this._mainGroup.append('g').attr('class', 'forecast-paths');
@@ -392,7 +418,7 @@ class CryptoForecastApp{
         const lower = this._data.prediction_interval_95.lower[idx];
         const upper = this._data.prediction_interval_95.upper[idx];
         
-        const dateStr = `${mean.date.getDate()} ${d3.timeFormat('%b')(mean.date)}`;
+        const dateStr = `${d3.timeFormat('%b')(mean.date)} ${mean.date.getDate()}`;
         
         const toFixed = this._symbolSettings[this._currentSymbol].toFixed;
         this._tooltip
@@ -402,8 +428,24 @@ class CryptoForecastApp{
                 <div class="upper"><span class="label">Upper:</span> <span class="value">${upper.value.toFixed(toFixed)}</span></div>
                 <div class="mean"><span class="label">Mean:</span> <span class="value">${mean.value.toFixed(toFixed)}</span></div>
                 <div class="lower"><span class="label">Lower:</span> <span class="value">${lower.value.toFixed(toFixed)}</span></div>
-            `)
-            .style('left', (event.pageX + 12) + 'px')
+            `);
+
+        // Smart positioning: flip to left if tooltip would go off SVG right edge
+        const tooltipNode = this._tooltip.node();
+        const tooltipRect = tooltipNode.getBoundingClientRect();
+        const tooltipWidth = tooltipRect.width;
+        const cursorX = event.pageX;
+        
+        // Get SVG right edge in page coordinates
+        const svgRect = this._svg.node().getBoundingClientRect();
+        const svgRightEdge = svgRect.right;
+        
+        const showLeft = (cursorX + tooltipWidth + 12) > svgRightEdge;
+        
+        this._tooltip
+            .style('left', showLeft 
+                ? (cursorX - tooltipWidth - 12) + 'px'
+                : (cursorX + 12) + 'px')
             .style('top', (event.pageY - 28) + 'px');
     }
 
