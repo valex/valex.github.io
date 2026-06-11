@@ -33,17 +33,27 @@ class CryptoForecastApp{
         this.line = null;
         this._colors = d3.schemePastel2; 
         this._currentSymbol = 'BTCUSDT';
+        this._fullscreenButton = null;
+        this._isFullscreen = false;
+
+        this._fullscreenSVGs = {
+            enter: `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g><g><path d="M192,64H32C14.328,64,0,78.328,0,96v96c0,17.672,14.328,32,32,32s32-14.328,32-32v-64h128c17.672,0,32-14.328,32-32 S209.672,64,192,64z"></path><path d="M480,64H320c-17.672,0-32,14.328-32,32s14.328,32,32,32h128v64c0,17.672,14.328,32,32,32s32-14.328,32-32V96 C512,78.328,497.672,64,480,64z"></path><path d="M480,288c-17.672,0-32,14.328-32,32v64H320c-17.672,0-32,14.328-32,32s14.328,32,32,32h160c17.672,0,32-14.328,32-32v-96 C512,302.328,497.672,288,480,288z"></path><path d="M192,384H64v-64c0-17.672-14.328-32-32-32S0,302.328,0,320v96c0,17.672,14.328,32,32,32h160c17.672,0,32-14.328,32-32 S209.672,384,192,384z"></path></g></g></svg>`,
+            exit: `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve"><g stroke-width="0"></g><g stroke-linecap="round" stroke-linejoin="round"></g><g><g><path d="M192,64c-17.672,0-32,14.328-32,32v64H32c-17.672,0-32,14.328-32,32s14.328,32,32,32h160c17.672,0,32-14.328,32-32V96 C224,78.328,209.672,64,192,64z"></path> <path d="M320,224h160c17.672,0,32-14.328,32-32s-14.328-32-32-32H352V96c0-17.672-14.328-32-32-32s-32,14.328-32,32v96 C288,209.672,302.328,224,320,224z"></path> <path d="M480,288H320c-17.672,0-32,14.328-32,32v96c0,17.672,14.328,32,32,32s32-14.328,32-32v-64h128c17.672,0,32-14.328,32-32 S497.672,288,480,288z"></path> <path d="M192,288H32c-17.672,0-32,14.328-32,32s14.328,32,32,32h128v64c0,17.672,14.328,32,32,32s32-14.328,32-32v-96 C224,302.328,209.672,288,192,288z"></path></g></g></svg>`
+        };
 
         this._symbolSettings = {
             'BTCUSDT': { 
-                leftMargin: 40,
+                title: 'BTC (Bitcoin)',
+                leftMargin: 50,
                 toFixed: 0
             },
             'ETHUSDT': { 
+                title: 'ETH (Ethereum)',
                 leftMargin: 40,
                 toFixed: 0
             },
             'LTCUSDT': { 
+                title: 'LTC (Litecoin)',
                 leftMargin: 30,
                 toFixed: 2
             },
@@ -109,6 +119,12 @@ class CryptoForecastApp{
                 console.log('onClickSvg');
             });
 
+        // Add white background rect to prevent black background in fullscreen
+        this._svg.insert('rect', ':first-child')
+            .attr('width', '100%')
+            .attr('height', '100%')
+            .attr('fill', '#ffffff');
+
         this._mainGroup = this._svg.append('g')
             .attr('transform', 'translate(' + this.options.margins.left + ',' + this.options.margins.top + ')');
 
@@ -126,6 +142,32 @@ class CryptoForecastApp{
             .attr('class', 'forecast-tooltip')
             .style('opacity', 0);
 
+        // Fullscreen button
+        this._fullscreenButton = document.getElementById('fullscreen-button');
+        if (this._fullscreenButton) {
+            this._fullscreenButton.innerHTML = this._fullscreenSVGs.enter;
+            this._fullscreenButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleFullscreen();
+            });
+        }
+
+        // Fullscreen change events
+        document.addEventListener('fullscreenchange', () => this.handleFullscreenChange());
+        document.addEventListener('webkitfullscreenchange', () => this.handleFullscreenChange());
+        document.addEventListener('mozfullscreenchange', () => this.handleFullscreenChange());
+        document.addEventListener('msfullscreenchange', () => this.handleFullscreenChange());
+
+        // Handle window resize (and orientation change)
+        window.addEventListener('resize', () => {
+            this._recalculateDimensions();
+            if (this.scaleX && this.scaleY) {
+                this.scaleX.range([0, this.calculations.mainGroupWidth]);
+                this.scaleY.range([this.calculations.mainGroupHeight, 0]);
+                this._draw();
+            }
+        });
+
         // Symbol switcher event delegation
         const symbolSelector = document.getElementById('symbol-selector');
         if (symbolSelector) {
@@ -140,14 +182,32 @@ class CryptoForecastApp{
     }
 
     _recalculateDimensions() {
+        this.calculations.svgWidth = Math.floor(this._el.clientWidth - 1);
+        
+        if (this._isFullscreen) {
+            this.calculations.svgHeight = Math.floor(this._el.clientHeight);
+        } else {
+            this.calculations.svgHeight = Math.floor(this.calculations.svgWidth / this.options.aspectRatio);
+        }
+
         this.calculations.mainGroupWidth = this.calculations.svgWidth - this.options.margins.left - this.options.margins.right;
+        this.calculations.mainGroupHeight = this.calculations.svgHeight - this.options.margins.top - this.options.margins.bottom;
+
+        // Update SVG size
+        this._svg.attr('width', this.calculations.svgWidth).attr('height', this.calculations.svgHeight);
 
         // Update mainGroup transform
         this._mainGroup.attr('transform', `translate(${this.options.margins.left},${this.options.margins.top})`);
 
         // Update hover rect size
         this._mainGroup.select('.chart-hover-area')
-            .attr('width', this.calculations.mainGroupWidth);
+            .attr('width', this.calculations.mainGroupWidth)
+            .attr('height', this.calculations.mainGroupHeight);
+
+        // Update guide line height
+        if (this._guideLine) {
+            this._guideLine.attr('y2', this.calculations.mainGroupHeight);
+        }
     }
 
     async fetchAndBuildData(symbol = this._currentSymbol) {
@@ -215,12 +275,12 @@ class CryptoForecastApp{
 
         this._recalculateDimensions();
 
-        this.scaleX = d3.scaleTime()
+        this.scaleX = d3.scaleUtc()
             .domain(this._data.x_extent)
             .range([0, this.calculations.mainGroupWidth]);
 
         this.scaleY = d3.scaleLinear()
-            .domain([this._data.y_extent[0] * 0.9, this._data.y_extent[1] * 1.01])  // slight padding
+            .domain([this._data.y_extent[0] * 0.9, this._data.y_extent[1] * 1.05])  // slight padding
             .range([this.calculations.mainGroupHeight, 0]);
 
         // Line Generator
@@ -265,17 +325,79 @@ class CryptoForecastApp{
         this._el.classList.toggle('loading', isLoading);
     }
 
+    isFullscreen() {
+        return !!document.fullscreenElement ||
+               !!document.webkitFullscreenElement ||
+               !!document.mozFullScreenElement ||
+               !!document.msFullscreenElement;
+    }
+
+    toggleFullscreen() {
+        if (!this.isFullscreen()) {
+            if (this._el.requestFullscreen) {
+                this._el.requestFullscreen();
+            } else if (this._el.webkitRequestFullscreen) {
+                this._el.webkitRequestFullscreen();
+            } else if (this._el.mozRequestFullScreen) {
+                this._el.mozRequestFullScreen();
+            } else if (this._el.msRequestFullscreen) {
+                this._el.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    }
+
+    handleFullscreenChange() {
+        this._isFullscreen = this.isFullscreen();
+        if (this._fullscreenButton) {
+            this._fullscreenButton.innerHTML = this._isFullscreen 
+                ? this._fullscreenSVGs.exit 
+                : this._fullscreenSVGs.enter;
+            this._fullscreenButton.title = this._isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen';
+            this._fullscreenButton.setAttribute('aria-label', this._isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen');
+        }
+        this._recalculateDimensions();
+
+        // Update scales for new dimensions
+        if (this.scaleX && this.scaleY) {
+            this.scaleX.range([0, this.calculations.mainGroupWidth]);
+            this.scaleY.range([this.calculations.mainGroupHeight, 0]);
+            this._draw();
+        }
+    }
+
     _draw() {
         // Clear all content except hover rect
         this._mainGroup.selectAll(':not(.chart-hover-area)').remove();
         
         this._drawAxes();
+        this._drawTitle();
         this._drawLabels();
         this._drawPaths();
         this._drawPredictionBand();
         this._drawLowerBound();
         this._drawUpperBound();
         this._drawMeanPath();
+
+        // Create/Update guide line to ensure it is on top
+        this._guideLine = this._mainGroup.append('line')
+            .attr('class', 'guide-line')
+            .attr('y1', 0)
+            .attr('y2', this.calculations.mainGroupHeight)
+            .attr('stroke', '#999') // Darker color for visibility
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', '4,4')
+            .style('opacity', 0)
+            .style('pointer-events', 'none');
     }
 
     _drawLabels(){
@@ -300,20 +422,37 @@ class CryptoForecastApp{
             .text(`valex.github.io`);
     }// end _drawLabels
 
+    _drawTitle() {
+        const settings = this._symbolSettings[this._currentSymbol];
+        if (settings && settings.title) {
+            this._mainGroup.append('text')
+                .attr('class', 'chart-title')
+                .attr('x', 10)
+                .attr('y', 25)
+                .attr('fill', '#333')
+                .attr('font-size', '18px')
+                .attr('font-weight', 'bold')
+                .attr('font-family', '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif')
+                .style('pointer-events', 'none')
+                .text(settings.title);
+        }
+    }
+
     _drawAxes() {
         // X axis - time
         const axisX = d3.axisBottom(this.scaleX)
-            .ticks(d3.timeDay.every(2))
+            .ticks(d3.utcDay.every(2))
             .tickFormat((d, i, nodes) => {
-                const month = d.getMonth();
-                const prevMonth = i > 0 ? new Date(nodes[i - 1].__data__).getMonth() : -1;
+                const month = d.getUTCMonth();
+                const prevMonth = i > 0 ? new Date(nodes[i - 1].__data__).getUTCMonth() : -1;
                 const showMonth = month !== prevMonth;
-                return (showMonth ? d3.timeFormat('%b')(d) + ' ' : '') + d.getDate();
+                return (showMonth ? d3.utcFormat('%b')(d) + ' ' : '') + d.getUTCDate();
             });
-        this._mainGroup.append('g')
+        const axisXGroup = this._mainGroup.append('g')
             .attr('class', 'axis axis-x')
             .attr('transform', `translate(0,${this.calculations.mainGroupHeight})`)
             .call(axisX);
+
         // Y axis - price
         const axisY = d3.axisLeft(this.scaleY)
             .ticks(6)
@@ -405,7 +544,10 @@ class CryptoForecastApp{
     }
 
     _showTooltip(event) {
+        if (!this.scaleX || !this.scaleY) return;
+        
         const [x] = d3.pointer(event, this._mainGroup.node());
+        
         const date = this.scaleX.invert(x);
         
         const bisect = d3.bisector(d => d.date).center;
@@ -418,6 +560,16 @@ class CryptoForecastApp{
         const lower = this._data.prediction_interval_95.lower[idx];
         const upper = this._data.prediction_interval_95.upper[idx];
         
+        const snappedX = this.scaleX(mean.date) + 0.5;
+
+        // Update guide line
+        if (this._guideLine) {
+            this._guideLine
+                .attr('x1', snappedX)
+                .attr('x2', snappedX)
+                .style('opacity', 1);
+        }
+
         const dateStr = `${d3.timeFormat('%b')(mean.date)} ${mean.date.getDate()}`;
         
         const toFixed = this._symbolSettings[this._currentSymbol].toFixed;
@@ -434,23 +586,24 @@ class CryptoForecastApp{
         const tooltipNode = this._tooltip.node();
         const tooltipRect = tooltipNode.getBoundingClientRect();
         const tooltipWidth = tooltipRect.width;
-        const cursorX = event.pageX;
         
-        // Get SVG right edge in page coordinates
-        const svgRect = this._svg.node().getBoundingClientRect();
-        const svgRightEdge = svgRect.right;
+        // Get mouse position relative to the container
+        const [mouseX, mouseY] = d3.pointer(event, this._el);
         
-        const showLeft = (cursorX + tooltipWidth + 12) > svgRightEdge;
+        const showLeft = (mouseX + tooltipWidth + 12) > this.calculations.svgWidth;
         
         this._tooltip
             .style('left', showLeft 
-                ? (cursorX - tooltipWidth - 12) + 'px'
-                : (cursorX + 12) + 'px')
-            .style('top', (event.pageY - 28) + 'px');
+                ? (mouseX - tooltipWidth - 12) + 'px'
+                : (mouseX + 12) + 'px')
+            .style('top', (mouseY - 28) + 'px');
     }
 
     _hideTooltip() {
         this._tooltip.style('opacity', 0);
+        if (this._guideLine) {
+            this._guideLine.style('opacity', 0);
+        }
     }
 }
 

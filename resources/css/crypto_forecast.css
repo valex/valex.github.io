@@ -82,3 +82,57 @@
     animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== FULLSCREEN BUTTON ===== */
+#svg_chart {
+    position: relative;
+    background: white;
+}
+
+#svg_chart:fullscreen {
+    background-color: white;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Vendor prefixes for fullscreen */
+#svg_chart:-webkit-full-screen { background-color: white; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+#svg_chart:-moz-full-screen { background-color: white; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+#svg_chart:-ms-fullscreen { background-color: white; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+
+.fullscreen-button {
+    position: absolute;
+    bottom: 45px;
+    right: 10px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px 8px;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.fullscreen-button:hover {
+    background: #fff;
+    border-color: #bbb;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.fullscreen-button svg {
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    fill: #666;
+    transition: fill 0.2s;
+}
+
+.fullscreen-button:hover svg {
+    fill: #333;
+}
