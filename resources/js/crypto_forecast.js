@@ -40,11 +40,11 @@ class CryptoForecastApp{
                 toFixed: 0
             },
             'ETHUSDT': { 
-                leftMargin: 30,
+                leftMargin: 40,
                 toFixed: 0
             },
             'LTCUSDT': { 
-                leftMargin: 20,
+                leftMargin: 30,
                 toFixed: 2
             },
         };
