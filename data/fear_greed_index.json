@@ -1576,5 +1576,11 @@
         "yesterday": 40,
         "last_week": 51,
         "last_update": "2025-06-23T12:17:54Z"
+    },
+    {
+        "today": 24,
+        "yesterday": 25,
+        "last_week": 14,
+        "last_update": "2026-06-16T16:41:42Z"
     }
 ]
