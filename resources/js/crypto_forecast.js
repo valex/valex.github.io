@@ -128,6 +128,12 @@ class CryptoForecastApp{
         this._mainGroup = this._svg.append('g')
             .attr('transform', 'translate(' + this.options.margins.left + ',' + this.options.margins.top + ')');
 
+        // Show buttons now that SVG is initialized
+        const fsBtn = document.getElementById('fullscreen-button');
+        const dlBtn = document.getElementById('download-button');
+        if (fsBtn) fsBtn.hidden = false;
+        if (dlBtn) dlBtn.hidden = false;
+
         this._mainGroup.append('rect')
             .attr('class', 'chart-hover-area')
             .attr('width', this.calculations.mainGroupWidth)
@@ -149,6 +155,24 @@ class CryptoForecastApp{
             this._fullscreenButton.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.toggleFullscreen();
+            });
+        }
+
+        // Download button
+        const downloadButton = document.getElementById('download-button');
+        if (downloadButton) {
+            downloadButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+
+                const dateStr = new Date().toISOString().split('T')[0];
+                const fileName = `forecast_${this._currentSymbol}_${dateStr}.png`;
+                
+                saveSvgAsPng(this._svg.node(), fileName, {
+                    backgroundColor: 'white',
+                    encoderOptions: 1.0,
+                    scale: 1
+                });
+
             });
         }
 
@@ -607,6 +631,14 @@ class CryptoForecastApp{
     }
 }
 
-const APP = new CryptoForecastApp({
-    container_id: 'svg_chart'
+window.addEventListener('DOMContentLoaded', () => {
+    if (typeof d3 !== 'undefined') {
+        const APP = new CryptoForecastApp({
+            container_id: 'svg_chart'
+        });
+        // Export to window for debugging if needed
+        window.cryptoApp = APP;
+    } else {
+        console.error('D3 library is not loaded! Crypto Forecast cannot initialize.');
+    }
 });

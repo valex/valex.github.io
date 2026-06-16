@@ -103,10 +103,10 @@
 #svg_chart:-moz-full-screen { background-color: white; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
 #svg_chart:-ms-fullscreen { background-color: white; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
 
-.fullscreen-button {
+.fullscreen-button,
+.download-button {
     position: absolute;
     bottom: 45px;
-    right: 10px;
     cursor: pointer;
     background: rgba(255, 255, 255, 0.7);
     border: 1px solid #ddd;
@@ -119,13 +119,23 @@
     transition: all 0.2s ease-in-out;
 }
 
-.fullscreen-button:hover {
+.fullscreen-button {
+    right: 10px;
+}
+
+.download-button {
+    right: 55px; /* Positioned to the left of the fullscreen button */
+}
+
+.fullscreen-button:hover,
+.download-button:hover {
     background: #fff;
     border-color: #bbb;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.fullscreen-button svg {
+.fullscreen-button svg,
+.download-button svg {
     width: 24px;
     height: 24px;
     pointer-events: none;
@@ -133,6 +143,7 @@
     transition: fill 0.2s;
 }
 
-.fullscreen-button:hover svg {
+.fullscreen-button:hover svg,
+.download-button:hover svg {
     fill: #333;
 }
