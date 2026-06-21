@@ -29,6 +29,7 @@ class CryptoForecastApp{
         this._svg = null;
         this._mainGroup = null;
         this._tooltip = null;
+        this._persist_tooltip = false;
         this._guideLine = null;
         this.scaleX = null;
         this.scaleY = null;
@@ -132,7 +133,7 @@ class CryptoForecastApp{
 
         // SVG Tooltip (native SVG, included in PNG download)
         this._tooltip = this._mainGroup.append('g')
-            .attr('class', 'svg-tooltip persistent')
+            .attr('class', 'svg-tooltip')
             .attr('visibility', 'hidden')
             .attr('pointer-events', 'none');
 
@@ -184,7 +185,7 @@ class CryptoForecastApp{
         if (dlBtn) dlBtn.hidden = false;
 
         this._mainGroup.append('rect')
-            .attr('class', 'chart-hover-area persistent')
+            .attr('class', 'chart-hover-area')
             .attr('width', this.calculations.mainGroupWidth)
             .attr('height', this.calculations.mainGroupHeight)
             .attr('fill', 'transparent')
@@ -215,7 +216,10 @@ class CryptoForecastApp{
         // Download button
         const downloadButton = document.getElementById('download-button');
         if (downloadButton) {
-            downloadButton.addEventListener('click', (e) => {
+            downloadButton.addEventListener('pointerdown', (e) => {
+
+                this._persist_tooltip = true;
+
                 e.stopPropagation();
 
                 const dateStr = new Date().toISOString().split('T')[0];
@@ -226,6 +230,8 @@ class CryptoForecastApp{
                     encoderOptions: 1.0,
                     scale: 1
                 });
+
+                this._persist_tooltip = false;
 
             });
         }
@@ -246,23 +252,12 @@ class CryptoForecastApp{
             }
         });
 
-
-
-        const hideIfOutside = (event) => {
-            const downloadButton = document.getElementById('download-button');
-            const path = event.composedPath();
-            
-            // Не скрывать если клик по кнопке скачивания
-            if (downloadButton && path.includes(downloadButton)) return;
-            
-            // Скрывать если клик вне chart-hover-area
-            const hoverArea = this._mainGroup.select('.chart-hover-area').node();
-            if (!path.includes(hoverArea)) {
+        // when click outside - hide tooltip
+        document.addEventListener('pointerdown', (event) => {
+            if (!this._mainGroup.select('.chart-hover-area').node().contains(event.target)) {
                 this._hideTooltip();
             }
-        };
-        document.addEventListener('pointerdown', hideIfOutside);
-        document.addEventListener('touchstart', hideIfOutside, { passive: true });
+        });
 
         // Symbol switcher event delegation
         const symbolSelector = document.getElementById('symbol-selector');
@@ -724,6 +719,10 @@ class CryptoForecastApp{
     }
 
     _hideTooltip() {
+
+        if(this._persist_tooltip) {
+            return
+        }
         this._tooltip.attr('visibility', 'hidden');
         if (this._guideLine) {
             this._guideLine.style('opacity', 0);
