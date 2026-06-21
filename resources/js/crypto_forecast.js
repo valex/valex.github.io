@@ -118,7 +118,7 @@ class CryptoForecastApp{
             .attr("width", this.calculations.svgWidth)
             .attr("height", this.calculations.svgHeight)
             .on('pointerdown', (event) => {
-                this._hideTooltip();
+                console.log('on pointerdown event')
             });
 
         // Add white background rect to prevent black background in fullscreen
@@ -243,6 +243,15 @@ class CryptoForecastApp{
                 this.scaleX.range([0, this.calculations.mainGroupWidth]);
                 this.scaleY.range([this.calculations.mainGroupHeight, 0]);
                 this._draw();
+            }
+        });
+        
+        document.addEventListener('pointerdown', (event) => {
+            const downloadButton = document.getElementById('download-button');
+            if (downloadButton && downloadButton.contains(event.target)) return; // не скрывать
+
+            if (!this._mainGroup.select('.chart-hover-area').node().contains(event.target)) {
+                this._hideTooltip();
             }
         });
 
