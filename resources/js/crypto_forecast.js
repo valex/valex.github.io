@@ -245,15 +245,24 @@ class CryptoForecastApp{
                 this._draw();
             }
         });
-        
-        document.addEventListener('pointerdown', (event) => {
-            const downloadButton = document.getElementById('download-button');
-            if (downloadButton && downloadButton.contains(event.target)) return; // не скрывать
 
-            if (!this._mainGroup.select('.chart-hover-area').node().contains(event.target)) {
+
+
+        const hideIfOutside = (event) => {
+            const downloadButton = document.getElementById('download-button');
+            const path = event.composedPath();
+            
+            // Не скрывать если клик по кнопке скачивания
+            if (downloadButton && path.includes(downloadButton)) return;
+            
+            // Скрывать если клик вне chart-hover-area
+            const hoverArea = this._mainGroup.select('.chart-hover-area').node();
+            if (!path.includes(hoverArea)) {
                 this._hideTooltip();
             }
-        });
+        };
+        document.addEventListener('pointerdown', hideIfOutside);
+        document.addEventListener('touchstart', hideIfOutside, { passive: true });
 
         // Symbol switcher event delegation
         const symbolSelector = document.getElementById('symbol-selector');
