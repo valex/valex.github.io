@@ -1600,5 +1600,17 @@
         "yesterday": 20,
         "last_week": 18,
         "last_update": "2026-06-19T11:38:55Z"
+    },
+    {
+        "today": 21,
+        "yesterday": 20,
+        "last_week": 20,
+        "last_update": "2026-06-20T13:03:39Z"
+    },
+    {
+        "today": 22,
+        "yesterday": 22,
+        "last_week": 23,
+        "last_update": "2026-06-21T11:28:11Z"
     }
 ]

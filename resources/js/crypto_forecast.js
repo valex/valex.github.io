@@ -28,6 +28,8 @@ class CryptoForecastApp{
         this._el = null;
         this._svg = null;
         this._mainGroup = null;
+        this._tooltip = null;
+        this._guideLine = null;
         this.scaleX = null;
         this.scaleY = null;
         this.line = null;
@@ -115,8 +117,8 @@ class CryptoForecastApp{
             .attr('xmlns', 'http://www.w3.org/2000/svg')
             .attr("width", this.calculations.svgWidth)
             .attr("height", this.calculations.svgHeight)
-            .on('click', function() {
-                console.log('onClickSvg');
+            .on('pointerdown', (event) => {
+                this._hideTooltip();
             });
 
         // Add white background rect to prevent black background in fullscreen
@@ -128,6 +130,53 @@ class CryptoForecastApp{
         this._mainGroup = this._svg.append('g')
             .attr('transform', 'translate(' + this.options.margins.left + ',' + this.options.margins.top + ')');
 
+        // SVG Tooltip (native SVG, included in PNG download)
+        this._tooltip = this._mainGroup.append('g')
+            .attr('class', 'svg-tooltip persistent')
+            .attr('visibility', 'hidden')
+            .attr('pointer-events', 'none');
+
+        // Background rect - will be sized dynamically
+        this._tooltip.append('rect')
+            .attr('class', 'tooltip-bg')
+            .attr('rx', 4)
+            .attr('ry', 4)
+            .attr('fill', 'rgba(0,0,0,0.9)')
+            .attr('stroke', '#8B0000')
+            .attr('stroke-width', 1);
+
+        // Title (date)
+        this._tooltip.append('text')
+            .attr('class', 'tooltip-title')
+            .attr('x', 8).attr('y', 16)
+            .attr('fill', '#fff')
+            .attr('font-size', '11px')
+            .attr('font-family', 'monospace');
+
+        // Upper
+        this._tooltip.append('text')
+            .attr('class', 'tooltip-upper')
+            .attr('x', 8).attr('y', 32)
+            .attr('fill', '#ffaaaa')
+            .attr('font-size', '11px')
+            .attr('font-family', 'monospace');
+
+        // Mean
+        this._tooltip.append('text')
+            .attr('class', 'tooltip-mean')
+            .attr('x', 8).attr('y', 48)
+            .attr('fill', '#ff6b6b')
+            .attr('font-size', '11px')
+            .attr('font-family', 'monospace');
+
+        // Lower
+        this._tooltip.append('text')
+            .attr('class', 'tooltip-lower')
+            .attr('x', 8).attr('y', 64)
+            .attr('fill', '#ffaaaa')
+            .attr('font-size', '11px')
+            .attr('font-family', 'monospace');
+
         // Show buttons now that SVG is initialized
         const fsBtn = document.getElementById('fullscreen-button');
         const dlBtn = document.getElementById('download-button');
@@ -135,18 +184,22 @@ class CryptoForecastApp{
         if (dlBtn) dlBtn.hidden = false;
 
         this._mainGroup.append('rect')
-            .attr('class', 'chart-hover-area')
+            .attr('class', 'chart-hover-area persistent')
             .attr('width', this.calculations.mainGroupWidth)
             .attr('height', this.calculations.mainGroupHeight)
-            .attr('fill', 'none')
-            .attr('stroke-width', 1.5)
+            .attr('fill', 'transparent')
             .attr('pointer-events', 'all')
-            .on('mousemove', (event) => this._showTooltip(event))
-            .on('mouseout', () => this._hideTooltip());
-
-        this._tooltip = d3.select(this._el).append('div')
-            .attr('class', 'forecast-tooltip')
-            .style('opacity', 0);
+            .on('pointerdown', (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                this._showTooltip(event);
+            })
+            .on('pointermove', (event) => {                
+                event.preventDefault();
+                event.stopPropagation();
+                this._showTooltip(event);
+            })
+            .on('mouseleave', () => this._hideTooltip());
 
         // Fullscreen button
         this._fullscreenButton = document.getElementById('fullscreen-button');
@@ -154,6 +207,7 @@ class CryptoForecastApp{
             this._fullscreenButton.innerHTML = this._fullscreenSVGs.enter;
             this._fullscreenButton.addEventListener('click', (e) => {
                 e.stopPropagation();
+                this._hideTooltip();
                 this.toggleFullscreen();
             });
         }
@@ -400,9 +454,12 @@ class CryptoForecastApp{
     }
 
     _draw() {
-        // Clear all content except hover rect
-        this._mainGroup.selectAll(':not(.chart-hover-area)').remove();
-        
+        this._mainGroup.selectAll('*')
+            .filter(function() {
+                return !this.closest('.chart-hover-area, .svg-tooltip');
+            })
+            .remove();
+
         this._drawAxes();
         this._drawTitle();
         this._drawLabels();
@@ -411,13 +468,17 @@ class CryptoForecastApp{
         this._drawLowerBound();
         this._drawUpperBound();
         this._drawMeanPath();
+        this._drawGuideLine();
 
-        // Create/Update guide line to ensure it is on top
+
+    }
+
+    _drawGuideLine(){
         this._guideLine = this._mainGroup.append('line')
             .attr('class', 'guide-line')
             .attr('y1', 0)
             .attr('y2', this.calculations.mainGroupHeight)
-            .attr('stroke', '#999') // Darker color for visibility
+            .attr('stroke', '#999')
             .attr('stroke-width', 1)
             .attr('stroke-dasharray', '4,4')
             .style('opacity', 0)
@@ -570,8 +631,13 @@ class CryptoForecastApp{
     _showTooltip(event) {
         if (!this.scaleX || !this.scaleY) return;
         
-        const [x] = d3.pointer(event, this._mainGroup.node());
-        
+
+        if (event.touches) {
+            event = event.touches[0];
+        }
+
+        const [x, y] = d3.pointer(event, this._mainGroup.node());
+
         const date = this.scaleX.invert(x);
         
         const bisect = d3.bisector(d => d.date).center;
@@ -591,40 +657,56 @@ class CryptoForecastApp{
             this._guideLine
                 .attr('x1', snappedX)
                 .attr('x2', snappedX)
+                .attr('y1', 0)
+                .attr('y2', this.calculations.mainGroupHeight)
                 .style('opacity', 1);
         }
 
         const dateStr = `${d3.timeFormat('%b')(mean.date)} ${mean.date.getDate()}`;
         
         const toFixed = this._symbolSettings[this._currentSymbol].toFixed;
-        this._tooltip
-            .style('opacity', 1)
-            .html(`
-                <div><span class="label">${dateStr}</span></div>
-                <div class="upper"><span class="label">Upper:</span> <span class="value">${upper.value.toFixed(toFixed)}</span></div>
-                <div class="mean"><span class="label">Mean:</span> <span class="value">${mean.value.toFixed(toFixed)}</span></div>
-                <div class="lower"><span class="label">Lower:</span> <span class="value">${lower.value.toFixed(toFixed)}</span></div>
-            `);
+        const upperText = `Upper: ${upper.value.toFixed(toFixed)}`;
+        const meanText = `Mean: ${mean.value.toFixed(toFixed)}`;
+        const lowerText = `Lower: ${lower.value.toFixed(toFixed)}`;
 
-        // Smart positioning: flip to left if tooltip would go off SVG right edge
-        const tooltipNode = this._tooltip.node();
-        const tooltipRect = tooltipNode.getBoundingClientRect();
-        const tooltipWidth = tooltipRect.width;
-        
-        // Get mouse position relative to the container
-        const [mouseX, mouseY] = d3.pointer(event, this._el);
-        
-        const showLeft = (mouseX + tooltipWidth + 12) > this.calculations.svgWidth;
-        
+        // Calculate tooltip dimensions based on text length
+        const padding = 8;
+        const lineHeight = 16;
+        const charWidth = 6.5; // approximate monospace char width
+        const maxChars = Math.max(
+            dateStr.length,
+            upperText.length,
+            meanText.length,
+            lowerText.length
+        );
+        const width = Math.max(96, padding * 2 + maxChars * charWidth);
+        const height = 72;
+
+        // Smart positioning - flip left if near right edge
+        const showLeft = (x + width + 12) > this.calculations.mainGroupWidth;
+        const tooltipX = showLeft ? x - width - 12 : x + 12;
+        const tooltipY = Math.max(20, y - height + height/2);
+
+        // Update tooltip content
         this._tooltip
-            .style('left', showLeft 
-                ? (mouseX - tooltipWidth - 12) + 'px'
-                : (mouseX + 12) + 'px')
-            .style('top', (mouseY - 28) + 'px');
+            .attr('visibility', 'visible')
+            .attr('transform', `translate(${tooltipX}, ${tooltipY})`);
+
+        this._tooltip.select('.tooltip-title').text(dateStr);
+        this._tooltip.select('.tooltip-upper').text(upperText);
+        this._tooltip.select('.tooltip-mean').text(meanText);
+        this._tooltip.select('.tooltip-lower').text(lowerText);
+
+        // Update background rect size
+        this._tooltip.select('.tooltip-bg')
+            .attr('width', width)
+            .attr('height', height);
+
+        this._tooltip.raise();
     }
 
     _hideTooltip() {
-        this._tooltip.style('opacity', 0);
+        this._tooltip.attr('visibility', 'hidden');
         if (this._guideLine) {
             this._guideLine.style('opacity', 0);
         }

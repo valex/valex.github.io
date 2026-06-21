@@ -38,26 +38,34 @@
     pointer-events: none;
 }
 
-.forecast-tooltip {
-    position: absolute;
+/* ===== SVG TOOLTIP ===== */
+.svg-tooltip {
     pointer-events: none;
-    background: rgba(0, 0, 0, 0.9);
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-family: monospace;
-    white-space: nowrap;
-    z-index: 100;
-    opacity: 0;
-    transition: opacity 0.1s;
-    border-left: 3px solid #8B0000;
 }
-.forecast-tooltip .label { color: #aaa; margin-right: 6px; }
-.forecast-tooltip .value { color: #fff; }
-.forecast-tooltip .mean .value { color: #ff6b6b; }
-.forecast-tooltip .lower .value { color: #ffaaaa; }
-.forecast-tooltip .upper .value { color: #ffaaaa; }
+
+.svg-tooltip .tooltip-bg {
+    fill: rgba(0, 0, 0, 0.9);
+    stroke: #8B0000;
+    stroke-width: 1;
+}
+
+.svg-tooltip text {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.guide-line {
+    pointer-events: none;
+}
+
+/* Debug: make tooltip background visible */
+.svg-tooltip .tooltip-bg {
+    fill: rgba(0, 0, 0, 0.9);
+    stroke: #8B0000;
+    stroke-width: 1;
+}
 
 /* ===== SYMBOL SELECTOR ===== */
 #symbol-selector .list-group-item small { color: #666; }
