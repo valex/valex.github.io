@@ -1612,5 +1612,23 @@
         "yesterday": 22,
         "last_week": 23,
         "last_update": "2026-06-21T11:28:11Z"
+    },
+    {
+        "today": 22,
+        "yesterday": 21,
+        "last_week": 25,
+        "last_update": "2026-06-22T12:49:29Z"
+    },
+    {
+        "today": 20,
+        "yesterday": 20,
+        "last_week": 22,
+        "last_update": "2026-06-24T12:04:20Z"
+    },
+    {
+        "today": 17,
+        "yesterday": 18,
+        "last_week": 20,
+        "last_update": "2026-06-25T11:51:56Z"
     }
 ]
