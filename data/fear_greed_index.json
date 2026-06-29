@@ -1630,5 +1630,29 @@
         "yesterday": 18,
         "last_week": 20,
         "last_update": "2026-06-25T11:51:56Z"
+    },
+    {
+        "today": 15,
+        "yesterday": 16,
+        "last_week": 20,
+        "last_update": "2026-06-26T12:44:20Z"
+    },
+    {
+        "today": 17,
+        "yesterday": 16,
+        "last_week": 22,
+        "last_update": "2026-06-27T21:00:54Z"
+    },
+    {
+        "today": 17,
+        "yesterday": 16,
+        "last_week": 21,
+        "last_update": "2026-06-28T13:30:37Z"
+    },
+    {
+        "today": 16,
+        "yesterday": 16,
+        "last_week": 21,
+        "last_update": "2026-06-29T11:40:31Z"
     }
 ]
