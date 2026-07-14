@@ -1666,5 +1666,29 @@
         "yesterday": 21,
         "last_week": 16,
         "last_update": "2026-07-03T18:56:31Z"
+    },
+    {
+        "today": 25,
+        "yesterday": 25,
+        "last_week": 16,
+        "last_update": "2026-07-04T12:46:36Z"
+    },
+    {
+        "today": 26,
+        "yesterday": 28,
+        "last_week": 17,
+        "last_update": "2026-07-06T13:13:58Z"
+    },
+    {
+        "today": 32,
+        "yesterday": 31,
+        "last_week": 28,
+        "last_update": "2026-07-12T15:48:15Z"
+    },
+    {
+        "today": 29,
+        "yesterday": 28,
+        "last_week": 28,
+        "last_update": "2026-07-14T12:48:38Z"
     }
 ]
