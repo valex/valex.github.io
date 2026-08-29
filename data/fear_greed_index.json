@@ -1690,5 +1690,23 @@
         "yesterday": 28,
         "last_week": 28,
         "last_update": "2026-07-14T12:48:38Z"
+    },
+    {
+        "today": 31,
+        "yesterday": 33,
+        "last_week": 31,
+        "last_update": "2026-07-17T16:39:09Z"
+    },
+    {
+        "today": 35,
+        "yesterday": 36,
+        "last_week": 31,
+        "last_update": "2026-07-19T12:07:29Z"
+    },
+    {
+        "today": 39,
+        "yesterday": 40,
+        "last_week": 35,
+        "last_update": "2026-07-22T15:02:50Z"
     }
 ]
