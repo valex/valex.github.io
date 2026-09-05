@@ -23,6 +23,8 @@ class PAGE_APP {
 
         this.initialRotationCompleted = false;
 
+        this.webglFailed = false;
+
         this.init();
     }
 
@@ -56,6 +58,10 @@ class PAGE_APP {
     }
 
 	handleResize(){
+        if( true === this.webglFailed ){
+            return;
+        }
+
 		// Update the calculations based on the new size
         this.calculations.chartWidth = Math.floor(this.container.clientWidth - 1);
         
@@ -189,9 +195,15 @@ class PAGE_APP {
         scene.add(this.camera);
 
         // create a render and set the size
-        this.renderer = new THREE.WebGLRenderer({
-            antialias: true,
-        });
+        try {
+            this.renderer = new THREE.WebGLRenderer({
+                antialias: true,
+            });
+        } catch (error) {
+            this.webglFailed = true;
+            this.showWebGLError();
+            return;
+        }
         this.renderer.setClearColor(new THREE.Color(0x0A0A0A));
         this.renderer.setSize(this.calculations.chartWidth, this.calculations.chartHeight);
         this.renderer.shadowMap.enabled = false;
@@ -241,6 +253,29 @@ class PAGE_APP {
             }
             loadingProgress.innerHTML = `Loading: ${Math.round(percentComplete)}%`;
         });
+    }
+
+    getBrowserName() {
+        const userAgent = navigator.userAgent;
+
+        if (userAgent.indexOf('Firefox') > -1) return 'Mozilla Firefox';
+        if (userAgent.indexOf('Edg') > -1) return 'Microsoft Edge';
+        if (userAgent.indexOf('OPR') > -1 || userAgent.indexOf('Opera') > -1) return 'Opera';
+        if (userAgent.indexOf('Chrome') > -1) return 'Google Chrome';
+        if (userAgent.indexOf('Safari') > -1) return 'Safari';
+
+        return 'your browser';
+    }
+
+    showWebGLError() {
+        this.container.innerHTML = '';
+
+        const message = document.createElement('div');
+        message.id = 'webgl_error';
+        message.innerHTML = '<p>WebGL is currently disabled, so the 3D visualization cannot be displayed.</p>' +
+            '<p>Please google it or ask your favorite AI assistant: <i>"how to enable WebGL in ' + this.getBrowserName() + '"</i>.</p>';
+
+        this.container.appendChild(message);
     }
 }
 

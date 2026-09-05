@@ -19,3 +19,20 @@
     color: #ffffff;
     font-size: 24px;
 }
+
+#webgl_error {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: #0A0A0A;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+#webgl_error p {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}

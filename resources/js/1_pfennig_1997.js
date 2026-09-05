@@ -18,6 +18,8 @@ class PAGE_APP {
 
         this.container = null;
 
+        this.webglFailed = false;
+
         this.init();
     }
 
@@ -61,9 +63,16 @@ class PAGE_APP {
         scene.add(camera);
 
         // create a render and set the size
-        const renderer = new THREE.WebGLRenderer({
-            antialias: true,
-        });
+        let renderer;
+        try {
+            renderer = new THREE.WebGLRenderer({
+                antialias: true,
+            });
+        } catch (error) {
+            this.webglFailed = true;
+            this.showWebGLError();
+            return;
+        }
         renderer.setClearColor(new THREE.Color(0x0A0A0A));
         renderer.setSize(this.calculations.chartWidth, this.calculations.chartHeight);
         renderer.shadowMap.enabled = false;
@@ -104,6 +113,29 @@ class PAGE_APP {
             }
             loadingProgress.innerHTML = `Loading: ${Math.round(percentComplete)}%`;
         });
+    }
+
+    getBrowserName() {
+        const userAgent = navigator.userAgent;
+
+        if (userAgent.indexOf('Firefox') > -1) return 'Mozilla Firefox';
+        if (userAgent.indexOf('Edg') > -1) return 'Microsoft Edge';
+        if (userAgent.indexOf('OPR') > -1 || userAgent.indexOf('Opera') > -1) return 'Opera';
+        if (userAgent.indexOf('Chrome') > -1) return 'Google Chrome';
+        if (userAgent.indexOf('Safari') > -1) return 'Safari';
+
+        return 'your browser';
+    }
+
+    showWebGLError() {
+        this.container.innerHTML = '';
+
+        const message = document.createElement('div');
+        message.id = 'webgl_error';
+        message.innerHTML = '<p>WebGL is currently disabled, so the 3D visualization cannot be displayed.</p>' +
+            '<p>Please google it or ask your favorite AI assistant: <i>"how to enable WebGL in ' + this.getBrowserName() + '"</i>.</p>';
+
+        this.container.appendChild(message);
     }
 }
 

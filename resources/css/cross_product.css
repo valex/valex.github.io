@@ -32,3 +32,20 @@ circle.draggable.dragging {
     opacity: 0.85;
     fill-opacity: 0.5;
 }
+
+#webgl_error {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-color: #333333;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+#webgl_error p {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}

@@ -52,6 +52,8 @@ class PAGE_APP {
 
         this.unitResult = false;
 
+        this.webglFailed = false;
+
         this.init();
     }
 
@@ -66,9 +68,36 @@ class PAGE_APP {
         
         this.initScene();
 
+        if( true === this.webglFailed ){
+            return;
+        }
+
         this.updateGraphics();
         this.updateCalculationTable();
         this.initEvents();
+    }
+
+    getBrowserName() {
+        const userAgent = navigator.userAgent;
+
+        if (userAgent.indexOf('Firefox') > -1) return 'Mozilla Firefox';
+        if (userAgent.indexOf('Edg') > -1) return 'Microsoft Edge';
+        if (userAgent.indexOf('OPR') > -1 || userAgent.indexOf('Opera') > -1) return 'Opera';
+        if (userAgent.indexOf('Chrome') > -1) return 'Google Chrome';
+        if (userAgent.indexOf('Safari') > -1) return 'Safari';
+
+        return 'your browser';
+    }
+
+    showWebGLError() {
+        this.el.innerHTML = '';
+
+        const message = document.createElement('div');
+        message.id = 'webgl_error';
+        message.innerHTML = '<p>WebGL is currently disabled, so the 3D visualization cannot be displayed.</p>' +
+            '<p>Please google it or ask your favorite AI assistant: <i>"how to enable WebGL in ' + this.getBrowserName() + '"</i>.</p>';
+
+        this.el.appendChild(message);
     }
 
     initScene() {
@@ -87,7 +116,14 @@ class PAGE_APP {
         const camera = new THREE.OrthographicCamera(this.calculations.chartWidth / -this.cameraPlaneDivider, this.calculations.chartWidth / this.cameraPlaneDivider, this.calculations.chartHeight / this.cameraPlaneDivider, this.calculations.chartHeight / -this.cameraPlaneDivider, -200, 500);
 
         // create a render and set the size
-        const webGLRenderer = new THREE.WebGLRenderer({ antialias: true });
+        let webGLRenderer;
+        try {
+            webGLRenderer = new THREE.WebGLRenderer({ antialias: true });
+        } catch (error) {
+            this.webglFailed = true;
+            this.showWebGLError();
+            return;
+        }
         webGLRenderer.setClearColor(new THREE.Color(0x333333));
         webGLRenderer.setSize(this.calculations.chartWidth, this.calculations.chartHeight);
         webGLRenderer.shadowMap.enabled = true;
