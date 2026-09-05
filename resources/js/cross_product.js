@@ -50,6 +50,8 @@ class PAGE_APP {
 
         this.el = null;
 
+        this.unitResult = false;
+
         this.init();
     }
 
@@ -64,6 +66,7 @@ class PAGE_APP {
         
         this.initScene();
 
+        this.updateGraphics();
         this.updateCalculationTable();
         this.initEvents();
     }
@@ -331,6 +334,12 @@ class PAGE_APP {
             APP.updateGraphics();
             APP.updateCalculationTable();
         })
+
+        d3.select('#unit_result_checkbox').on('change', (e) => {
+            APP.unitResult = e.target.checked;
+            APP.updateGraphics();
+            APP.updateCalculationTable();
+        })
     } // end initEvents()
 
     updateVector(index, x, y, z) {
@@ -356,14 +365,25 @@ class PAGE_APP {
         );
     }
 
+    getDisplayResultedVector() {
+        const resultedVector = this.vectors[2].entity.clone();
+
+        if( true === this.unitResult ){
+            resultedVector.normalize();
+        }
+
+        return resultedVector;
+    }
+
     updateGraphics( dragging = false ) {
         this.vectors.forEach((vector, vector_index) => {
-            const dir = vector.entity.clone();
+            const entity = 2 === vector_index ? this.getDisplayResultedVector() : vector.entity.clone();
+            const dir = entity.clone();
             const length = dir.length();
 
             //normalize the direction vector (convert to vector of length 1)
             dir.normalize();
-        
+
             vector.arrow_object.setDirection(dir);
             vector.arrow_object.setLength(length);
 
@@ -403,9 +423,10 @@ class PAGE_APP {
             d3.select('#t_1_z').property('value', this.vectors[1].entity.z.toFixed(2));
         }
 
-        d3.select('#t_2_x').text(this.vectors[2].entity.x.toFixed(2));
-        d3.select('#t_2_y').text(this.vectors[2].entity.y.toFixed(2));
-        d3.select('#t_2_z').text(this.vectors[2].entity.z.toFixed(2));
+        const resultedVector = this.getDisplayResultedVector();
+        d3.select('#t_2_x').text(resultedVector.x.toFixed(2));
+        d3.select('#t_2_y').text(resultedVector.y.toFixed(2));
+        d3.select('#t_2_z').text(resultedVector.z.toFixed(2));
 
         const alpha = this.calculateAlpha();
         d3.select('#t_alpha').text(alpha.toFixed(2));
@@ -416,14 +437,15 @@ class PAGE_APP {
     calculateAlpha(){
         const lengthP = this.vectors[0].entity.length();
         const lengthQ = this.vectors[1].entity.length();
-        const lengthPxQ = this.vectors[2].entity.length();
 
-        let sinA = 0;
-        if( 0 != (lengthP * lengthQ)){
-            sinA = lengthPxQ / (lengthP * lengthQ);
+        if( 0 == (lengthP * lengthQ)){
+            return 0;
         }
 
-        return Math.asin(sinA);
+        const dotProduct = this.vectors[0].entity.dot(this.vectors[1].entity);
+        const cosA = Math.max(-1, Math.min(1, dotProduct / (lengthP * lengthQ)));
+
+        return Math.acos(cosA);
     }
 
     isNumeric(n) {

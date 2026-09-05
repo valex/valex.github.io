@@ -52,7 +52,7 @@
 <hr>
 <p>Like the <i>dot product</i>, the <b>cross product</b> has trigonometric significance. Given two 3D vectors \(\vec{ P }\) and \(\vec{ Q }\), the cross product \(\overrightarrow{ P \times Q }\) satisfies the equation:</p>
 <p class="text-center">\( \lVert \overrightarrow{ P \times Q } \rVert = \lVert \vec{ P } \rVert \lVert \vec{ Q } \rVert \sin \alpha \)</p>
-<p>where \(\alpha\) is the planar angle between the lines connecting the origin to the points represented by \(\vec{ P }\) and \(\vec{ Q }\), or in simpler terms, it is the angle between vectors \(\vec{ P }\) and \(\vec{ Q }\).</p>
+<p>where \(\alpha\) is the angle between vectors \(\vec{ P }\) and \(\vec{ Q }\) (from \(0^\circ\) to \(180^\circ\)).</p>
 <hr>
 <p>Any nonzero result of the <b>cross product</b> must be perpendicular to the two vectors being multiplied together, but there are two possible directions that satisfy this requirement. It turns out that the <i>cross product</i> follows a pattern called the <i>right hand rule</i>.</p>
 <p style="font-style: italic;">If the fingers of the right hand are aligned with a vector \(\vec{ P }\), and the palm is facing in the direction of a vector \(\vec{ Q }\), then the thumb points along the direction of the cross product \(\overrightarrow{ P \times Q }\).</p>
@@ -95,21 +95,25 @@
 </td>
 </tr>
 <tr>
-<th>\(\overrightarrow{ P \times Q }\)
-<sub style="margin-left:3px; padding:2px; background-color:#333333; color: #ffffff; border-radius: 3px;">white</sub></th>
-<td class="text-center align-middle">
+<th class="user-select-none">\(\overrightarrow{ P \times Q }\)
+<sub style="margin-left:3px; padding:2px; background-color:#333333; color: #ffffff; border-radius: 3px;">white</sub>
+<div class="form-check" title="Show the result vector normalized to length 1">
+<input class="form-check-input" type="checkbox" id="unit_result_checkbox">
+<label class="form-check-label fw-normal" for="unit_result_checkbox">Unit</label>
+</div></th>
+<td class="text-center align-middle user-select-none">
 <span id="t_2_x" ></span>
 </td>
-<td class="text-center align-middle">
+<td class="text-center align-middle user-select-none">
 <span id="t_2_y" ></span>
 </td>
-<td class="text-center align-middle">
+<td class="text-center align-middle user-select-none">
 <span id="t_2_z" ></span>
 </td>
 </tr>
 <tr>
-<th class="text-center align-middle">\( \alpha \)</th>
-<td colspan=3 class="text-center align-middle">
+<th class="text-center align-middle user-select-none" title="The angle between vectors P and Q">\( \alpha \)</th>
+<td colspan=3 class="text-center align-middle user-select-none">
 <span style="font-weight: bold;" id="t_alpha"></span>rad&nbsp;=&nbsp;<span id="t_alpha_deg"></span>&deg;
 </td>
 </tr>
