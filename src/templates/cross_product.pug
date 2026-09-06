@@ -13,7 +13,11 @@ block content
     <div class="row">
         <div class="col-sm-8">
 
-            <div id="webgl_chart"></div>
+            <div id="webgl_chart">
+                <button id="fullscreen-button" class="fullscreen-button" title="Fullscreen">
+                    
+                </button>
+            </div>
 
             <div class="alert alert-secondary rounded-0 py-2 user-select-none" role="alert">
                 <p style="font-size: 0.8rem;" class="mb-2"><b>Rotate</b> - by clicking and holding the left mouse button</p>
@@ -94,21 +98,25 @@ block content
                         </td>
                     </tr>
                     <tr>
-                        <th>\(\overrightarrow{ P \times Q }\)
-                            <sub style="margin-left:3px; padding:2px; background-color:#333333; color: #ffffff; border-radius: 3px;">white</sub></th>
-                        <td class="text-center align-middle">
+                        <th class="user-select-none">\(\overrightarrow{ P \times Q }\)
+                            <sub style="margin-left:3px; padding:2px; background-color:#333333; color: #ffffff; border-radius: 3px;">white</sub>
+                            <div class="form-check" title="Show the result vector normalized to length 1">
+                                <input class="form-check-input" type="checkbox" id="unit_result_checkbox">
+                                <label class="form-check-label fw-normal" for="unit_result_checkbox">Unit</label>
+                            </div></th>
+                        <td class="text-center align-middle user-select-none">
                             <span id="t_2_x" ></span>
                         </td>
-                        <td class="text-center align-middle">
+                        <td class="text-center align-middle user-select-none">
                             <span id="t_2_y" ></span>
                         </td>
-                        <td class="text-center align-middle">
+                        <td class="text-center align-middle user-select-none">
                             <span id="t_2_z" ></span>
                         </td>
                     </tr>
                     <tr>
-                        <th class="text-center align-middle">\( \alpha \)</th>
-                        <td colspan=3 class="text-center align-middle">
+                        <th class="text-center align-middle user-select-none" title="The angle between vectors P and Q">\( \alpha \)</th>
+                        <td colspan=3 class="text-center align-middle user-select-none">
                             <span style="font-weight: bold;" id="t_alpha"></span>rad&nbsp;=&nbsp;<span id="t_alpha_deg"></span>&deg;
                         </td>
                     </tr>

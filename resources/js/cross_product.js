@@ -49,6 +49,9 @@ class PAGE_APP {
         ];
 
         this.el = null;
+        this.renderer = null;
+        this.camera = null;
+        this.fullscreenButton = null;
 
         this.unitResult = false;
 
@@ -75,6 +78,110 @@ class PAGE_APP {
         this.updateGraphics();
         this.updateCalculationTable();
         this.initEvents();
+
+        window.addEventListener('resize', () => this.handleResize());
+
+        this.fullscreenButton = document.getElementById('fullscreen-button');
+        this.fullscreenButton.addEventListener('click', (event) => this.toggleFullscreen(event));
+        this.setFullscreenBtnTo('fullscreen');
+
+        document.addEventListener('fullscreenchange', (event) => this.handleFullscreenChange(event));
+        document.addEventListener('mozfullscreenchange', (event) => this.handleFullscreenChange(event));
+        document.addEventListener('webkitfullscreenchange', (event) => this.handleFullscreenChange(event));
+        document.addEventListener('msfullscreenchange', (event) => this.handleFullscreenChange(event));
+    }
+
+    handleResize() {
+        if( true === this.webglFailed ){
+            return;
+        }
+
+        this.calculations.chartWidth = Math.floor(this.el.clientWidth - 1);
+
+        if(this.isFullscreen()){
+            this.calculations.chartHeight = Math.floor(this.el.clientHeight);
+        } else{
+            this.calculations.chartHeight = Math.floor(this.calculations.chartWidth / this.options.aspectRatio);
+        }
+
+        this.camera.left = this.calculations.chartWidth / -this.cameraPlaneDivider;
+        this.camera.right = this.calculations.chartWidth / this.cameraPlaneDivider;
+        this.camera.top = this.calculations.chartHeight / this.cameraPlaneDivider;
+        this.camera.bottom = this.calculations.chartHeight / -this.cameraPlaneDivider;
+        this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize(this.calculations.chartWidth, this.calculations.chartHeight);
+    }
+
+    handleFullscreenChange(event){
+        if ( this.isFullscreen() ) {
+            this.setFullscreenBtnTo('normal');
+        } else {
+            this.setFullscreenBtnTo('fullscreen');
+        }
+    }
+
+    toggleFullscreen(event){
+       
+        if ( ! this.isFullscreen() ) {
+            if (this.el.requestFullscreen) {
+                this.el.requestFullscreen();
+            } else if (this.el.mozRequestFullScreen) {
+                this.el.mozRequestFullScreen();
+            } else if (this.el.webkitRequestFullscreen) {
+                this.el.webkitRequestFullscreen();
+            } else if (this.el.msRequestFullscreen) {
+                this.el.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    }
+
+    isFullscreen() {
+        return !!document.fullscreenElement ||
+               !!document.mozFullScreenElement ||
+               !!document.webkitFullscreenElement ||
+               !!document.msFullscreenElement;
+    }
+
+    setFullscreenBtnTo(mode){
+        switch(mode){
+            case 'fullscreen':
+                this.fullscreenButton.innerHTML = `<svg fill="#dddddd" height="40px" width="40px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                    <g stroke-width="0"></g>
+                    <g stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g>
+                        <g>
+                            <path d="M192,64H32C14.328,64,0,78.328,0,96v96c0,17.672,14.328,32,32,32s32-14.328,32-32v-64h128c17.672,0,32-14.328,32-32 S209.672,64,192,64z"></path>
+                            <path d="M480,64H320c-17.672,0-32,14.328-32,32s14.328,32,32,32h128v64c0,17.672,14.328,32,32,32s32-14.328,32-32V96 C512,78.328,497.672,64,480,64z"></path>
+                            <path d="M480,288c-17.672,0-32,14.328-32,32v64H320c-17.672,0-32,14.328-32,32s14.328,32,32,32h160c17.672,0,32-14.328,32-32v-96 C512,302.328,497.672,288,480,288z"></path>
+                            <path d="M192,384H64v-64c0-17.672-14.328-32-32-32S0,302.328,0,320v96c0,17.672,14.328,32,32,32h160c17.672,0,32-14.328,32-32 S209.672,384,192,384z"></path>
+                        </g>
+                    </g>
+                </svg>`;
+            break;
+            
+            case 'normal':
+                this.fullscreenButton.innerHTML = `<svg fill="#dddddd" height="40px" width="40px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve">
+                    <g stroke-width="0"></g>
+                    <g stroke-linecap="round" stroke-linejoin="round"></g>
+                    <g > 
+                        <g> 
+                            <path d="M192,64c-17.672,0-32,14.328-32,32v64H32c-17.672,0-32,14.328-32,32s14.328,32,32,32h160c17.672,0,32-14.328,32-32V96 C224,78.328,209.672,64,192,64z"></path> <path d="M320,224h160c17.672,0,32-14.328,32-32s-14.328-32-32-32H352V96c0-17.672-14.328-32-32-32s-32,14.328-32,32v96 C288,209.672,302.328,224,320,224z"></path> <path d="M480,288H320c-17.672,0-32,14.328-32,32v96c0,17.672,14.328,32,32,32s32-14.328,32-32v-64h128c17.672,0,32-14.328,32-32 S497.672,288,480,288z"></path> <path d="M192,288H32c-17.672,0-32,14.328-32,32s14.328,32,32,32h128v64c0,17.672,14.328,32,32,32s32-14.328,32-32v-96 C224,302.328,209.672,288,192,288z"></path> 
+                        </g> 
+                    </g>
+                    </svg>`;
+            break;
+        }
     }
 
     getBrowserName() {
@@ -112,28 +219,27 @@ class PAGE_APP {
         scene.add(axes);
 
         // create a camera, which defines where we're looking at.
-        //const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const camera = new THREE.OrthographicCamera(this.calculations.chartWidth / -this.cameraPlaneDivider, this.calculations.chartWidth / this.cameraPlaneDivider, this.calculations.chartHeight / this.cameraPlaneDivider, this.calculations.chartHeight / -this.cameraPlaneDivider, -200, 500);
+        //this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera = new THREE.OrthographicCamera(this.calculations.chartWidth / -this.cameraPlaneDivider, this.calculations.chartWidth / this.cameraPlaneDivider, this.calculations.chartHeight / this.cameraPlaneDivider, this.calculations.chartHeight / -this.cameraPlaneDivider, -200, 500);
 
         // create a render and set the size
-        let webGLRenderer;
         try {
-            webGLRenderer = new THREE.WebGLRenderer({ antialias: true });
+            this.renderer = new THREE.WebGLRenderer({ antialias: true });
         } catch (error) {
             this.webglFailed = true;
             this.showWebGLError();
             return;
         }
-        webGLRenderer.setClearColor(new THREE.Color(0x333333));
-        webGLRenderer.setSize(this.calculations.chartWidth, this.calculations.chartHeight);
-        webGLRenderer.shadowMap.enabled = true;
-        webGLRenderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
+        this.renderer.setClearColor(new THREE.Color(0x333333));
+        this.renderer.setSize(this.calculations.chartWidth, this.calculations.chartHeight);
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
 
         // position and point the camera to the center of the scene
-        camera.position.x = this.options.cameraPositionNormVector.x * this.distanceToCam;
-        camera.position.y = this.options.cameraPositionNormVector.y * this.distanceToCam;
-        camera.position.z = this.options.cameraPositionNormVector.z * this.distanceToCam ;
-        camera.lookAt(this.options.cameraTarget);
+        this.camera.position.x = this.options.cameraPositionNormVector.x * this.distanceToCam;
+        this.camera.position.y = this.options.cameraPositionNormVector.y * this.distanceToCam;
+        this.camera.position.z = this.options.cameraPositionNormVector.z * this.distanceToCam ;
+        this.camera.lookAt(this.options.cameraTarget);
 
         // add spotlight for the shadows
         const spotLight = new THREE.SpotLight(0xffffff);
@@ -208,15 +314,15 @@ class PAGE_APP {
         scene.add( planeXZ );
 
         // add the output of the renderer to the html element
-        this.el.appendChild(webGLRenderer.domElement);
+        this.el.appendChild(this.renderer.domElement);
 
         // IMPORTANT: make sure that your container.append(renderer.domElement); is executed BEFORE initializing OrbitControls( camera, renderer.domElement );
-        const orbitControls = new THREE.OrbitControls(camera, webGLRenderer.domElement);
+        const orbitControls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
         orbitControls.enablePan = false;
         orbitControls.target = this.options.cameraTarget;
         orbitControls.update();
 
-        const dragControls = new THREE.DragControls( draggedObjects, camera, webGLRenderer.domElement );
+        const dragControls = new THREE.DragControls( draggedObjects, this.camera, this.renderer.domElement );
         // add event listener to highlight dragged objects
         dragControls.addEventListener( 'dragstart', function ( event ) {
             orbitControls.enabled = false;
@@ -249,17 +355,17 @@ class PAGE_APP {
         } );
 
 
-        render();
-
-        function render() {
+        const render = () => {
   
             // required if orbitControls.enableDamping or orbitControls.autoRotate are set to true
             // orbitControls.update();
     
             // render using requestAnimationFrame
             requestAnimationFrame(render);
-            webGLRenderer.render(scene, camera);
-        }
+            this.renderer.render(scene, this.camera);
+        };
+
+        render();
     }
 
     initEvents() {

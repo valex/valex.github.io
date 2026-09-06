@@ -1,3 +1,16 @@
+#webgl_chart {
+    position: relative;
+}
+
+.fullscreen-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
 svg text {
     font-family: sans-serif;
 }
