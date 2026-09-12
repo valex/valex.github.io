@@ -7,12 +7,22 @@ const pages = [
     {
         "slug": "crypto_forecast",
         "theme": "crypto",
-    
+
         "meta_description": "Interactive cryptocurrency price forecast visualization using stochastic modeling. View probabilistic price projections for BTCUSDT, ETHUSDT, and LTCUSDT with 95% prediction intervals, mean forecast paths, and real-time tooltips. Powered by D3.js.",
         "meta_keywords": "crypto price forecast, cryptocurrency prediction, stochastic modeling, BTCUSDT forecast, ETHUSDT forecast, LTCUSDT forecast, prediction interval, confidence bands, interactive D3 visualization, crypto trading tools, price projection",
         "meta_title": "Cryptocurrency Price Forecast - Interactive Stochastic Modeling with 95% Prediction Intervals",
-    
+
         "title": "Crypto Price Forecast"
+    },
+    {
+        "slug": "x402_forecast_pro",
+        "theme": "crypto",
+
+        "meta_description": "Paid crypto forecast API for AI agents using the x402 HTTP-402 payment protocol. Get extended stochastic price forecasts (90-step horizon, drift/volatility, 50 Monte Carlo paths, 95% prediction intervals) for $0.01 per request, paid in USDC on Base.",
+        "meta_keywords": "x402, HTTP 402, paid API, AI agents, crypto forecast API, USDC, Base network, machine payments, Monte Carlo forecast, prediction interval, crypto price prediction, agent payments",
+        "meta_title": "x402 Paid Crypto Forecast API for AI Agents — $0.01 per Request in USDC on Base",
+
+        "title": "x402 Paid Forecast API"
     },
     {
         "slug": "kill_process",

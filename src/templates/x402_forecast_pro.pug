@@ -1,0 +1,223 @@
+extends basic.pug
+
+block content
+
+    <div class="row">
+        <div class="col-sm-8 order-1">
+
+            h2 Paid Crypto Forecast API for AI Agents
+
+            p.
+                This website's <a href="/crypto_forecast.html">free forecast tool</a> shows a 30-step
+                Monte Carlo projection for a single timeframe. The #[strong Pro API] extends it into a
+                machine-readable, paid endpoint designed for #[strong AI agents] and automated clients:
+
+            <ul>
+                <li><b>90-step horizon</b> instead of 30</li>
+                <li><b>Drift (μ) and volatility (σ)</b> of the fitted diffusion process</li>
+                <li><b>50 Monte Carlo sample paths</b> per timeframe</li>
+                <li><b>95% prediction interval</b> and <b>uncertainty bounds</b> (± standard error)</li>
+                <li><b>Multiple timeframes in one request</b>: <code>intervals=1d,1w</code></li>
+            </ul>
+
+            div(class="alert alert-primary mt-4" role="alert")
+                h4(class="alert-heading") Endpoint
+                p(class="mb-0")
+                    code GET https://stochastic.fastapicloud.dev/forecast-pro
+                hr
+                p(class="mb-0")
+                    | Price: <b>$0.01 per request</b>, paid in <b>USDC on Base</b>
+                    via the <a href="https://x402.org" rel="noopener" target="_blank">x402</a> protocol (HTTP 402).
+
+            h2 How x402 payments work
+
+            p.
+                x402 turns the long-forgotten #[code HTTP 402 Payment Required] status code into a real
+                machine-payment layer. No API keys, no accounts, no subscription — the HTTP client
+                pays on-chain and gets the content:
+
+            <div class="card bg-light mb-3">
+                <div class="card-body">
+                    <ol class="mb-0">
+                        <li>The agent requests <code>/forecast-pro</code> without payment and receives <b>402</b> with a <code>payment-required</code> header describing price, asset and recipient.</li>
+                        <li>The agent signs an <b>EIP-3009 transfer authorization</b> (USDC on Base) — an offline signature, no gas needed from the payer.</li>
+                        <li>The agent retries the request attaching the signed payload in the <code>payment</code> header.</li>
+                        <li>The server verifies the payment via a facilitator, serves the forecast, and settles the transfer on-chain.</li>
+                    </ol>
+                </div>
+            </div>
+
+            h2#try-it Live demo (unpaid request)
+
+            p.
+                Press the button to send a real request to the endpoint without a payment header.
+                You will get the genuine <b>402</b> response exactly as an agent sees it before paying.
+
+            <button id="x402-try-btn" class="btn btn-primary mb-3" type="button">Try unpaid request</button>
+
+            <pre id="x402-try-out" class="border rounded p-3 bg-white" style="display:none; white-space: pre-wrap; word-break: break-word;"><code></code></pre>
+
+            h2 Query parameters
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>symbol</code></td><td>string</td><td><code>BTCUSDT</code></td><td>Binance spot trading pair, e.g. <code>BTCUSDT</code>, <code>ETHUSDT</code></td></tr>
+                        <tr><td><code>intervals</code></td><td>string</td><td><code>1d</code></td><td>Comma-separated list of kline intervals: <code>1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M</code></td></tr>
+                        <tr><td><code>from</code></td><td>date</td><td>—</td><td>Training data range start, <code>YYYY-MM-DD</code></td></tr>
+                        <tr><td><code>to</code></td><td>date</td><td>—</td><td>Training data range end, <code>YYYY-MM-DD</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            h2 Example response
+
+            p.
+                A paid response contains one forecast block per requested interval
+                (trimmed here to a single timestamp for readability):
+
+            pre(class="border rounded p-3 bg-light").
+                <code>{
+                  "symbol": "BTCUSDT",
+                  "horizon": 90,
+                  "status": "ok",
+                  "build_at_utc": "2026-09-12T12:00:00+00:00",
+                  "forecasts": {
+                    "1d": {
+                      "rows": 999,
+                      "t0": "2023-12-24",
+                      "s0": 43779.14,
+                      "μ": 0.000595,
+                      "σ": 0.024612,
+                      "mean_path":             {"2026-09-13 00:00:00+00:00": {"price": 43805.2}},
+                      "sample_paths":          {"2026-09-13 00:00:00+00:00": {"0": 44001.1, "1": 43620.5, "...": "..."}},
+                      "prediction_interval_95": [
+                        {"2026-09-13 00:00:00+00:00": {0: 42000.1}},
+                        {"2026-09-13 00:00:00+00:00": {0: 45800.2}}
+                      ],
+                      "uncertainty_bounds": [
+                        {"2026-09-13 00:00:00+00:00": {0: 43700.3}},
+                        {"2026-09-13 00:00:00+00:00": {0: 43910.4}}
+                      ]
+                    }
+                  },
+                  "errors": {}
+                }</code>
+
+            h2 Paying from code
+
+            p Any x402-capable HTTP client handles the 402 flow automatically.
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-curl" type="button" role="tab">curl</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-python" type="button" role="tab">Python</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-ts" type="button" role="tab">TypeScript</button>
+                </li>
+            </ul>
+
+            <div class="tab-content border border-top-0 rounded-bottom p-3">
+                <div class="tab-pane fade show active" id="tab-curl" role="tabpanel">
+                    pre(class="mb-0").
+                        <code>curl -i "https://stochastic.fastapicloud.dev/forecast-pro?symbol=BTCUSDT&amp;intervals=1d"
+
+                        # HTTP/1.1 402 Payment Required
+                        # payment-required: eyJ4NDAyVmVyc2lvbiI6MiwiZXJyb3IiOiJQYXltZW50IHJlcXVpcmVkIiw...
+
+                        # Decode the header (base64 JSON) to see:
+                        # {
+                        #   "x402Version": 2,
+                        #   "accepts": [{
+                        #     "scheme": "exact",
+                        #     "network": "eip155:8453",
+                        #     "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",   # USDC on Base
+                        #     "amount": "10000",                                        # 0.01 USDC (6 decimals)
+                        #     "payTo": "0x9e6a..."
+                        #   }]
+                        # }</code>
+                </div>
+                <div class="tab-pane fade" id="tab-python" role="tabpanel">
+                    pre(class="mb-0").
+                        <code>import asyncio
+                        from eth_account import Account
+                        from x402 import x402Client
+                        from x402.http.clients import x402HttpxClient
+                        from x402.mechanisms.evm.exact import ExactEvmScheme
+
+                        async def main():
+                            buyer = Account.from_key("0x...")  # your wallet with USDC on Base
+
+                            client = x402Client()
+                            client.register("eip155:8453", ExactEvmScheme(signer=buyer))
+
+                            async with x402HttpxClient(client) as http:
+                                r = await http.get(
+                                    "https://stochastic.fastapicloud.dev/forecast-pro",
+                                    params={"symbol": "BTCUSDT", "intervals": "1d,1w"},
+                                )
+                                print(r.status_code)   # 200 — payment was settled automatically
+                                print(r.json())
+
+                        asyncio.run(main())</code>
+                </div>
+                <div class="tab-pane fade" id="tab-ts" role="tabpanel">
+                    pre(class="mb-0").
+                        <code>import { wrapFetchWithPayment } from "x402-fetch";
+
+                        const signer = await privateKeyToAccount("0x..."); // wallet with USDC on Base
+
+                        const fetchWithPayment = wrapFetchWithPayment(fetch, signer);
+
+                        const res = await fetchWithPayment(
+                          "https://stochastic.fastapicloud.dev/forecast-pro?symbol=BTCUSDT&intervals=1d",
+                        );
+
+                        console.log(res.status);              // 200
+                        const forecast = await res.json();    // μ, σ, 50 paths, 95% interval...</code>
+                </div>
+            </div>
+
+            div(class="alert alert-warning mt-4" role="alert")
+                h4(class="alert-heading") Free tier
+                p(class="mb-0").
+                    A #[a href="https://stochastic.fastapicloud.dev/forecast"] free 30-step forecast
+                    remains available on <code>GET /forecast</code> — no payment needed.
+                    The paid <code>/forecast-pro</code> endpoint adds depth, parameters and multi-timeframe output.
+
+        </div>
+        <div class="col-sm-4 order-2">
+
+            div(class='card')
+                div(class='card-header') Endpoint specification
+                div(class='card-body')
+                    <dl class="mb-0">
+                        <dt>Method</dt><dd>GET</dd>
+                        <dt>URL</dt><dd><code>https://stochastic.fastapicloud.dev/forecast-pro</code></dd>
+                        <dt>Price</dt><dd>$0.01 per request</dd>
+                        <dt>Asset</dt><dd>USDC (native, Base)</dd>
+                        <dt>Scheme</dt><dd>x402 exact (EIP-3009, gasless for payer)</dd>
+                        <dt>Facilitator</dt><dd>PayAI</dd>
+                        <dt>Response</dt><dd>application/json</dd>
+                    </dl>
+
+            div(class='mt-3' class='card')
+                div(class='card-header') Useful links
+                div(class='card-body')
+                    div(class='list-group')
+                        a(class='list-group-item list-group-item-action' href='https://x402.org' target='_blank' rel='noopener') x402 protocol
+                        a(class='list-group-item list-group-item-action' href='https://docs.x402.org' target='_blank' rel='noopener') x402 documentation
+                        a(class='list-group-item list-group-item-action' href='https://www.base.org' target='_blank' rel='noopener') Base network
+                        a(class='list-group-item list-group-item-action' href='https://stochastic.fastapicloud.dev/forecast') Free /forecast endpoint
+                        a(class='list-group-item list-group-item-action' href='/crypto_forecast.html') Free interactive forecast tool
+
+            include see_also.pug
+
+        </div>
+    </div>
