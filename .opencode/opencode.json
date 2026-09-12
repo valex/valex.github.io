@@ -2,6 +2,9 @@
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "plan",
   "permission": {
+    "external_directory": {
+      "/home/developer/python_projects/stochastic_fastapi/**": "allow"
+    },
     "bash": {
       "*": "ask",
       "grep *": "allow",
@@ -22,5 +25,68 @@
       "status *": "allow",
       "diff *": "allow"
     }
-  }
+  },
+  "provider": {
+    "aimlapi": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "AIMLAPI",
+      "options": {
+        "baseURL": "https://api.aimlapi.com/v1"
+      },
+      "models": {
+        "poolside/laguna-s-2.1": {
+          "name": "Laguna S 2.1",
+          "cost": { "input": 0.078, "output": 0.156 },
+          "limit": {
+            "context": 1000000,
+            "output": 32000
+          }
+        },
+        "zhipu/glm-5.3": {
+          "name": "GLM 5.3",
+          "reasoning": true,
+          "cost": { "input": 1.82, "output": 5.72 },
+          "limit": {
+            "context": 1000000,
+            "output": 32000
+          },
+          "variants": {
+            "low": {
+              "reasoningEffort": "low"
+            },
+            "high": {
+              "reasoningEffort": "high"
+            },
+            "max": {
+              "reasoningEffort": "max"
+            }
+          }
+        }
+      }
+    },
+    "zai": {
+      "models": {
+        "glm-5.3": {
+          "name": "GLM 5.3",
+          "reasoning": true,
+          "cost": { "input": 1.40, "output": 4.40 },
+          "limit": {
+            "context": 1000000,
+            "output": 131072
+          },
+          "variants": {
+            "low": {
+              "reasoning_effort": "low"
+            },
+            "high": {
+              "reasoning_effort": "high"
+            },
+            "max": {
+              "reasoning_effort": "max"
+            }
+          }
+        }
+      }
+    }
+  },
 }
