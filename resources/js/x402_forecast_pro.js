@@ -13,9 +13,9 @@
         error: 'Payment required',
         resource: {
             url: 'https://stochastic.fastapicloud.dev/forecast-pro',
-            description: 'Extended crypto price forecast: horizon 90, drift/volatility (mu, sigma), ' +
-                '50 Monte-Carlo paths, 95% prediction interval, uncertainty bounds, ' +
-                'multiple timeframes in one request.',
+            description: 'Extended crypto price forecast (BTCUSDT, ETHUSDT): horizon 90, ' +
+                'drift/volatility (mu, sigma), 50 Monte-Carlo paths, 95% prediction interval, ' +
+                'uncertainty bounds, multiple timeframes in one request.',
             mimeType: 'application/json',
             serviceName: 'Stochastic Forecast Pro',
             tags: ['forecast', 'crypto', 'montecarlo']

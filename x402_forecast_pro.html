@@ -36,6 +36,7 @@ machine-readable, paid endpoint designed for <strong>AI agents</strong> and auto
 <li><b>50 Monte Carlo sample paths</b> per timeframe</li>
 <li><b>95% prediction interval</b> and <b>uncertainty bounds</b> (± standard error)</li>
 <li><b>Multiple timeframes in one request</b>: <code>intervals=1d,1w</code></li>
+<li><b>Trading pairs</b>: <code>BTCUSDT</code> and <code>ETHUSDT</code> on the daily timeframe and beyond</li>
 </ul><div class="alert alert-primary mt-4" role="alert"><h4 class="alert-heading">Endpoint</h4><p class="mb-0"><code>GET https://stochastic.fastapicloud.dev/forecast-pro</code></p><hr><p class="mb-0">Price: <b>$0.01 per request</b>, paid in <b>USDC on Base</b><via>the <a href="https://x402.org" rel="noopener" target="_blank">x402</a> protocol (HTTP 402).</via></p></div><h2>How x402 payments work</h2><p>x402 turns the long-forgotten <code>HTTP 402 Payment Required</code> status code into a real
 machine-payment layer. No API keys, no accounts, no subscription — the HTTP client
 pays on-chain and gets the content:
@@ -57,7 +58,7 @@ You will get the genuine <b>402</b> response exactly as an agent sees it before 
 <tr><th>Parameter</th><th>Type</th><th>Default</th><th>Description</th></tr>
 </thead>
 <tbody>
-<tr><td><code>symbol</code></td><td>string</td><td><code>BTCUSDT</code></td><td>Binance spot trading pair, e.g. <code>BTCUSDT</code>, <code>ETHUSDT</code></td></tr>
+<tr><td><code>symbol</code></td><td>string</td><td><code>BTCUSDT</code></td><td>Binance spot trading pair: <code>BTCUSDT</code> or <code>ETHUSDT</code></td></tr>
 <tr><td><code>intervals</code></td><td>string</td><td><code>1d</code></td><td>Comma-separated list of kline intervals: <code>1m,3m,5m,15m,30m,1h,2h,4h,6h,8h,12h,1d,3d,1w,1M</code></td></tr>
 <tr><td><code>from</code></td><td>date</td><td>—</td><td>Training data range start, <code>YYYY-MM-DD</code></td></tr>
 <tr><td><code>to</code></td><td>date</td><td>—</td><td>Training data range end, <code>YYYY-MM-DD</code></td></tr>
@@ -66,7 +67,7 @@ You will get the genuine <b>402</b> response exactly as an agent sees it before 
 </div><h2>Example response</h2><p>A paid response contains one forecast block per requested interval
 (trimmed here to a single timestamp for readability):
 </p><pre class="border rounded p-3 bg-light"><code>{
-  "symbol": "BTCUSDT",
+  "symbol": "ETHUSDT",
   "horizon": 90,
   "status": "ok",
   "build_at_utc": "2026-09-12T12:00:00+00:00",
@@ -74,18 +75,18 @@ You will get the genuine <b>402</b> response exactly as an agent sees it before 
     "1d": {
       "rows": 999,
       "t0": "2023-12-24",
-      "s0": 43779.14,
-      "μ": 0.000595,
-      "σ": 0.024612,
-      "mean_path":             {"2026-09-13 00:00:00+00:00": {"price": 43805.2}},
-      "sample_paths":          {"2026-09-13 00:00:00+00:00": {"0": 44001.1, "1": 43620.5, "...": "..."}},
+      "s0": 2516.43,
+      "μ": 0.000126,
+      "σ": 0.035405,
+      "mean_path":             {"2026-09-13 00:00:00+00:00": {"price": 2519.6}},
+      "sample_paths":          {"2026-09-13 00:00:00+00:00": {"0": 2550.7, "1": 2488.2, "...": "..."}},
       "prediction_interval_95": [
-        {"2026-09-13 00:00:00+00:00": {0: 42000.1}},
-        {"2026-09-13 00:00:00+00:00": {0: 45800.2}}
+        {"2026-09-13 00:00:00+00:00": {0: 2290.5}},
+        {"2026-09-13 00:00:00+00:00": {0: 2760.1}}
       ],
       "uncertainty_bounds": [
-        {"2026-09-13 00:00:00+00:00": {0: 43700.3}},
-        {"2026-09-13 00:00:00+00:00": {0: 43910.4}}
+        {"2026-09-13 00:00:00+00:00": {0: 2511.8}},
+        {"2026-09-13 00:00:00+00:00": {0: 2527.4}}
       ]
     }
   },
