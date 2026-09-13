@@ -306,3 +306,47 @@ content = pug.renderFile('src/templates/donate.pug');
 fs.writeFile('donate.html', content, function(){});
 
 
+// llms.txt — LLM/agent-friendly index of the site (see https://llmstxt.org)
+const SITE_URL = 'https://valex.github.io';
+
+// theme -> human-readable category, in display order (mirrors index.html)
+const llmsCategories = [
+    { label: 'Interactive Math', themes: ['vectors', 'math'] },
+    { label: 'Linux',            themes: ['linux'] },
+    { label: 'Geo Guessing',     themes: ['geoguessing'] },
+    { label: 'JavaScript',       themes: ['javascript'] },
+    { label: 'Python',           themes: ['python'] },
+    { label: '3D Coins',         themes: ['coins'] },
+    { label: 'Crypto',           themes: ['crypto'] },
+];
+
+function buildLlmsTxt() {
+    const lines = [];
+
+    lines.push('# valex.github.io');
+    lines.push('');
+    lines.push('> Personal technical site with concise, interactive articles and tools on programming (JavaScript, Python), Linux, math and vectors, cryptocurrency, GeoGuessing, and 3D coin models.');
+    lines.push('');
+    lines.push('Every page below is a standalone HTML article or interactive demo. Primary language is English; a German translation of some pages is available under /de/.');
+    lines.push('');
+
+    for (const category of llmsCategories) {
+        const categoryPages = pages.filter(page => category.themes.includes(page.theme));
+        if (categoryPages.length === 0) {
+            continue;
+        }
+
+        lines.push('## ' + category.label);
+        lines.push('');
+        for (const page of categoryPages) {
+            lines.push(`- [${page.title}](${SITE_URL}/${page.slug}.html): ${page.meta_description}`);
+        }
+        lines.push('');
+    }
+
+    return lines.join('\n').replace(/\n+$/, '') + '\n';
+}
+
+fs.writeFile('llms.txt', buildLlmsTxt(), function(){});
+
+

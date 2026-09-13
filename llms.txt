@@ -1,0 +1,49 @@
+# valex.github.io
+
+> Personal technical site with concise, interactive articles and tools on programming (JavaScript, Python), Linux, math and vectors, cryptocurrency, GeoGuessing, and 3D coin models.
+
+Every page below is a standalone HTML article or interactive demo. Primary language is English; a German translation of some pages is available under /de/.
+
+## Interactive Math
+
+- [Vector addition](https://valex.github.io/vector_addition.html): Vector addition
+- [Vector subtraction](https://valex.github.io/vector_subtraction.html): Vector subtraction
+- [Vector length or magnitude](https://valex.github.io/vector_length.html): Vector length or vector magnitude. How to calculate vector length and interactive animation.
+- [Unit vector](https://valex.github.io/unit_vector.html): Unit vector is a vector of length 1 (one)
+- [Cross product](https://valex.github.io/cross_product.html): Explore the concept of cross product in 3D vectors through an interactive animation. Understand how it produces a new vector perpendicular to the multiplied vectors, with trigonometric significance and the right-hand rule.
+- [Complex Numbers: An Introduction](https://valex.github.io/complex_numbers.html): Comprehensive guide to complex numbers: from imaginary unit i and complex plane to advanced operations. Learn algebraic, trigonometric, and exponential forms, Euler's formula, De Moivre's formula, and extracting roots with interactive D3.js visualizations.
+
+## Linux
+
+- [Process Termination in Linux: How to Kill Processes the Right Way](https://valex.github.io/kill_process.html): Learn how to safely terminate processes in Linux using kill, pkill, and killall. Understand the difference between SIGTERM, SIGKILL, and SIGHUP, and master best practices for managing processes like a pro
+- [Finding PID in Linux: A Complete Beginner’s Guide](https://valex.github.io/pid_search.html): Learn how to find process IDs (PID) in Linux with simple commands like pgrep, pidof, ps, top, and htop. Step-by-step guide for beginners with practical examples and tips
+
+## Geo Guessing
+
+- [GeoGuessr Clue Map](https://valex.github.io/geoint_map.html): Improve your GeoGuessr game with our comprehensive training tool. Interactive world map featuring road signs, distance markers, and landmarks from different countries. Perfect for learning location-specific clues.
+- [Spanish vs Portuguese: Visual Language Clues](https://valex.github.io/spanish_vs_portuguese.html): A practical guide to visually distinguishing Spanish from Portuguese using street signs, public text, and common written patterns. Designed for language spotters and those engaged in geographic identification through visual clues
+
+## JavaScript
+
+- [DOM - Document Object Model](https://valex.github.io/dom.html): Discover the power of the Document Object Model (DOM) and how it enables dynamic, interactive web experiences. Learn about the fundamental concepts of DOM, including elements, nodes, and attributes, and explore how JavaScript can be used to manipulate them. With practical examples and step-by-step instructions, this comprehensive guide will help you master DOM and take your web development skills to the next level.
+- [Inserting JavaScript into an HTML page](https://valex.github.io/script_tag.html): Learn how to effectively include JavaScript in your web pages using the script-tag and understand the benefits of dynamically loading scripts. Explore techniques such as direct embedding and external file inclusion, along with the 'defer' and 'async' attributes. Discover the use of the link rel='subresource' tag to optimize resource loading, improve performance, and enhance the browsing experience.
+- [Variables in JavaScript](https://valex.github.io/variables_in_js.html): Learn about JavaScript variables and their types: var, let, and const. Understand variable scoping, initialization, and best practices for improved code quality. Discover how to declare variables, handle global and block scopes, and ensure immutability with const.
+- [Functions in JavaScript](https://valex.github.io/functions_javascript.html): Learn about JavaScript functions, including different syntax options, how arguments work, and the behavior of functions in ECMAScript. Explore examples and understand the nuances of defining and using functions in JavaScript
+- [Numbers in JavaScript](https://valex.github.io/numbers_in_js.html): Learn about the different types of numbers in JavaScript, including integers, floating-point numbers, NaN, and Infinity. Understand how to handle conversions and avoid common pitfalls with Number, parseInt, and parseFloat functions. Get insights into the complexities of JavaScript numbers and improve your coding precision.
+- [Strings in JavaScript](https://valex.github.io/strings_in_js.html): Explore the world of JavaScript strings in this comprehensive guide! Learn how to create, manipulate, and interpolate strings with ease. Discover the power of template literals and raw strings for better code efficiency.
+
+## Python
+
+- [How to create a Virtual Environment in Python](https://valex.github.io/virtual_environment.html): Learn about Python virtual environments, how to create them for project isolation, and manage dependencies using the requirements.txt file. Keep your projects up-to-date and conflict-free with virtual environments, ensuring reliable operations
+
+## 3D Coins
+
+- [10 kopiyok 2013, Ukraine, 3D View](https://valex.github.io/10_kopiyok_2013.html): Explore a 3D model of a 10 kopiyok coin from 2013, Ukraine. Get a detailed view of the coin's design and features
+- [5 francs 1940, France, 3D View](https://valex.github.io/5_francs_1940.html): Explore a virtual 3D model of the historical 5 francs coin from 1940, France. Immerse yourself in the world of numismatics, examining every detail and angle of this coin, which is a significant artifact of French history
+- [1 pfennig 1997, Germany, 3D View](https://valex.github.io/1_pfennig_1997.html): Explore a 3D model of a 1 pfennig coin from 1997, Germany. Get a detailed view of the coin's design and features
+
+## Crypto
+
+- [Crypto Price Forecast](https://valex.github.io/crypto_forecast.html): Interactive cryptocurrency price forecast visualization using stochastic modeling. View probabilistic price projections for BTCUSDT, ETHUSDT, and LTCUSDT with 95% prediction intervals, mean forecast paths, and real-time tooltips. Powered by D3.js.
+- [x402 Paid Forecast API](https://valex.github.io/x402_forecast_pro.html): Paid crypto forecast API for AI agents using the x402 HTTP-402 payment protocol. Get extended stochastic price forecasts (90-step horizon, drift/volatility, 50 Monte Carlo paths, 95% prediction intervals) for $0.01 per request, paid in USDC on Base.
+- [Fear and Greed Index](https://valex.github.io/fear_and_greed.html): Explore the Fear and Greed Index in cryptocurrency trading with real-time insights. This article explains how the index is calculated, its significance in market sentiment, and trading strategies, featuring an SVG graph displaying the current index value.
