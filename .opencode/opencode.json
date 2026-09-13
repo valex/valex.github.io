@@ -22,21 +22,15 @@
       "head *": "allow",
       "wc *": "allow",
       "uv *": "allow",
-      "git remote *": "deny",
-      "git ls-remote *": "deny",
-      "git push *": "deny",
-      "git pull *": "deny"
+      "git *": "deny",
+      "git log *": "allow",
+      "git status *": "allow",
+      "git diff *": "allow"
     },
     "edit": {
       "*": "ask",
       "*keys*.json": "deny",
       "*filepaths*.json": "deny"
-    },
-    "git": {
-      "*": "ask",
-      "log *": "allow",
-      "status *": "allow",
-      "diff *": "allow"
     }
   },
   "provider": {
