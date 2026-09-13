@@ -22,7 +22,8 @@
       "head *": "allow",
       "wc *": "allow",
       "uv *": "allow",
-      "git remote *": "deny"
+      "git remote *": "deny",
+      "git ls-remote *": "deny"
     },
     "edit": {
       "*": "ask",
