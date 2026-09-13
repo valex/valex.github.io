@@ -34,8 +34,6 @@ doctype html
     block scripts
 
     script(defer=pages[index]['script_module'] ? false : true, type=pages[index]['script_module'] ? 'module' : 'application/javascript', src=`./resources/js/${pages[index]['slug']}.js`)
-
-    <script defer src="./resources/js/donate.js"></script>
     
     <link rel="stylesheet" href="./resources/css/basic.css" >
     <link rel="stylesheet" href="./resources/css/#{pages[index]['slug']}.css" >

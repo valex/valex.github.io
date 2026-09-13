@@ -65,3 +65,39 @@
     animation: goldGlitter 4s infinite;
 }
 
+.donate-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 12px;
+    padding: 4px 14px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: #0a4275;
+    text-decoration: none;
+    background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%);
+    border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+    cursor: pointer;
+    vertical-align: middle;
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+
+.donate-btn:hover {
+    color: #0a4275;
+    filter: brightness(1.07);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, .45);
+}
+
+.donate-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .25);
+}
+
+.donate-btn svg {
+    width: 13px;
+    height: 13px;
+    fill: currentColor;
+}
+

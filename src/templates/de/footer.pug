@@ -1,31 +1,12 @@
-<section id="donate" class="">
-    <footer class=" text-white" style="background-color: #0a4275;">
-        <div class="container p-4 pb-0">
-        <section class="text-center">
-            <p class="d-flex justify-content-center align-items-center">
-                | Wenn Ihnen das gefällt, kaufen Sie mir bitte einen Kaffee
-            </p>
-        </section>
+<section>
+    <footer class="text-white text-center" style="background-color: #0a4275;">
+        <div class="p-3">
+            <span>© <span id="copyright_year"></span> valex.github.io</span>
+            <a href="/donate.html" rel="nofollow" class="donate-btn">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/></svg>
+                | Spenden
+            </a>
         </div>
-
-        <div class="p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-        <div class="table-responsive">
-            <table class="w-100">
-            <tr>
-                <td ><span style="user-select: none" class="text-nowrap">BTC (Bitcoin): </span></td>
-                <td ><span class="ms-3" id="btc_donate"></span></td>
-            </tr>
-            <tr>
-                <td><span style="user-select: none" class="text-nowrap">XMR (Monero): </span></td>
-                <td ><span class="ms-3" id="xmr_donate"></span></td>
-            </tr>
-            <tr>
-                <td><span style="user-select: none" class="text-nowrap">LTC (Litecoin): </span></td>
-                <td ><span class="ms-3" id="ltc_donate"></span></td>
-            </tr>
-            </table>
-        </div>
-        </div>
-
+        <script>document.getElementById("copyright_year").textContent = new Date().getFullYear();</script>
     </footer>
 </section>

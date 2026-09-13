@@ -300,4 +300,9 @@ for(let i=0; i<alternatePages['de'].length; i++){
     fs.writeFile(alternate+'/'+alternatePages[alternate][i]['slug']+'.html', content, function(){});
 }
 
+// Standalone donate page (noindex, not part of pages navigation)
+content = pug.renderFile('src/templates/donate.pug');
+
+fs.writeFile('donate.html', content, function(){});
+
 
