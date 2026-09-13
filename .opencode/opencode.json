@@ -10,7 +10,9 @@
       "*.env": "deny",
       "*.env.*": "deny",
       "*.env.example": "allow",
-      "sitemap.xml": "deny"
+      "sitemap.xml": "deny",
+      "pug.js": "deny",
+      "llms.txt": "deny"
     },
     "bash": {
       "*": "ask",
@@ -19,7 +21,8 @@
       "tail *": "allow",
       "head *": "allow",
       "wc *": "allow",
-      "uv *": "allow"
+      "uv *": "allow",
+      "git remote *": "deny"
     },
     "edit": {
       "*": "ask",
