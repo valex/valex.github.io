@@ -5,6 +5,13 @@
     "external_directory": {
       "/home/developer/python_projects/stochastic_fastapi/**": "allow"
     },
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow",
+      "sitemap.xml": "deny"
+    },
     "bash": {
       "*": "ask",
       "grep *": "allow",
