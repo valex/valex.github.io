@@ -18,11 +18,11 @@ const pages = [
         "slug": "x402_forecast_pro",
         "theme": "crypto",
 
-        "meta_description": "Paid crypto forecast API for AI agents using the x402 HTTP-402 payment protocol. Get extended stochastic price forecasts (90-step horizon, drift/volatility, 50 Monte Carlo paths, 95% prediction intervals) for $0.01 per request, paid in USDC on Base.",
+        "meta_description": "Paid crypto forecast API for AI agents: 90-step Monte Carlo forecasts with 95% intervals. $0.01 per request, paid in USDC on Base.",
         "meta_keywords": "x402, HTTP 402, paid API, AI agents, crypto forecast API, USDC, Base network, machine payments, Monte Carlo forecast, prediction interval, crypto price prediction, agent payments",
-        "meta_title": "x402 Paid Crypto Forecast API for AI Agents — $0.01 per Request in USDC on Base",
+        "meta_title": "x402 Crypto Forecast API for AI Agents — $0.01 per Request",
 
-        "title": "x402 Paid Forecast API"
+        "title": "x402 Paid Crypto Forecast API for AI Agents"
     },
     {
         "slug": "kill_process",

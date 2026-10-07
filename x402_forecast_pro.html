@@ -2,8 +2,8 @@
 <head>
 <meta charset=UTF-8>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Paid crypto forecast API for AI agents using the x402 HTTP-402 payment protocol. Get extended stochastic price forecasts (90-step horizon, drift/volatility, 50 Monte Carlo paths, 95% prediction intervals) for $0.01 per request, paid in USDC on Base.">
-<meta name="keywords" content="x402, HTTP 402, paid API, AI agents, crypto forecast API, USDC, Base network, machine payments, Monte Carlo forecast, prediction interval, crypto price prediction, agent payments"><title>x402 Paid Crypto Forecast API for AI Agents — $0.01 per Request in USDC on Base</title>
+<meta name="description" content="Paid crypto forecast API for AI agents: 90-step Monte Carlo forecasts with 95% intervals. $0.01 per request, paid in USDC on Base.">
+<meta name="keywords" content="x402, HTTP 402, paid API, AI agents, crypto forecast API, USDC, Base network, machine payments, Monte Carlo forecast, prediction interval, crypto price prediction, agent payments"><title>x402 Crypto Forecast API for AI Agents — $0.01 per Request</title>
 <link rel="describedby" href="/llms.txt"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 <script>MathJax = {
    tex: {
@@ -25,19 +25,30 @@
 </a>
 </div>
 </header><section class="text-center py-5">
-<h1 class="h4 d-flex justify-content-center align-items-center">x402 Paid Forecast API</h1>
+<h1 class="h4 d-flex justify-content-center align-items-center">x402 Paid Crypto Forecast API for AI Agents</h1>
 </section><div class="row">
-<div class="col-sm-8 order-1"><h2>Paid Crypto Forecast API for AI Agents</h2><p>This website's <a href="/crypto_forecast.html">free forecast tool</a> shows a 30-step
+<div class="col-sm-8 order-1"><h2>Free tool vs Pro API</h2><p>This website's <a href="/crypto_forecast.html">free forecast tool</a> shows a 30-step
 Monte Carlo projection for a single timeframe. The <strong>Pro API</strong> extends it into a
 machine-readable, paid endpoint designed for <strong>AI agents</strong> and automated clients:
-</p><ul>
-<li><b>90-step horizon</b> instead of 30</li>
-<li><b>Drift (μ) and volatility (σ)</b> of the fitted diffusion process</li>
-<li><b>50 Monte Carlo sample paths</b> per timeframe</li>
-<li><b>95% prediction interval</b> and <b>uncertainty bounds</b> (± standard error)</li>
-<li><b>Multiple timeframes in one request</b>: <code>intervals=1d,1w</code></li>
-<li><b>Trading pairs</b>: <code>BTCUSDT</code> and <code>ETHUSDT</code> on the daily timeframe and beyond</li>
-</ul><div class="alert alert-primary mt-4" role="alert"><h4 class="alert-heading">Endpoint</h4><p class="mb-0"><code>GET https://stochastic.fastapicloud.dev/forecast-pro</code></p><hr><p class="mb-0">Price: <b>$0.01 per request</b>, paid in <b>USDC on Base</b>
+</p><div class="table-responsive">
+<table class="table table-striped">
+<thead>
+<tr><th>Feature</th><th>Free <code>/forecast</code></th><th>Pro <code>/forecast-pro</code></th></tr>
+</thead>
+<tbody>
+<tr><td>Forecast horizon</td><td>30 steps</td><td>90 steps</td></tr>
+<tr><td>Monte Carlo sample paths</td><td>20</td><td>50 per timeframe</td></tr>
+<tr><td>Mean forecast path</td><td>Included</td><td>Included</td></tr>
+<tr><td>95% prediction interval</td><td>Included</td><td>Included</td></tr>
+<tr><td>Drift (μ) and volatility (σ)</td><td>—</td><td>Included in the response</td></tr>
+<tr><td>Uncertainty bounds (± standard error)</td><td>—</td><td>Included</td></tr>
+<tr><td>Timeframes per request</td><td>One</td><td>Several: <code>intervals=1d,1w</code></td></tr>
+<tr><td>Trading pairs</td><td><code>BTCUSDT</code>, <code>ETHUSDT</code>, <code>LTCUSDT</code></td><td><code>BTCUSDT</code>, <code>ETHUSDT</code></td></tr>
+<tr><td>Training data range</td><td><code>from</code> / <code>to</code></td><td><code>from</code> / <code>to</code></td></tr>
+<tr><td>Price</td><td>Free</td><td>$0.01 per request (USDC on Base)</td></tr>
+</tbody>
+</table>
+</div><div class="alert alert-primary mt-4" role="alert"><h4 class="alert-heading">Endpoint</h4><p class="mb-0"><code>GET https://stochastic.fastapicloud.dev/forecast-pro</code></p><hr><p class="mb-0">Price: <b>$0.01 per request</b>, paid in <b>USDC on Base</b>
 via the <a href="https://x402.org" rel="noopener" target="_blank">x402</a> protocol (HTTP 402).</p></div><h2>How x402 payments work</h2><p>x402 turns the long-forgotten <code>HTTP 402 Payment Required</code> status code into a real
 machine-payment layer. No API keys, no accounts, no subscription — the HTTP client
 pays on-chain and gets the content:
@@ -166,7 +177,7 @@ The paid <code>/forecast-pro</code> endpoint adds depth, parameters and multi-ti
 <dt>Scheme</dt><dd>x402 exact (EIP-3009, gasless for payer)</dd>
 <dt>Facilitator</dt><dd>PayAI</dd>
 <dt>Response</dt><dd>application/json</dd>
-</dl></div></div><div class="mt-3 card"><div class="card-header">Useful links</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="https://x402.org" target="_blank" rel="noopener">x402 protocol</a><a class="list-group-item list-group-item-action" href="https://docs.x402.org" target="_blank" rel="noopener">x402 documentation</a><a class="list-group-item list-group-item-action" href="https://www.base.org" target="_blank" rel="noopener">Base network</a><a class="list-group-item list-group-item-action" href="https://stochastic.fastapicloud.dev/forecast">Free /forecast endpoint</a><a class="list-group-item list-group-item-action" href="/crypto_forecast.html">Free interactive forecast tool</a></div></div></div><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/crypto_forecast.html">Crypto Price Forecast</a><a class="list-group-item list-group-item-action active" href="/x402_forecast_pro.html">x402 Paid Forecast API</a><a class="list-group-item list-group-item-action" href="/fear_and_greed.html">Fear and Greed Index</a></div></div></div></div>
+</dl></div></div><div class="mt-3 card"><div class="card-header">Useful links</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="https://x402.org" target="_blank" rel="noopener">x402 protocol</a><a class="list-group-item list-group-item-action" href="https://docs.x402.org" target="_blank" rel="noopener">x402 documentation</a><a class="list-group-item list-group-item-action" href="https://www.base.org" target="_blank" rel="noopener">Base network</a><a class="list-group-item list-group-item-action" href="https://stochastic.fastapicloud.dev/forecast">Free /forecast endpoint</a><a class="list-group-item list-group-item-action" href="/crypto_forecast.html">Free interactive forecast tool</a></div></div></div><div class="card"><div class="card-header">See also</div><div class="card-body"><div class="list-group"><a class="list-group-item list-group-item-action" href="/crypto_forecast.html">Crypto Price Forecast</a><a class="list-group-item list-group-item-action active" href="/x402_forecast_pro.html">x402 Paid Crypto Forecast API for AI Agents</a><a class="list-group-item list-group-item-action" href="/fear_and_greed.html">Fear and Greed Index</a></div></div></div></div>
 </div></div> <!--end .container-fluid --><section>
 <footer class="text-white text-center" style="background-color: #0a4275;">
 <div class="p-3">

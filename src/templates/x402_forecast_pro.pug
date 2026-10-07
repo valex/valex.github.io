@@ -5,21 +5,32 @@ block content
     <div class="row">
         <div class="col-sm-8 order-1">
 
-            h2 Paid Crypto Forecast API for AI Agents
+            h2 Free tool vs Pro API
 
             p.
                 This website's <a href="/crypto_forecast.html">free forecast tool</a> shows a 30-step
                 Monte Carlo projection for a single timeframe. The #[strong Pro API] extends it into a
                 machine-readable, paid endpoint designed for #[strong AI agents] and automated clients:
 
-            <ul>
-                <li><b>90-step horizon</b> instead of 30</li>
-                <li><b>Drift (μ) and volatility (σ)</b> of the fitted diffusion process</li>
-                <li><b>50 Monte Carlo sample paths</b> per timeframe</li>
-                <li><b>95% prediction interval</b> and <b>uncertainty bounds</b> (± standard error)</li>
-                <li><b>Multiple timeframes in one request</b>: <code>intervals=1d,1w</code></li>
-                <li><b>Trading pairs</b>: <code>BTCUSDT</code> and <code>ETHUSDT</code> on the daily timeframe and beyond</li>
-            </ul>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Feature</th><th>Free <code>/forecast</code></th><th>Pro <code>/forecast-pro</code></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Forecast horizon</td><td>30 steps</td><td>90 steps</td></tr>
+                        <tr><td>Monte Carlo sample paths</td><td>20</td><td>50 per timeframe</td></tr>
+                        <tr><td>Mean forecast path</td><td>Included</td><td>Included</td></tr>
+                        <tr><td>95% prediction interval</td><td>Included</td><td>Included</td></tr>
+                        <tr><td>Drift (μ) and volatility (σ)</td><td>—</td><td>Included in the response</td></tr>
+                        <tr><td>Uncertainty bounds (± standard error)</td><td>—</td><td>Included</td></tr>
+                        <tr><td>Timeframes per request</td><td>One</td><td>Several: <code>intervals=1d,1w</code></td></tr>
+                        <tr><td>Trading pairs</td><td><code>BTCUSDT</code>, <code>ETHUSDT</code>, <code>LTCUSDT</code></td><td><code>BTCUSDT</code>, <code>ETHUSDT</code></td></tr>
+                        <tr><td>Training data range</td><td><code>from</code> / <code>to</code></td><td><code>from</code> / <code>to</code></td></tr>
+                        <tr><td>Price</td><td>Free</td><td>$0.01 per request (USDC on Base)</td></tr>
+                    </tbody>
+                </table>
+            </div>
 
             div(class="alert alert-primary mt-4" role="alert")
                 h4(class="alert-heading") Endpoint
