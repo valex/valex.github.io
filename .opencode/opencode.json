@@ -60,10 +60,7 @@
       "*": "allow",
       "*.env": "deny",
       "*.env.*": "deny",
-      "*.env.example": "allow",
-      "sitemap.xml": "deny",
-      "pug.js": "deny",
-      "llms.txt": "deny"
+      "*.env.example": "allow"
     },
     "bash": {
       "*": "ask",
@@ -72,16 +69,10 @@
       "tail *": "allow",
       "head *": "allow",
       "wc *": "allow",
-      "uv *": "allow",
-      "git *": "deny",
-      "git log *": "allow",
-      "git status *": "allow",
-      "git diff *": "allow"
+      "uv *": "allow"
     },
     "edit": {
-      "*": "ask",
-      "*keys*.json": "deny",
-      "*filepaths*.json": "deny"
+      "*": "ask"
     }
   }
 }

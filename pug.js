@@ -106,9 +106,9 @@ const pages = [
         "slug": "dom",
         "theme": "javascript",
     
-        "meta_description": "Discover the power of the Document Object Model (DOM) and how it enables dynamic, interactive web experiences. Learn about the fundamental concepts of DOM, including elements, nodes, and attributes, and explore how JavaScript can be used to manipulate them. With practical examples and step-by-step instructions, this comprehensive guide will help you master DOM and take your web development skills to the next level.",
+        "meta_description": "Learn the DOM tree, node types, and how to access, modify, create, and remove nodes with console examples you can follow along on a test page.",
         "meta_keywords": "DOM manipulation, JavaScript DOM, HTML elements, web development, front-end development, nodes, attributes",
-        "meta_title": "DOM - Document Object Model. DOM Manipulation Methods in JavaScript",
+        "meta_title": "DOM in JavaScript: Document Object Model Tutorial",
     
         "title": "DOM - Document Object Model"
     },
