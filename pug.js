@@ -261,6 +261,16 @@ const pages = [
 
         "script_module": true
     },
+    {
+        "slug": "schaums_calculus_ayres_1990",
+        "theme": "books",
+
+        "meta_description": "Complete table of contents of Schaum's Outline of Calculus (Ayres & Mendelson, 3rd ed., 1990) — all 76 chapters, book facts, and where to read or borrow the book.",
+        "meta_keywords": "Schaum's Outline of Calculus, differential and integral calculus, Frank Ayres, Elliott Mendelson, 3rd edition 1990, table of contents, ISBN 0070026629, Schaum's Outline Series, calculus solved problems, calculus book, read online, borrow, Internet Archive",
+        "meta_title": "Schaum's Outline of Calculus (Ayres & Mendelson, 3rd ed. 1990): Complete Table of Contents",
+
+        "title": "Schaum's Outline of Calculus, 3rd Edition (1990)"
+    },
 ];
 
 const alternatePages = {
@@ -312,6 +322,7 @@ const SITE_URL = 'https://valex.github.io';
 // theme -> human-readable category, in display order (mirrors index.html)
 const llmsCategories = [
     { label: 'Interactive Math', themes: ['vectors', 'math'] },
+    { label: 'Math Books',        themes: ['books'] },
     { label: 'Linux',            themes: ['linux'] },
     { label: 'Geo Guessing',     themes: ['geoguessing'] },
     { label: 'JavaScript',       themes: ['javascript'] },

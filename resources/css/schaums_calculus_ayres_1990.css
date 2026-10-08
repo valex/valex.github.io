@@ -1,0 +1,54 @@
+.book-cover {
+    float: right;
+    width: 170px;
+    margin: 0 0 1.2rem 1.5rem;
+    padding: 4px;
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+}
+
+.book-toc h3 {
+    margin-top: 2.2rem;
+}
+
+.book-toc ul.chapters {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.book-toc ul.chapters > li {
+    margin-bottom: .6rem;
+    line-height: 1.5;
+}
+
+.book-toc ul.subs {
+    list-style: none;
+    display: inline;
+    margin: 0;
+    padding: 0 0 0 .4rem;
+    color: #6c757d;
+    font-size: .93em;
+}
+
+.book-toc ul.subs li {
+    display: inline;
+}
+
+.book-toc ul.subs li::after {
+    content: " · ";
+    color: #adb5bd;
+}
+
+.book-toc ul.subs li:last-child::after {
+    content: "";
+}
+
+@media (max-width: 576px) {
+    .book-cover {
+        float: none;
+        display: block;
+        margin: 0 auto 1.2rem;
+    }
+}

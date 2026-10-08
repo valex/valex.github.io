@@ -13,6 +13,10 @@ Every page below is a standalone HTML article or interactive demo. Primary langu
 - [Cross product](https://valex.github.io/cross_product.html): Explore the concept of cross product in 3D vectors through an interactive animation. Understand how it produces a new vector perpendicular to the multiplied vectors, with trigonometric significance and the right-hand rule.
 - [Complex Numbers: An Introduction](https://valex.github.io/complex_numbers.html): Comprehensive guide to complex numbers: from imaginary unit i and complex plane to advanced operations. Learn algebraic, trigonometric, and exponential forms, Euler's formula, De Moivre's formula, and extracting roots with interactive D3.js visualizations.
 
+## Math Books
+
+- [Schaum's Outline of Calculus, 3rd Edition (1990)](https://valex.github.io/schaums_calculus_ayres_1990.html): Complete table of contents of Schaum's Outline of Calculus (Ayres & Mendelson, 3rd ed., 1990) — all 76 chapters, book facts, and where to read or borrow the book.
+
 ## Linux
 
 - [Process Termination in Linux: How to Kill Processes the Right Way](https://valex.github.io/kill_process.html): Learn how to safely terminate processes in Linux using kill, pkill, and killall. Understand the difference between SIGTERM, SIGKILL, and SIGHUP, and master best practices for managing processes like a pro
