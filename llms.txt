@@ -49,5 +49,4 @@ Every page below is a standalone HTML article or interactive demo. Primary langu
 ## Crypto
 
 - [Crypto Price Forecast](https://valex.github.io/crypto_forecast.html): Interactive cryptocurrency price forecast visualization using stochastic modeling. View probabilistic price projections for BTCUSDT, ETHUSDT, and LTCUSDT with 95% prediction intervals, mean forecast paths, and real-time tooltips. Powered by D3.js.
-- [x402 Paid Crypto Forecast API for AI Agents](https://valex.github.io/x402_forecast_pro.html): Paid crypto forecast API for AI agents: 90-step Monte Carlo forecasts with 95% intervals. $0.01 per request, paid in USDC on Base.
 - [Fear and Greed Index](https://valex.github.io/fear_and_greed.html): Explore the Fear and Greed Index in cryptocurrency trading with real-time insights. This article explains how the index is calculated, its significance in market sentiment, and trading strategies, featuring an SVG graph displaying the current index value.
